@@ -5,9 +5,27 @@
     &__item {
         display: flex;
         align-items: center;
+        position: relative;
+        width: 100%;
         :not(:last-child) {
             margin: 0 18px 0 0;
         }
+        &:hover > .todo__button {
+            opacity: 1;
+        }
+    }
+    &__button {
+        opacity: 0;
+        font-size: 14px;
+        color: red;
+        font-weight: 900;
+        background-color: transparent;
+        transition: all 0.2s linear;
+        border: none;
+        position: absolute;
+        right: 0;
+        top: 0;
+        transform: scale(1);
     }
     &__label {
         font-size: 18px;
@@ -24,6 +42,12 @@
         line-height: 14px;
         color: #fff;
         padding: 5px 20px;
+        // disable copy
+        -webkit-user-select: none;
+        -webkit-touch-callout: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
     }
     &__checkbox {
         position: absolute;

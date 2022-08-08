@@ -19,6 +19,7 @@ const TodoTemplate: React.FC<propTypes> = ({ text, category, status }) => {
                 {text}
             </label>
             <span className="todo__category">{category}</span>
+            <button className="todo__button">x</button>
         </li>
     );
 };

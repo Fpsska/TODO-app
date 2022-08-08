@@ -6,6 +6,10 @@
         color: #525252;
         font-size: 22px;
         line-height: 26px;
+        transition: all .25s linear;
+        &:hover {
+            color: rgba($color: #EA5959, $alpha: 0.8)
+        }
     }
     &__link.active {
         color: #EA5959;
