@@ -2,6 +2,8 @@ import React from 'react';
 
 import './form.scss';
 
+// /. imports
+
 const Form: React.FC = () => {
     return (
         <form className="form" action="">

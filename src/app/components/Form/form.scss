@@ -3,10 +3,13 @@
         width: 100%;
         font-size: 18px;
         line-height: 21.6px;
-        color: #b5b5b5;
+        color: #525252;
         background-color: #f3f3f3;
         border: none;
         border-radius: 8px;
         padding: 10px 25px 10px 25px;
+        &::placeholder {
+            color: #b5b5b5;
+        }
     }
 }

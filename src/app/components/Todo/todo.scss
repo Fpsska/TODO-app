@@ -1,0 +1,59 @@
+.todo {
+    :not(:last-child) {
+        margin: 0 0 20px 0;
+    }
+    &__item {
+        display: flex;
+        align-items: center;
+        :not(:last-child) {
+            margin: 0 18px 0 0;
+        }
+    }
+    &__label {
+        font-size: 18px;
+        line-height: 23px;
+        color: #5a5a5a;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+    }
+    &__category {
+        background-color: #ea5959;
+        border-radius: 4px;
+        font-size: 12px;
+        line-height: 14px;
+        color: #fff;
+        padding: 5px 20px;
+    }
+    &__checkbox {
+        position: absolute;
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        -ms-appearance: none;
+        border: none;
+        padding: 0;
+        margin: 0;
+        &:focus,
+        &:hover {
+            border: none;
+        }
+        &:hover + .todo__checkbox--fake {
+            border: 1px solid #5a5a5a;
+        }
+        &:checked + .todo__checkbox--fake {
+            background-color: #ea5959;
+            border: transparent;
+        }
+    }
+    &__checkbox--fake {
+        width: 1rem;
+        height: 1rem;
+        background-color: transparent;
+        border: 1px solid #ea5959;
+        border-radius: 4px;
+        transition: all 0.2s linear;
+        margin: 0 18px 0 0;
+        cursor: pointer;
+    }
+}
