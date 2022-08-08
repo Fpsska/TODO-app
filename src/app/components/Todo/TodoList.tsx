@@ -21,7 +21,7 @@ const TodoList: React.FC = () => {
             id: '2',
             text: 'Purchase Milk & Corn Flakes',
             category: 'Groceries',
-            status: 'in process'
+            status: 'process'
         },
         {
             id: '3',
@@ -33,7 +33,13 @@ const TodoList: React.FC = () => {
             id: '4',
             text: 'Complete Assignments',
             category: 'College',
-            status: 'in process'
+            status: 'process'
+        },
+        {
+            id: '5',
+            text: 'Make a coffee',
+            category: 'Uncategorized',
+            status: ''
         },
     ]);
 

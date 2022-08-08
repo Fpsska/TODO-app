@@ -35,6 +35,15 @@
         align-items: center;
         cursor: pointer;
     }
+    &__label.process {
+        color: #407aed;
+    }
+    &__label.waiting {
+        color: #fca205;
+    }
+    &__label.done {
+        color: #1ec40c;
+    }
     &__category {
         background-color: #ea5959;
         border-radius: 4px;
