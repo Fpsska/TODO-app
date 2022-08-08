@@ -5,7 +5,8 @@ import Form from '../Form/Form';
 import TodoList from '../Todo/TodoList';
 
 import './App.css';
-import '../../assets/styles/styles.scss';
+import '../../assets/styles/_styles.scss';
+import '../../assets/styles/_media.scss';
 
 // /. imports
 
@@ -17,7 +18,7 @@ const App: React.FC = () => {
           <div className="page__nav">
             <Nav />
           </div>
-          <div className="page__content content">
+          <div className="page__content">
 
             <h1 className="page__title">All Tasks</h1>
 

@@ -53,11 +53,12 @@ body {
 }
 
 .App {
-    padding: 8rem 15rem;
+    padding: 20px;
 }
 
 .page {
     background-color: #fff;
+    box-shadow: 2px 17px 26px -12px rgba(34, 60, 80, 0.43);
     border-radius: 10px;
     &__wrapper {
         display: flex;

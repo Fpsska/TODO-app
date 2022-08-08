@@ -40,7 +40,7 @@ const TodoList: React.FC = () => {
             text: 'Make a coffee',
             category: 'Uncategorized',
             status: ''
-        },
+        }
     ]);
 
     return (
