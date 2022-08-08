@@ -4,7 +4,8 @@
     }
     .page__nav {
         border-right: none;
-        padding: 10px 20px;
+        border-bottom: 1px solid #d8d8d8;
+        padding: 15px 35px 15px 35px;
     }
     .page__content {
         padding: 15px 35px 15px 35px;
@@ -13,11 +14,14 @@
         text-align: center;
     }
     .todo {
-        height: calc(100vh - 400px);
+        height: calc(100vh - 405px);
     }
 }
 
 @media screen and (max-width: 425px) {
+    .todo {
+        height: calc(100vh - 260px);
+    }
     .todo__item {
         flex-direction: column;
         align-items: flex-start;
@@ -28,10 +32,16 @@
     .todo__category.todo__category {
         margin: 10px auto 0 auto;
     }
+    .form__input {
+        padding: 10px 15px 10px 15px;
+    }
 }
 
 @media screen and (max-width: 375px) {
     .page__content {
+        padding: 15px 20px 15px 20px;
+    }
+    .page__nav {
         padding: 15px 20px 15px 20px;
     }
 }

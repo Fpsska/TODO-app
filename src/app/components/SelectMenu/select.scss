@@ -1,0 +1,14 @@
+.nav-select {
+    width: 100%;
+    font-size: 22px;
+    border: none;
+    &:focus {
+        outline: none;
+    }
+    &__item {
+        color: #525252;
+    }
+    &__item.active {
+        color: #EA5959;
+    }
+}
