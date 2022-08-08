@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Nav from '../Nav/Nav';
+import Form from '../Form/Form';
 
 import './App.css';
 import '../../assets/styles/styles.scss';
@@ -15,7 +16,14 @@ const App: React.FC = () => {
           <div className="page__nav">
             <Nav />
           </div>
-          <div className="page__content"></div>
+          <div className="page__content">
+
+            <h1 className="page__title">All Tasks</h1>
+
+          <Form/>
+
+
+          </div>
         </div>
       </div>
     </div>
