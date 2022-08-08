@@ -1,0 +1,13 @@
+.nav {
+    :not(:last-child) {
+        margin: 0 0 24px;
+    }
+    &__link {
+        color: #525252;
+        font-size: 22px;
+        line-height: 26px;
+    }
+    &__link.active {
+        color: #EA5959;
+    }
+}
