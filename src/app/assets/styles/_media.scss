@@ -35,6 +35,12 @@
     .form__input {
         padding: 10px 15px 10px 15px;
     }
+    .nav-select {
+        display: block;
+    }
+    .nav {
+        display: none;
+    }
 }
 
 @media screen and (max-width: 375px) {
