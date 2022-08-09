@@ -1,6 +1,6 @@
 export interface Itodo {
-    id: string;
-    text: string;
+    id: number;
+    title: string;
     category: string;
     status: string
 }
