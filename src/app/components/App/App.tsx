@@ -55,6 +55,11 @@ const App: React.FC = () => {
     }
   };
 
+  const openBtnHandler = (e: React.SyntheticEvent): void => {
+    e.stopPropagation();  // for currect work of burger hide/show logic
+    setBurgerVisibleStatus(true);
+  };
+
   useEffect(() => { // call at initial render
     fetchTodosData();
   }, []);
@@ -76,9 +81,8 @@ const App: React.FC = () => {
           </div>
           <div className="page__content">
 
-
             {!isBurgerVisible &&
-              <button className="page__button" onClick={() => setBurgerVisibleStatus(true)}>
+              <button className="page__button" onClick={(e) => openBtnHandler(e)}>
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <g clipPath="url(#clip0_8368_6965)">
                     <path d="M16.0002 5H0.000244141V4H16.0002V5ZM16.0002 13H0.000244141V12H16.0002V13ZM16.0002 8.99218H0.000244141V8H16.0002V8.99218Z" fill="" />
@@ -91,7 +95,6 @@ const App: React.FC = () => {
                 </svg>
               </button>
             }
-
 
             <h1 className="page__title">All Tasks</h1>
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 
 import './burger.scss';
 
@@ -12,8 +12,38 @@ interface propTypes {
 // /. interfaces
 
 const Burger: React.FC<propTypes> = ({ isBurgerVisible, setBurgerVisibleStatus }) => {
+
+    const burgerRef = useRef<HTMLDivElement>(null!);
+
+    useEffect(() => {
+        const keyHandler = (e: KeyboardEvent): void => {
+            if (e.code === 'Escape' && isBurgerVisible) {
+                setBurgerVisibleStatus(false);
+            }
+        };
+
+        const areaHandler = (e: any): void => {
+            const validArea = burgerRef.current.contains(e.target);
+            const validElements =
+                e.target.className === 'burger__wrapper' ||
+                e.target.className === 'page__button' ||
+                e.target.className === 'burger__button';
+
+            if (!validArea && !validElements) {
+                setBurgerVisibleStatus(false);
+            }
+        };
+
+        document.addEventListener('click', areaHandler);
+        document.addEventListener('keydown', keyHandler);
+        return () => {
+            document.removeEventListener('click', areaHandler);
+            document.removeEventListener('keydown', keyHandler);
+        };
+    }, []);
+
     return (
-        <div className={isBurgerVisible ? 'burger visible' : 'burger'}>
+        <div className={isBurgerVisible ? 'burger visible' : 'burger'} ref={burgerRef}>
             <div className="burger__wrapper">
                 <button className="burger__button" onClick={() => setBurgerVisibleStatus(false)}>
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
