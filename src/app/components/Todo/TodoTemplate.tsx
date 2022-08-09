@@ -3,8 +3,8 @@ import React, { useState, useEffect } from 'react';
 // /. imports
 
 interface propTypes {
-    text: string,
-    category: string,
+    text: string;
+    category: string;
     status: string
 }
 

@@ -1,17 +1,19 @@
 .nav {
-    :not(:last-child) {
-        margin: 0 0 24px;
+    &__menu {
+        :not(:last-child) {
+            margin: 0 0 24px;
+        }
     }
     &__link {
         color: #525252;
         font-size: 22px;
         line-height: 26px;
-        transition: all .25s linear;
+        transition: all 0.25s linear;
         &:hover {
-            color: rgba($color: #EA5959, $alpha: 0.8)
+            color: rgba($color: #ea5959, $alpha: 0.8);
         }
     }
     &__link.active {
-        color: #EA5959;
+        color: #ea5959;
     }
 }
