@@ -20,11 +20,12 @@ const App: React.FC = () => {
 
   const [todosData, setTodosData] = useState<Itodo[]>([]);
   const [isLoading, setLoadingStatus] = useState<boolean>(true);
+  const [isDataEmpty, setDataEmtyStatus] = useState<boolean>(true);
 
   const fetchTodosData = async () => {
     try {
       const limit = 15;
-      const response = await fetch(`https://jsonplaceholder.typicode.com/todos?&_limit=${limit}`);
+      const response = await fetch(`https://jsonplaceholder.typicod.com/todos?&_limit=${limit}`);
 
       if (!response.ok) {
         throw new Error('response error');
@@ -44,6 +45,10 @@ const App: React.FC = () => {
       }, 1600);
 
     } catch (err: any) {
+      setTimeout(() => {
+        setLoadingStatus(false);
+      }, 1600);
+
       throw new Error(`${err.message || err}`);
     }
   };
@@ -51,6 +56,10 @@ const App: React.FC = () => {
   useEffect(() => { // call at initial render
     fetchTodosData();
   }, []);
+
+  useEffect(() => { // check length of todosData[] for handle display alternative content
+    todosData.length === 0 ? setDataEmtyStatus(true) : setDataEmtyStatus(false);
+  }, [todosData]);
 
   return (
     <div className="App">
@@ -69,7 +78,10 @@ const App: React.FC = () => {
             </div>
 
             <div className="page__list">
-              {isLoading ? <div className="page__preloader"><Preloader /></div> : <TodoList todosData={todosData} />}
+              {isLoading ?
+                <div className="page__preloader"><Preloader /></div> :
+                isDataEmpty ?
+                  <h2 className="page__title page__title--empty">no matches</h2> : <TodoList todosData={todosData} />}
             </div>
 
           </div>
