@@ -8,6 +8,7 @@ import Nav from '../Nav/Nav';
 import SelectMenu from '../SelectMenu/SelectMenu';
 import Form from '../Form/Form';
 import TodoList from '../Todo/TodoList';
+import Preloader from '../Preloader/Preloader';
 
 import './App.css';
 import '../../assets/styles/_styles.scss';
@@ -18,6 +19,7 @@ import '../../assets/styles/_media.scss';
 const App: React.FC = () => {
 
   const [todosData, setTodosData] = useState<Itodo[]>([]);
+  const [isLoading, setLoadingStatus] = useState<boolean>(true);
 
   const fetchTodosData = async () => {
     try {
@@ -30,12 +32,16 @@ const App: React.FC = () => {
 
       const data = await response.json();
 
-      data.map((item: any) => { // extend array by category, status fields
+      data.map((item: Itodo) => { // extend array by category, status fields
         item.category = getRandomArrElement(['Groceries', 'College', 'Payments']);
         item.status = getRandomArrElement(['waiting', 'process', 'done', '']);
       });
 
       setTodosData(data);
+
+      setTimeout(() => {
+        setLoadingStatus(false);
+      }, 1600);
 
     } catch (err: any) {
       throw new Error(`${err.message || err}`);
@@ -63,7 +69,7 @@ const App: React.FC = () => {
             </div>
 
             <div className="page__list">
-              <TodoList todosData={todosData} />
+              {isLoading ? <div className="page__preloader"><Preloader /></div> : <TodoList todosData={todosData} />}
             </div>
 
           </div>

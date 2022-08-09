@@ -89,4 +89,10 @@ body {
     &__list {
         flex: 1;
     }
+    &__preloader {
+        display: flex;
+        justify-content: center;
+        align-items: center;      
+        height: 100%;  
+    }
 }
