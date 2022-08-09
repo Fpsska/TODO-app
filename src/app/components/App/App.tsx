@@ -106,7 +106,8 @@ const App: React.FC = () => {
               {isLoading ?
                 <div className="page__preloader"><Preloader /></div> :
                 isDataEmpty ?
-                  <h2 className="page__title page__title--empty">no matches</h2> : <TodoList todosData={todosData} />}
+                  <h2 className="page__title page__title--empty">no matches</h2> :
+                  <TodoList todosData={todosData} setTodosData={setTodosData} />}
             </div>
 
           </div>
