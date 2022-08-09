@@ -96,11 +96,14 @@ const App: React.FC = () => {
               </button>
             }
 
-            <h1 className="page__title">All Tasks</h1>
+            <div className="page__header">
+              <h1 className="page__title">All Tasks</h1>
 
-            <div className="page__form">
-              <Form />
+              <div className="page__form">
+                <Form text={'Find a task'} />
+              </div>
             </div>
+
 
             <div className="page__list">
               {isLoading ?
@@ -108,6 +111,10 @@ const App: React.FC = () => {
                 isDataEmpty ?
                   <h2 className="page__title page__title--empty">no matches</h2> :
                   <TodoList todosData={todosData} setTodosData={setTodosData} />}
+            </div>
+
+            <div className="page__footer">
+              <Form text={'Add a new task inside'} />
             </div>
 
           </div>

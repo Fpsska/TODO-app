@@ -4,10 +4,14 @@ import './form.scss';
 
 // /. imports
 
-const Form: React.FC = () => {
+interface propTypes {
+    text: string
+}
+
+const Form: React.FC<propTypes> = ({ text }) => {
     return (
-        <form className="form" action="">
-            <input className="form__input" type="text" placeholder="Add a new task insdie ‘All’ category" />
+        <form className="form" onSubmit={e => e.preventDefault()}>
+            <input className="form__input" type="text" placeholder={text} />
         </form>
     );
 };

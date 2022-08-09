@@ -1,27 +1,32 @@
 @media screen and (max-width: 768px) {
+    .nav-select {
+        display: block;
+    }
+    .nav {
+        display: none;
+    }
     .page__wrapper {
         flex-direction: column;
+        position: relative;
     }
     .page__nav {
         border-right: none;
         border-bottom: 1px solid #d8d8d8;
-        padding: 15px 35px 15px 35px;
+        padding: 15px 65px 15px 35px;
     }
     .page__content {
         padding: 15px 35px 15px 35px;
+        position: static;
     }
     .page__title {
         text-align: center;
     }
     .todo {
-        height: calc(100vh - 405px);
+        height: calc(100vh - 255px);
     }
 }
 
 @media screen and (max-width: 425px) {
-    .todo {
-        height: calc(100vh - 260px);
-    }
     .todo__item {
         flex-direction: column;
         align-items: flex-start;
@@ -35,19 +40,26 @@
     .form__input {
         padding: 10px 15px 10px 15px;
     }
-    .nav-select {
-        display: block;
+    .todo {
+        height: calc(100vh - 260px);
     }
-    .nav {
-        display: none;
+    .page__title {
+        font-size: 22px;
     }
 }
 
 @media screen and (max-width: 375px) {
     .page__content {
-        padding: 15px 20px 15px 20px;
+        padding: 15px 22px 15px 22px;
     }
     .page__nav {
-        padding: 15px 20px 15px 20px;
+        padding: 15px 55px 15px 20px;
     }
 }
+
+@media screen and (max-width: 320px) {
+    .burger.visible {
+        width: 100%;
+    }
+}
+
