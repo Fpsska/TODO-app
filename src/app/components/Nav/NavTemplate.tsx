@@ -5,7 +5,7 @@ import React from 'react';
 interface propTypes {
     text: string;
     link: string;
-    isActive: boolean;
+    isActive: boolean
 }
 
 // /. interfaces
