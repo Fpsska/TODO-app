@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { Inav } from '../../types/navTypes';
 import { Itodo } from '../../types/todoTypes';
@@ -39,6 +39,13 @@ const NavTemplate: React.FC<propTypes> = (props) => {
         setTitle
     } = props;
 
+    const [todoCount, setTodoCount] = useState<number>(0);
+
+    useEffect(() => {
+        const array = todosData.filter(item => item.category.toLocaleLowerCase() === category);
+        setTodoCount(array.length);
+    }, [todosData]);
+
     const filterTodoItems = (): void => {
         switch (category) {
             case 'all':
@@ -78,7 +85,12 @@ const NavTemplate: React.FC<propTypes> = (props) => {
 
     return (
         <li className="nav__item">
-            <a className={isActive ? 'nav__link active' : 'nav__link'} href={link} onClick={filterTodoItems}>{text}</a>
+            <a className={isActive ? 'nav__link active' : 'nav__link'}
+                href={link}
+                onClick={filterTodoItems}
+            >
+                {text}{' '}({category === 'all' ? todosData.length : todoCount})
+            </a>
         </li>
     );
 };

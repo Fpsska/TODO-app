@@ -32,7 +32,7 @@ const Form: React.FC<propTypes> = ({ role, text, setFilteredTodosData, todosData
         switch (role) {
             case 'add':
                 setTodosData && setTodosData([...todosData, { // create todo item
-                    id: Math.floor(Math.floor(Math.random() * (100 - 20 + 1)) + 20),
+                    id: +new Date(),
                     title: createInputValue,
                     status: '',
                     category: 'Groceries'
