@@ -40,6 +40,7 @@ const App: React.FC = () => {
       data.map((item: Itodo) => { // extend array by category, status fields
         item.category = getRandomArrElement(['Groceries', 'College', 'Payments']);
         item.status = getRandomArrElement(['waiting', 'process', 'done', '']);
+        item.completed = false;
       });
 
       setTodosData(data);

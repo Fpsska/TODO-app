@@ -42,14 +42,8 @@
         align-items: center;
         cursor: pointer;
     }
-    &__label.process {
-        color: #407aed;
-    }
-    &__label.waiting {
-        color: #fca205;
-    }
-    &__label.done {
-        color: #1ec40c;
+    &__label.completed {
+        text-decoration: line-through;
     }
     &__category {
         background-color: #ea5959;
@@ -64,6 +58,15 @@
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
+    }
+    &__category.process {
+        background-color: #407aed;
+    }
+    &__category.waiting {
+        background-color: #fca205;
+    }
+    &__category.done {
+        background-color: #1ec40c;
     }
     &__checkbox {
         position: absolute;

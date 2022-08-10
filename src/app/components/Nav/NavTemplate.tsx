@@ -41,7 +41,7 @@ const NavTemplate: React.FC<propTypes> = (props) => {
 
     const [todoCount, setTodoCount] = useState<number>(0);
 
-    useEffect(() => {
+    useEffect(() => { // set current todo items count for each category
         const array = todosData.filter(item => item.category.toLocaleLowerCase() === category);
         setTodoCount(array.length);
     }, [todosData]);

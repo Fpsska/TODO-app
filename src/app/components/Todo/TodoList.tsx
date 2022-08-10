@@ -26,6 +26,7 @@ const TodoList: React.FC<propTypes> = ({ filteredTodosData, todosData, setTodosD
                         title={item.title}
                         category={item.category}
                         status={item.status}
+                        completed={item.completed}
                         filteredTodosData={filteredTodosData}
                         todosData={todosData}
                         setTodosData={setTodosData}
