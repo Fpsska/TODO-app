@@ -24,6 +24,7 @@ const App: React.FC = () => {
   const [isLoading, setLoadingStatus] = useState<boolean>(true);
   const [isDataEmpty, setDataEmtyStatus] = useState<boolean>(true);
   const [isBurgerVisible, setBurgerVisibleStatus] = useState<boolean>(false);
+  const [title, setTitle] = useState<string>('All');
 
   const fetchTodosData = async () => {
     try {
@@ -42,7 +43,6 @@ const App: React.FC = () => {
       });
 
       setTodosData(data);
-      setFilteredTodosData(data); // for immutable change todos Data[]
 
       setTimeout(() => {
         setLoadingStatus(false);
@@ -66,9 +66,16 @@ const App: React.FC = () => {
     fetchTodosData();
   }, []);
 
-  useEffect(() => { // check length of todosData[] for handle display alternative content
-    todosData.length === 0 ? setDataEmtyStatus(true) : setDataEmtyStatus(false);
+  useEffect(() => {
+    todosData.length === 0 ? setDataEmtyStatus(true) : setDataEmtyStatus(false); // check length of todosData[] for handle display alternative content
+    setFilteredTodosData(todosData);
   }, [todosData]);
+
+  useEffect(() => {
+    filteredTodosData.length === 0 ? setDataEmtyStatus(true) : setDataEmtyStatus(false);
+    console.log('filteredTodosData', filteredTodosData)
+  },[filteredTodosData])
+
 
   return (
     <div className="App">
@@ -79,7 +86,13 @@ const App: React.FC = () => {
 
           <div className="page__nav">
             <SelectMenu />
-            <Nav setTodosData={setTodosData} filteredTodosData={filteredTodosData} />
+            <Nav
+              todosData={todosData}
+              setTodosData={setTodosData}
+              filteredTodosData={filteredTodosData}
+              setFilteredTodosData={setFilteredTodosData} 
+              setTitle={setTitle}
+              />
           </div>
           <div className="page__content">
 
@@ -99,7 +112,7 @@ const App: React.FC = () => {
             }
 
             <div className="page__header">
-              <h1 className="page__title">All Tasks</h1>
+              <h1 className="page__title">{title} Tasks</h1>
 
               <div className="page__form">
                 <Form text={'Find a task'} />
@@ -111,7 +124,7 @@ const App: React.FC = () => {
                 <div className="page__preloader"><Preloader /></div> :
                 isDataEmpty ?
                   <h2 className="page__title page__title--empty">no matches</h2> :
-                  <TodoList todosData={todosData} setTodosData={setTodosData} />}
+                  <TodoList filteredTodosData={filteredTodosData} todosData={todosData} setTodosData={setTodosData} setFilteredTodosData={setFilteredTodosData} />}
             </div>
 
             <div className="page__footer">

@@ -11,12 +11,15 @@ import './nav.scss';
 
 interface propTypes {
     filteredTodosData: Itodo[];
-    setTodosData: (arg: Itodo[]) => void
+    todosData: Itodo[];
+    setTodosData: (arg: Itodo[]) => void;
+    setFilteredTodosData: (arg: Itodo[]) => void;
+    setTitle: (arg: string) => void
 }
 
 // /. interfaces
 
-const Nav: React.FC<propTypes> = ({ setTodosData, filteredTodosData }) => {
+const Nav: React.FC<propTypes> = ({ todosData, setTodosData, filteredTodosData, setFilteredTodosData, setTitle }) => {
 
     const [navTemplatesData, setNavTemplatesData] = useState<Inav[]>([
         {
@@ -63,8 +66,11 @@ const Nav: React.FC<propTypes> = ({ setTodosData, filteredTodosData }) => {
                             isActive={item.isActive}
                             navTemplatesData={navTemplatesData}
                             setNavTemplatesData={setNavTemplatesData}
+                            todosData={todosData}
                             setTodosData={setTodosData}
                             filteredTodosData={filteredTodosData}
+                            setFilteredTodosData={setFilteredTodosData}
+                            setTitle={setTitle}
                         />
                     );
                 })}

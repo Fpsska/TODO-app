@@ -9,14 +9,16 @@ import './todo.scss';
 // /. imports
 
 interface propTypes {
+    filteredTodosData: Itodo[];
     todosData: Itodo[];
-    setTodosData: (arg: Itodo[]) => void
+    setTodosData: (arg: Itodo[]) => void;
+    setFilteredTodosData: (arg: Itodo[]) => void
 }
 
-const TodoList: React.FC<propTypes> = ({ todosData, setTodosData }) => {
+const TodoList: React.FC<propTypes> = ({ filteredTodosData, todosData, setTodosData, setFilteredTodosData }) => {
     return (
         <ul className="todo">
-            {todosData.map((item: Itodo) => {
+            {filteredTodosData.map((item: Itodo) => {
                 return (
                     <TodoTemplate
                         key={item.id}
@@ -24,8 +26,10 @@ const TodoList: React.FC<propTypes> = ({ todosData, setTodosData }) => {
                         title={item.title}
                         category={item.category}
                         status={item.status}
+                        filteredTodosData={filteredTodosData}
                         todosData={todosData}
                         setTodosData={setTodosData}
+                        setFilteredTodosData={setFilteredTodosData}
                     />
                 );
             })}
