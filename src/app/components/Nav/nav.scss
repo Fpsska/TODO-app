@@ -12,6 +12,9 @@
         &:hover {
             color: rgba($color: #ea5959, $alpha: 0.8);
         }
+        span {
+            font-size: 20px;
+        }
     }
     &__link.active {
         color: #ea5959;
