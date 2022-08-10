@@ -20,6 +20,7 @@ import '../../assets/styles/_media.scss';
 const App: React.FC = () => {
 
   const [todosData, setTodosData] = useState<Itodo[]>([]);
+  const [filteredTodosData, setFilteredTodosData] = useState<Itodo[]>([]);
   const [isLoading, setLoadingStatus] = useState<boolean>(true);
   const [isDataEmpty, setDataEmtyStatus] = useState<boolean>(true);
   const [isBurgerVisible, setBurgerVisibleStatus] = useState<boolean>(false);
@@ -41,6 +42,7 @@ const App: React.FC = () => {
       });
 
       setTodosData(data);
+      setFilteredTodosData(data); // for immutable change todos Data[]
 
       setTimeout(() => {
         setLoadingStatus(false);
@@ -56,7 +58,7 @@ const App: React.FC = () => {
   };
 
   const openBtnHandler = (e: React.SyntheticEvent): void => {
-    e.stopPropagation();  // for currect work of burger hide/show logic
+    e.stopPropagation();  // for correct work of burger hide/show logic
     setBurgerVisibleStatus(true);
   };
 
@@ -77,7 +79,7 @@ const App: React.FC = () => {
 
           <div className="page__nav">
             <SelectMenu />
-            <Nav />
+            <Nav setTodosData={setTodosData} filteredTodosData={filteredTodosData} />
           </div>
           <div className="page__content">
 
@@ -103,7 +105,6 @@ const App: React.FC = () => {
                 <Form text={'Find a task'} />
               </div>
             </div>
-
 
             <div className="page__list">
               {isLoading ?
