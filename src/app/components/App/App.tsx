@@ -74,7 +74,7 @@ const App: React.FC = () => {
   useEffect(() => {
     filteredTodosData.length === 0 ? setDataEmtyStatus(true) : setDataEmtyStatus(false);
     console.log('filteredTodosData', filteredTodosData)
-  },[filteredTodosData])
+  }, [filteredTodosData]);
 
 
   return (
@@ -90,9 +90,9 @@ const App: React.FC = () => {
               todosData={todosData}
               setTodosData={setTodosData}
               filteredTodosData={filteredTodosData}
-              setFilteredTodosData={setFilteredTodosData} 
+              setFilteredTodosData={setFilteredTodosData}
               setTitle={setTitle}
-              />
+            />
           </div>
           <div className="page__content">
 
@@ -114,9 +114,12 @@ const App: React.FC = () => {
             <div className="page__header">
               <h1 className="page__title">{title} Tasks</h1>
 
-              <div className="page__form">
-                <Form text={'Find a task'} />
-              </div>
+              <Form
+                role={'search'}
+                text={'Find a task'}
+                todosData={todosData}
+                setFilteredTodosData={setFilteredTodosData}
+              />
             </div>
 
             <div className="page__list">
@@ -124,11 +127,21 @@ const App: React.FC = () => {
                 <div className="page__preloader"><Preloader /></div> :
                 isDataEmpty ?
                   <h2 className="page__title page__title--empty">no matches</h2> :
-                  <TodoList filteredTodosData={filteredTodosData} todosData={todosData} setTodosData={setTodosData} setFilteredTodosData={setFilteredTodosData} />}
+                  <TodoList
+                    todosData={todosData}
+                    setTodosData={setTodosData}
+                    filteredTodosData={filteredTodosData}
+                    setFilteredTodosData={setFilteredTodosData}
+                  />}
             </div>
 
             <div className="page__footer">
-              <Form text={'Add a new task inside'} />
+              <Form
+                role={'add'}
+                text={'Add a new task inside'}
+                todosData={todosData}
+                setTodosData={setTodosData}
+              />
             </div>
 
           </div>
