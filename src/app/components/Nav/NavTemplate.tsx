@@ -42,7 +42,7 @@ const NavTemplate: React.FC<propTypes> = (props) => {
     const [todoCount, setTodoCount] = useState<number>(0);
 
     useEffect(() => { // set current todo items count for each category
-        const array = [...todosData].filter(item => item.category.toLocaleLowerCase() === category);
+        const array = [...todosData].filter(item => item.category.toLocaleLowerCase() === `#${category}`);
         setTodoCount(array.length);
     }, [todosData]);
 
@@ -58,21 +58,21 @@ const NavTemplate: React.FC<propTypes> = (props) => {
             case 'groceries':
                 setNavTemplatesData(navTemplatesData.map(item => item.id === id ? { ...item, isActive: true } : { ...item, isActive: false }));
 
-                setFilteredTodosData([...todosData].filter(item => item.category.toLocaleLowerCase() === category));
+                setFilteredTodosData([...todosData].filter(item => item.category.toLocaleLowerCase() === `#${category}`));
 
                 setTitle(text);
                 break;
             case 'college':
                 setNavTemplatesData([...navTemplatesData].map(item => item.category === category ? { ...item, isActive: true } : { ...item, isActive: false }));
 
-                setFilteredTodosData([...todosData].filter(item => item.category.toLocaleLowerCase() === category));
+                setFilteredTodosData([...todosData].filter(item => item.category.toLocaleLowerCase() === `#${category}`));
 
                 setTitle(text);
                 break;
             case 'payments':
                 setNavTemplatesData([...navTemplatesData].map(item => item.category === category ? { ...item, isActive: true } : { ...item, isActive: false }));
 
-                setFilteredTodosData([...todosData].filter(item => item.category.toLocaleLowerCase() === category));
+                setFilteredTodosData([...todosData].filter(item => item.category.toLocaleLowerCase() === `#${category}`));
 
                 setTitle(text);
                 break;

@@ -34,7 +34,7 @@ const Form: React.FC<propTypes> = ({ role, text, setFilteredTodosData, todosData
                 setTodosData && setTodosData([...todosData, { // create todo item
                     id: +new Date(),
                     title: createInputValue,
-                    category: 'uncategorized',
+                    category: '',
                     status: '',
                     completed: false,
                     editable: false

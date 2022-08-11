@@ -38,8 +38,8 @@ const TodoTemplate: React.FC<propTypes> = (props) => {
         setCurrentTodoID
     } = props;
 
-    const todoItemHandler = (): void => {
-        setTodosData([...todosData].map(item => item.id === id ? { ...item, completed: !completed } : item)); 
+    const handleCompleteStatus = (): void => {
+        setTodosData([...todosData].map(item => item.id === id ? { ...item, completed: !completed } : item));
     };
 
     const editTodoItem = (): void => {
@@ -54,15 +54,19 @@ const TodoTemplate: React.FC<propTypes> = (props) => {
     };
 
     return (
-        <li className="todo__item" data-category={category} data-status={status}>
+        <li className="todo__item">
 
-            <label className={completed ? 'todo__label completed' : 'todo__label'} title={title} onClick={todoItemHandler}>
+            <label className={completed ? 'todo__label completed' : 'todo__label'} title={title} onClick={handleCompleteStatus}>
                 <input className="todo__checkbox" type="checkbox" />
                 <span className="todo__checkbox--fake"></span>
                 <span className={editable ? 'todo__label-text editable' : 'todo__label-text'}>{title}</span>
             </label>
 
-            <span className={`todo__category ${status}`}>{category}</span>
+            {category ?
+                <span className={`todo__category ${status}`}>{category}</span>
+                :
+                <span className={`todo__indicator ${status}`}>{category}</span>
+            }
 
             <div className="todo__controllers">
                 <button className="todo__button todo__button--edit" onClick={editTodoItem}>

@@ -45,7 +45,6 @@
     &__label-text {
         border-bottom: 2px solid transparent;
         border-radius: 4px;
-        padding: 2px;
     }
     &__label-text.editable {
         border-bottom: 2px solid lavender;
@@ -57,13 +56,13 @@
         display: flex;
         align-items: center;
         cursor: pointer;
-        margin: 0 18px 0 0;
+        margin: 0 14px 0 0;
     }
     &__label.completed {
         text-decoration: line-through;
     }
     &__category {
-        background-color: #ea5959;
+        background-color: #888;
         border-radius: 4px;
         font-size: 12px;
         line-height: 14px;
@@ -83,6 +82,22 @@
         background-color: #fca205;
     }
     &__category.done {
+        background-color: #1ec40c;
+    }
+    &__indicator {
+        flex-shrink: 0;
+        width: 0.55rem;
+        height: 0.55rem;
+        border-radius: 50%;
+        background-color: #888;
+    }
+    &__indicator.process {
+        background-color: #407aed;
+    }
+    &__indicator.waiting {
+        background-color: #fca205;
+    }
+    &__indicator.done {
         background-color: #1ec40c;
     }
     &__checkbox {

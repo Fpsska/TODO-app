@@ -44,7 +44,7 @@ const App: React.FC = () => {
       const data = await response.json();
 
       data.map((item: Itodo) => { // extend array by category, status fields
-        item.category = getRandomArrElement(['Groceries', 'College', 'Payments']);
+        item.category = getRandomArrElement(['#Groceries', '#College', '#Payments', '']);
         item.status = getRandomArrElement(['waiting', 'process', 'done', '']);
         item.completed = false;
         item.editable = false;

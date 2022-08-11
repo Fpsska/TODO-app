@@ -18,7 +18,8 @@ interface propTypes {
 const Modal: React.FC<propTypes> = ({ todosData, setTodosData, setModalVisibleStatus, currentTodoID }) => {
 
     const [inputValue, setInputValue] = useState<string>('');
-    const [inputRadioValue, setInputRadioValue] = useState<string>('');
+    const [inputRadioCategoryValue, setInputRadioCategoryValue] = useState<string>('');
+    const [inputRadioStatusValue, setInputRadioStatusValue] = useState<string>('');
 
     const formSubmitHandler = (e: React.SyntheticEvent): any => {
         e.preventDefault();
@@ -27,9 +28,9 @@ const Modal: React.FC<propTypes> = ({ todosData, setTodosData, setModalVisibleSt
             if (item.id === currentTodoID) {
                 return {
                     ...item,
-                    title: inputValue,
-                    category: inputRadioValue ? `#${inputRadioValue.charAt(0).toUpperCase() + inputRadioValue.slice(1)}` : 'uncategorized', // set upperCase for 1st letter of getted inputRadioValue
-                    status: '',
+                    title: inputValue,                                                                                                                  // uncategorized
+                    category: inputRadioCategoryValue ? `#${inputRadioCategoryValue.charAt(0).toUpperCase() + inputRadioCategoryValue.slice(1)}` : '', // set upperCase for 1st letter of getted inputRadioValue
+                    status: inputRadioStatusValue,
                     editable: false
                 };
             } else {
@@ -68,30 +69,58 @@ const Modal: React.FC<propTypes> = ({ todosData, setTodosData, setModalVisibleSt
                         />
                     </fieldset>
 
-                    <fieldset className="modal__categories">
-                        <legend className="modal__title">Category:</legend>
+                    <div className="modal__radios">
+                        <fieldset className="modal__categories">
+                            <legend className="modal__title">Category:</legend>
 
-                        <label className="modal__label">
-                            <input className="modal__radio" type="radio" name="category" value="groceries" onChange={e => setInputRadioValue(e.target.value)} />
-                            <span className="modal__radio--fake"></span>
-                            groceries
-                        </label>
-                        <label className="modal__label">
-                            <input className="modal__radio" type="radio" name="category" value="college" onChange={e => setInputRadioValue(e.target.value)} />
-                            <span className="modal__radio--fake"></span>
-                            college
-                        </label>
-                        <label className="modal__label">
-                            <input className="modal__radio" type="radio" name="category" value="payments" onChange={e => setInputRadioValue(e.target.value)} />
-                            <span className="modal__radio--fake"></span>
-                            payments
-                        </label>
-                        <label className="modal__label">
-                            <input className="modal__radio" type="radio" name="category" value="" onChange={e => setInputRadioValue(e.target.value)} />
-                            <span className="modal__radio--fake"></span>
-                            none
-                        </label>
-                    </fieldset>
+                            <label className="modal__label">
+                                <input className="modal__radio" type="radio" name="category" value="groceries" onChange={e => setInputRadioCategoryValue(e.target.value)} />
+                                <span className="modal__radio--fake"></span>
+                                groceries
+                            </label>
+                            <label className="modal__label">
+                                <input className="modal__radio" type="radio" name="category" value="college" onChange={e => setInputRadioCategoryValue(e.target.value)} />
+                                <span className="modal__radio--fake"></span>
+                                college
+                            </label>
+                            <label className="modal__label">
+                                <input className="modal__radio" type="radio" name="category" value="payments" onChange={e => setInputRadioCategoryValue(e.target.value)} />
+                                <span className="modal__radio--fake"></span>
+                                payments
+                            </label>
+                            <label className="modal__label">
+                                <input className="modal__radio" type="radio" name="category" value="" onChange={e => setInputRadioCategoryValue(e.target.value)} />
+                                <span className="modal__radio--fake"></span>
+                                none
+                            </label>
+                        </fieldset>
+
+                        <fieldset className="modal__statuses">
+                            <legend className="modal__title">Status:</legend>
+
+                            <label className="modal__label">
+                                <input className="modal__radio" type="radio" name="status" value="waiting" onChange={e => setInputRadioStatusValue(e.target.value)} />
+                                <span className="modal__radio--fake"></span>
+                                <span className="modal__label-text waiting">waiting</span>
+
+                            </label>
+                            <label className="modal__label">
+                                <input className="modal__radio" type="radio" name="status" value="process" onChange={e => setInputRadioStatusValue(e.target.value)} />
+                                <span className="modal__radio--fake"></span>
+                                <span className="modal__label-text process">process</span>
+                            </label>
+                            <label className="modal__label">
+                                <input className="modal__radio" type="radio" name="status" value="done" onChange={e => setInputRadioStatusValue(e.target.value)} />
+                                <span className="modal__radio--fake"></span>
+                                <span className="modal__label-text done">done</span>
+                            </label>
+                            <label className="modal__label">
+                                <input className="modal__radio" type="radio" name="status" value="none" onChange={e => setInputRadioStatusValue(e.target.value)} />
+                                <span className="modal__radio--fake"></span>
+                                <span className="modal__label-text">none</span>
+                            </label>
+                        </fieldset>
+                    </div>
 
                     <div className="modal__controllers">
                         <button className="modal__button modal__button--save">Ok</button>
