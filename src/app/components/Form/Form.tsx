@@ -50,10 +50,7 @@ const Form: React.FC<propTypes> = ({ role, text, setFilteredTodosData, todosData
         <form ref={formRef} className="form" onSubmit={e => formSubmitHandler(e)}>
             {role === 'search' ?
                 <input className="form__input" type="text" data-role={role} placeholder={text} onChange={e => findTodoItem(e.target.value)} />
-                : role === 'edit' ?
-                    <input className="form__input form__input--edit" type="text" data-role={role} placeholder={text} />
-                    :
-                    <input className="form__input" type="text" data-role={role} placeholder={text} onChange={e => setCreateInputValue(e.target.value)} />
+                : <input className="form__input" type="text" data-role={role} placeholder={text} onChange={e => setCreateInputValue(e.target.value)} />
             }
         </form>
     );

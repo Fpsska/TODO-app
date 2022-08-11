@@ -2,8 +2,6 @@ import React from 'react';
 
 import { Itodo } from '../../types/todoTypes';
 
-import Form from '../Form/Form';
-
 import './modal.scss';
 
 // /. imports 
@@ -28,14 +26,16 @@ const Modal: React.FC<propTypes> = ({ todosData, setTodosData, setModalVisibleSt
 
             <div className="modal__wrapper">
 
-                <div className="modal__inputs">
-                    <h2 className="modal__title">Title:</h2>
-                    <Form role={'edit'} text={'Write new task title inside'} todosData={todosData} setTodosData={setTodosData} />
-                </div>
+                <form className="modal__form">
 
-                <div className="modal__categories">
-                    <h2 className="modal__title">Category:</h2>
-                    <form className="modal__form">
+                    <fieldset className="modal__inputs">
+                        <legend className="modal__title">Title:</legend>  {/* display previous title in input */}
+                        <input className="modal__input" type="text" placeholder="Write new task title inside" />
+                    </fieldset>
+
+                    <fieldset className="modal__categories">
+                        <legend className="modal__title">Category:</legend>
+
                         <label className="modal__label">
                             <input className="modal__radio" type="radio" name="category" value="groceries" />
                             <span className="modal__radio--fake"></span>
@@ -56,14 +56,14 @@ const Modal: React.FC<propTypes> = ({ todosData, setTodosData, setModalVisibleSt
                             <span className="modal__radio--fake"></span>
                             none
                         </label>
-                    </form>
-                </div>
+                    </fieldset>
 
-                <div className="modal__controllers">
-                    <button className="modal__button modal__button--accept">Ok</button>
-                    <button className="modal__button modal__button--cancel">Cancel</button>
-                </div>
+                    <div className="modal__controllers">
+                        <button className="modal__button modal__button--accept">Ok</button>
+                        <button className="modal__button modal__button--cancel">Cancel</button>
+                    </div>
 
+                </form>
             </div>
         </div>
     );
