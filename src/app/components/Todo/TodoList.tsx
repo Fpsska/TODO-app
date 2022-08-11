@@ -12,10 +12,20 @@ interface propTypes {
     filteredTodosData: Itodo[];
     todosData: Itodo[];
     setTodosData: (arg: Itodo[]) => void;
-    setFilteredTodosData: (arg: Itodo[]) => void
+    setFilteredTodosData: (arg: Itodo[]) => void;
+    setModalVisibleStatus: (arg: boolean) => void
 }
 
-const TodoList: React.FC<propTypes> = ({ filteredTodosData, todosData, setTodosData, setFilteredTodosData }) => {
+const TodoList: React.FC<propTypes> = (props) => {
+
+    const {
+        filteredTodosData,
+        todosData,
+        setTodosData,
+        setFilteredTodosData,
+        setModalVisibleStatus
+    } = props;
+
     return (
         <ul className="todo">
             {filteredTodosData.map((item: Itodo) => {
@@ -31,6 +41,7 @@ const TodoList: React.FC<propTypes> = ({ filteredTodosData, todosData, setTodosD
                         todosData={todosData}
                         setTodosData={setTodosData}
                         setFilteredTodosData={setFilteredTodosData}
+                        setModalVisibleStatus={setModalVisibleStatus}
                     />
                 );
             })}

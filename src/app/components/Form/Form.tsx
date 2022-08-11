@@ -18,7 +18,7 @@ interface propTypes {
 
 const Form: React.FC<propTypes> = ({ role, text, setFilteredTodosData, todosData, setTodosData }) => {
 
-    const [createInputValue, setCreateInputValueValue] = useState<string>('');
+    const [createInputValue, setCreateInputValue] = useState<string>('');
 
     const formRef = useRef<HTMLFormElement>(null!);
 
@@ -34,25 +34,26 @@ const Form: React.FC<propTypes> = ({ role, text, setFilteredTodosData, todosData
                 setTodosData && setTodosData([...todosData, { // create todo item
                     id: +new Date(),
                     title: createInputValue,
-                    category: 'Groceries',
+                    category: 'uncategorized',
                     status: '',
                     completed: false
                 }]);
 
                 //  clear input value after create todo item
                 formRef.current.reset();
-                setCreateInputValueValue('');
+                setCreateInputValue('');
                 break;
         }
-
     };
 
     return (
         <form ref={formRef} className="form" onSubmit={e => formSubmitHandler(e)}>
             {role === 'search' ?
                 <input className="form__input" type="text" data-role={role} placeholder={text} onChange={e => findTodoItem(e.target.value)} />
-                :
-                <input className="form__input" type="text" data-role={role} placeholder={text} onChange={e => setCreateInputValueValue(e.target.value)} />
+                : role === 'edit' ?
+                    <input className="form__input form__input--edit" type="text" data-role={role} placeholder={text} />
+                    :
+                    <input className="form__input" type="text" data-role={role} placeholder={text} onChange={e => setCreateInputValue(e.target.value)} />
             }
         </form>
     );

@@ -10,6 +10,7 @@ import Form from '../Form/Form';
 import TodoList from '../Todo/TodoList';
 import Preloader from '../Preloader/Preloader';
 import Burger from '../Burger/Burger';
+import Modal from '../Modal/Modal';
 
 import './App.css';
 import '../../assets/styles/_styles.scss';
@@ -24,6 +25,7 @@ const App: React.FC = () => {
   const [isLoading, setLoadingStatus] = useState<boolean>(true);
   const [isDataEmpty, setDataEmtyStatus] = useState<boolean>(true);
   const [isBurgerVisible, setBurgerVisibleStatus] = useState<boolean>(false);
+  const [isModalVisible, setModalVisibleStatus] = useState<boolean>(false);
   const [title, setTitle] = useState<string>('All');
 
   const fetchTodosData = async () => {
@@ -77,13 +79,14 @@ const App: React.FC = () => {
     console.log('filteredTodosData', filteredTodosData)
   }, [filteredTodosData]);
 
-
   return (
     <div className="App">
       <div className="page">
+
         <div className="page__wrapper">
 
           {isBurgerVisible && <Burger isBurgerVisible={isBurgerVisible} setBurgerVisibleStatus={setBurgerVisibleStatus} />}
+          {isModalVisible && <Modal todosData={todosData} setTodosData={setTodosData} setModalVisibleStatus={setModalVisibleStatus} />}
 
           <div className="page__nav">
             <SelectMenu />
@@ -133,7 +136,9 @@ const App: React.FC = () => {
                     setTodosData={setTodosData}
                     filteredTodosData={filteredTodosData}
                     setFilteredTodosData={setFilteredTodosData}
-                  />}
+                    setModalVisibleStatus={setModalVisibleStatus}
+                  />
+                  }
             </div>
 
             <div className="page__footer">
