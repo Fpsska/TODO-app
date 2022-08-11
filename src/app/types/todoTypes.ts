@@ -3,5 +3,6 @@ export interface Itodo {
     title: string;
     category: string;
     status: string;
-    completed: boolean
+    completed: boolean;
+    editable: boolean
 }

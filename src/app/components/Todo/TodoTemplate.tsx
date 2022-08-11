@@ -10,11 +10,13 @@ interface propTypes {
     category: string;
     status: string;
     completed: boolean,
+    editable: boolean,
     filteredTodosData: Itodo[];
     todosData: Itodo[];
     setTodosData: (arg: Itodo[]) => void;
     setFilteredTodosData: (arg: Itodo[]) => void;
-    setModalVisibleStatus: (arg: boolean) => void
+    setModalVisibleStatus: (arg: boolean) => void;
+    setCurrentTodoID: (arg: number) => void
 }
 
 // /. interfaces
@@ -27,15 +29,23 @@ const TodoTemplate: React.FC<propTypes> = (props) => {
         category,
         status,
         completed,
+        editable,
         filteredTodosData,
         todosData,
         setTodosData,
         setFilteredTodosData,
-        setModalVisibleStatus
+        setModalVisibleStatus,
+        setCurrentTodoID
     } = props;
 
     const todoItemHandler = (): void => {
-        setTodosData([...todosData].map(item => item.id === id ? { ...item, completed: !completed } : item));
+        setTodosData([...todosData].map(item => item.id === id ? { ...item, completed: !completed } : item)); 
+    };
+
+    const editTodoItem = (): void => {
+        setModalVisibleStatus(true);
+        setCurrentTodoID(id);
+        setTodosData([...todosData].map(item => item.id === id ? { ...item, editable: true } : { ...item, editable: false }));  // set editable css-class
     };
 
     const deleteTodoItem = (): void => {
@@ -49,13 +59,13 @@ const TodoTemplate: React.FC<propTypes> = (props) => {
             <label className={completed ? 'todo__label completed' : 'todo__label'} title={title} onClick={todoItemHandler}>
                 <input className="todo__checkbox" type="checkbox" />
                 <span className="todo__checkbox--fake"></span>
-                {title}
+                <span className={editable ? 'todo__label-text editable' : 'todo__label-text'}>{title}</span>
             </label>
 
-            <span className={`todo__category ${status}`}>#{category}</span>  {/* remove # for init todo item */}
+            <span className={`todo__category ${status}`}>{category}</span>
 
             <div className="todo__controllers">
-                <button className="todo__button todo__button--edit" onClick={() => setModalVisibleStatus(true)}>
+                <button className="todo__button todo__button--edit" onClick={editTodoItem}>
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M13.23 1H11.77L3.52002 9.25L3.35999 9.46997L1 13.59L2.41003 15L6.53003 12.64L6.75 12.48L15 4.22998V2.77002L13.23 1ZM2.41003 13.59L3.92004 10.59L5.37 12.04L2.41003 13.59ZM6.23999 11.53L4.46997 9.76001L12.47 1.76001L14.24 3.53003L6.23999 11.53Z" fill="#C5C5C5" />
                     </svg>

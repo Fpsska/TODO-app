@@ -36,7 +36,8 @@ const Form: React.FC<propTypes> = ({ role, text, setFilteredTodosData, todosData
                     title: createInputValue,
                     category: 'uncategorized',
                     status: '',
-                    completed: false
+                    completed: false,
+                    editable: false
                 }]);
 
                 //  clear input value after create todo item

@@ -22,11 +22,15 @@ const App: React.FC = () => {
 
   const [todosData, setTodosData] = useState<Itodo[]>([]);
   const [filteredTodosData, setFilteredTodosData] = useState<Itodo[]>([]);
+
   const [isLoading, setLoadingStatus] = useState<boolean>(true);
   const [isDataEmpty, setDataEmtyStatus] = useState<boolean>(true);
+
   const [isBurgerVisible, setBurgerVisibleStatus] = useState<boolean>(false);
   const [isModalVisible, setModalVisibleStatus] = useState<boolean>(false);
+
   const [title, setTitle] = useState<string>('All');
+  const [currentTodoID, setCurrentTodoID] = useState<number>(todosData[0]?.id);
 
   const fetchTodosData = async () => {
     try {
@@ -43,6 +47,7 @@ const App: React.FC = () => {
         item.category = getRandomArrElement(['Groceries', 'College', 'Payments']);
         item.status = getRandomArrElement(['waiting', 'process', 'done', '']);
         item.completed = false;
+        item.editable = false;
       });
 
       setTodosData(data);
@@ -60,7 +65,7 @@ const App: React.FC = () => {
     }
   };
 
-  const openBtnHandler = (e: React.SyntheticEvent): void => {
+  const openBurger = (e: React.SyntheticEvent): void => {
     e.stopPropagation();  // for correct work of burger hide/show logic
     setBurgerVisibleStatus(true);
   };
@@ -85,8 +90,21 @@ const App: React.FC = () => {
 
         <div className="page__wrapper">
 
-          {isBurgerVisible && <Burger isBurgerVisible={isBurgerVisible} setBurgerVisibleStatus={setBurgerVisibleStatus} />}
-          {isModalVisible && <Modal todosData={todosData} setTodosData={setTodosData} setModalVisibleStatus={setModalVisibleStatus} />}
+          {isBurgerVisible &&
+            <Burger
+              isBurgerVisible={isBurgerVisible}
+              setBurgerVisibleStatus={setBurgerVisibleStatus}
+            />
+          }
+
+          {isModalVisible &&
+            <Modal
+              todosData={todosData}
+              setTodosData={setTodosData}
+              setModalVisibleStatus={setModalVisibleStatus}
+              currentTodoID={currentTodoID}
+            />
+          }
 
           <div className="page__nav">
             <SelectMenu />
@@ -101,7 +119,7 @@ const App: React.FC = () => {
           <div className="page__content">
 
             {!isBurgerVisible &&
-              <button className="page__button" onClick={(e) => openBtnHandler(e)}>
+              <button className="page__button" onClick={(e) => openBurger(e)}>
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <g clipPath="url(#clip0_8368_6965)">
                     <path d="M16.0002 5H0.000244141V4H16.0002V5ZM16.0002 13H0.000244141V12H16.0002V13ZM16.0002 8.99218H0.000244141V8H16.0002V8.99218Z" fill="" />
@@ -137,8 +155,9 @@ const App: React.FC = () => {
                     filteredTodosData={filteredTodosData}
                     setFilteredTodosData={setFilteredTodosData}
                     setModalVisibleStatus={setModalVisibleStatus}
+                    setCurrentTodoID={setCurrentTodoID}
                   />
-                  }
+              }
             </div>
 
             <div className="page__footer">
