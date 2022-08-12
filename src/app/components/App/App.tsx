@@ -26,7 +26,7 @@ const App: React.FC = () => {
   const [todosData, setTodosData] = useState<Itodo[]>([]);
   const [filteredTodosData, setFilteredTodosData] = useState<Itodo[]>([]);
 
-  const [isLoading, setLoadingStatus] = useState<boolean>(true);
+  const [isDataTLoading, setDataLoadingStatus] = useState<boolean>(true);
   const [isDataEmpty, setDataEmtyStatus] = useState<boolean>(true);
 
   const [isBurgerVisible, setBurgerVisibleStatus] = useState<boolean>(false);
@@ -58,12 +58,12 @@ const App: React.FC = () => {
       setTodosData(data);
 
       setTimeout(() => {
-        setLoadingStatus(false);
+        setDataLoadingStatus(false);
       }, 1600);
 
     } catch (err: any) {
       setTimeout(() => {
-        setLoadingStatus(false);
+        setDataLoadingStatus(false);
       }, 1600);
 
       throw new Error(`${err.message || err}`);
@@ -121,6 +121,7 @@ const App: React.FC = () => {
               filteredTodosData={filteredTodosData}
               setFilteredTodosData={setFilteredTodosData}
               setTitle={setTitle}
+              isDataTLoading={isDataTLoading}
             />
           </div>
           <div className="page__content">
@@ -148,11 +149,12 @@ const App: React.FC = () => {
                 text={'Find a task'}
                 todosData={todosData}
                 setFilteredTodosData={setFilteredTodosData}
+                isDataTLoading={isDataTLoading}
               />
             </div>
 
             <div className="page__list">
-              {isLoading ?
+              {isDataTLoading ?
                 <div className="page__preloader"><Preloader /></div> :
                 isDataEmpty ?
                   <h2 className="page__title page__title--empty">no matches</h2> :
@@ -173,6 +175,7 @@ const App: React.FC = () => {
                 text={'Add a new task inside'}
                 todosData={todosData}
                 setTodosData={setTodosData}
+                isDataTLoading={isDataTLoading}
               />
             </div>
 

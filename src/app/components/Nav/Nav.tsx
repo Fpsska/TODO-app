@@ -14,12 +14,22 @@ interface propTypes {
     todosData: Itodo[];
     setTodosData: (arg: Itodo[]) => void;
     setFilteredTodosData: (arg: Itodo[]) => void;
-    setTitle: (arg: string) => void
+    setTitle: (arg: string) => void;
+    isDataTLoading: boolean
 }
 
 // /. interfaces
 
-const Nav: React.FC<propTypes> = ({ todosData, setTodosData, filteredTodosData, setFilteredTodosData, setTitle }) => {
+const Nav: React.FC<propTypes> = (props) => {
+
+    const {
+        todosData,
+        setTodosData,
+        filteredTodosData,
+        setFilteredTodosData,
+        setTitle,
+        isDataTLoading
+    } = props;
 
     const [navTemplatesData, setNavTemplatesData] = useState<Inav[]>([
         {
@@ -71,6 +81,7 @@ const Nav: React.FC<propTypes> = ({ todosData, setTodosData, filteredTodosData, 
                             filteredTodosData={filteredTodosData}
                             setFilteredTodosData={setFilteredTodosData}
                             setTitle={setTitle}
+                            isDataTLoading={isDataTLoading}
                         />
                     );
                 })}

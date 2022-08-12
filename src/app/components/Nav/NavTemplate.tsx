@@ -17,7 +17,8 @@ interface propTypes {
     setTodosData: (arg: Itodo[]) => void;
     filteredTodosData: Itodo[];
     setFilteredTodosData: (arg: Itodo[]) => void;
-    setTitle: (arg: string) => void
+    setTitle: (arg: string) => void;
+    isDataTLoading: boolean
 }
 
 // /. interfaces
@@ -36,7 +37,8 @@ const NavTemplate: React.FC<propTypes> = (props) => {
         setTodosData,
         filteredTodosData,
         setFilteredTodosData,
-        setTitle
+        setTitle,
+        isDataTLoading
     } = props;
 
     const [todoCount, setTodoCount] = useState<number>(0);
@@ -85,9 +87,9 @@ const NavTemplate: React.FC<propTypes> = (props) => {
 
     return (
         <li className="nav__item">
-            <a className={isActive ? 'nav__link active' : 'nav__link'}
+            <a className={isActive ? 'nav__link active' : isDataTLoading ? 'nav__link disabled' : 'nav__link'}
                 href={link}
-                onClick={filterTodoItems}
+                onClick={() => !isDataTLoading && filterTodoItems()}
             >
                 {text}
                 {' '}

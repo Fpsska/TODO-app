@@ -12,11 +12,12 @@ interface propTypes {
     todosData: Itodo[];
     setFilteredTodosData?: (arg: Itodo[]) => void;
     setTodosData?: (arg: Itodo[]) => void;
+    isDataTLoading: boolean
 }
 
 // /. interfaces
 
-const Form: React.FC<propTypes> = ({ role, text, setFilteredTodosData, todosData, setTodosData }) => {
+const Form: React.FC<propTypes> = ({ role, text, setFilteredTodosData, todosData, setTodosData, isDataTLoading }) => {
 
     const [createInputValue, setCreateInputValue] = useState<string>('');
 
@@ -50,8 +51,18 @@ const Form: React.FC<propTypes> = ({ role, text, setFilteredTodosData, todosData
     return (
         <form ref={formRef} className="form" onSubmit={e => formSubmitHandler(e)}>
             {role === 'search' ?
-                <input className="form__input" type="text" data-role={role} placeholder={text} onChange={e => findTodoItem(e.target.value)} />
-                : <input className="form__input" type="text" data-role={role} placeholder={text} onChange={e => setCreateInputValue(e.target.value)} />
+                <input className="form__input"
+                    type="text"
+                    data-role={role}
+                    placeholder={text}
+                    onChange={e => findTodoItem(e.target.value)}
+                    disabled={isDataTLoading} />
+                : <input className="form__input"
+                    type="text"
+                    data-role={role}
+                    placeholder={text}
+                    onChange={e => setCreateInputValue(e.target.value)}
+                    disabled={isDataTLoading} />
             }
         </form>
     );
