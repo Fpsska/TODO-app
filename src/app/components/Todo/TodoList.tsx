@@ -13,8 +13,8 @@ interface propTypes {
     todosData: Itodo[];
     setTodosData: (arg: Itodo[]) => void;
     setFilteredTodosData: (arg: Itodo[]) => void;
-    setModalVisibleStatus: (arg: boolean) => void;
-    setCurrentTodoID: (arg: number) => void
+    setVisibleStatus: (arg: boolean) => void
+    setCurrentTodoID: (arg: number) => void;
 }
 
 const TodoList: React.FC<propTypes> = (props) => {
@@ -24,8 +24,8 @@ const TodoList: React.FC<propTypes> = (props) => {
         todosData,
         setTodosData,
         setFilteredTodosData,
-        setModalVisibleStatus,
-        setCurrentTodoID
+        setVisibleStatus,
+        setCurrentTodoID,
     } = props;
 
     return (
@@ -44,7 +44,7 @@ const TodoList: React.FC<propTypes> = (props) => {
                         todosData={todosData}
                         setTodosData={setTodosData}
                         setFilteredTodosData={setFilteredTodosData}
-                        setModalVisibleStatus={setModalVisibleStatus}
+                        setVisibleStatus={setVisibleStatus}
                         setCurrentTodoID={setCurrentTodoID}
                     />
                 );

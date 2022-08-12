@@ -4,6 +4,7 @@ import { Itodo } from '../../types/todoTypes';
 
 import { getRandomArrElement } from '../../helpers/getRandomArrElement';
 
+import { useAreaHandler } from '../../hooks/useAreaHandler';
 
 import Nav from '../Nav/Nav';
 import SelectMenu from '../SelectMenu/SelectMenu';
@@ -11,7 +12,6 @@ import Form from '../Form/Form';
 import TodoList from '../Todo/TodoList';
 import Preloader from '../Preloader/Preloader';
 import Burger from '../Burger/Burger';
-// import useBurger from '../Burger/Burger';
 import Modal from '../Modal/Modal';
 
 import '../../assets/styles/_styles.scss';
@@ -34,6 +34,9 @@ const App: React.FC = () => {
 
   const [title, setTitle] = useState<string>('All');
   const [currentTodoID, setCurrentTodoID] = useState<number>(todosData[0]?.id);
+
+  const { refEl, isVisible, setVisibleStatus } = useAreaHandler({ initialStatus: false });
+
 
   const fetchTodosData = async () => {
     try {
@@ -93,19 +96,21 @@ const App: React.FC = () => {
 
         <div className="page__wrapper">
 
-            <Burger
-              isBurgerVisible={isBurgerVisible}
-              setBurgerVisibleStatus={setBurgerVisibleStatus}
-            />
+          <Burger
+            isBurgerVisible={isBurgerVisible}
+            setBurgerVisibleStatus={setBurgerVisibleStatus}
+          />
 
-          {isModalVisible &&
-            <Modal
-              todosData={todosData}
-              setTodosData={setTodosData}
-              setModalVisibleStatus={setModalVisibleStatus}
-              currentTodoID={currentTodoID}
-            />
-          }
+          <div className="page__modal" ref={refEl}>
+            {isVisible &&
+              <Modal
+                todosData={todosData}
+                setTodosData={setTodosData}
+                setVisibleStatus={setVisibleStatus}
+                currentTodoID={currentTodoID}
+              />
+            }
+          </div>
 
           <div className="page__nav">
             <SelectMenu />
@@ -155,7 +160,7 @@ const App: React.FC = () => {
                     setTodosData={setTodosData}
                     filteredTodosData={filteredTodosData}
                     setFilteredTodosData={setFilteredTodosData}
-                    setModalVisibleStatus={setModalVisibleStatus}
+                    setVisibleStatus={setVisibleStatus}
                     setCurrentTodoID={setCurrentTodoID}
                   />
               }

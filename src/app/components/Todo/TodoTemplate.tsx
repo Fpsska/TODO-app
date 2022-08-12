@@ -15,7 +15,7 @@ interface propTypes {
     todosData: Itodo[];
     setTodosData: (arg: Itodo[]) => void;
     setFilteredTodosData: (arg: Itodo[]) => void;
-    setModalVisibleStatus: (arg: boolean) => void;
+    setVisibleStatus: (arg: boolean) => void
     setCurrentTodoID: (arg: number) => void
 }
 
@@ -34,7 +34,8 @@ const TodoTemplate: React.FC<propTypes> = (props) => {
         todosData,
         setTodosData,
         setFilteredTodosData,
-        setModalVisibleStatus,
+
+        setVisibleStatus,
         setCurrentTodoID
     } = props;
 
@@ -43,7 +44,8 @@ const TodoTemplate: React.FC<propTypes> = (props) => {
     };
 
     const editTodoItem = (): void => {
-        setModalVisibleStatus(true);
+        setVisibleStatus(true);
+
         setCurrentTodoID(id);
         setTodosData([...todosData].map(item => item.id === id ? { ...item, editable: true } : { ...item, editable: false }));  // set editable css-class
     };

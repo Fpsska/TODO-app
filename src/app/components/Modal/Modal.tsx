@@ -9,13 +9,20 @@ import './modal.scss';
 interface propTypes {
     todosData: Itodo[],
     setTodosData: (arg: any[]) => any;
-    setModalVisibleStatus: (arg: boolean) => void;
+    setVisibleStatus: (arg: boolean) => void;
     currentTodoID: number
 }
 
 // /. interfaces
 
-const Modal: React.FC<propTypes> = ({ todosData, setTodosData, setModalVisibleStatus, currentTodoID }) => {
+const Modal: React.FC<propTypes> = (props) => {
+
+    const {
+        todosData,
+        setTodosData,
+        setVisibleStatus,
+        currentTodoID
+    } = props;
 
     const [inputValue, setInputValue] = useState<string>('');
     const [inputRadioCategoryValue, setInputRadioCategoryValue] = useState<string>('');
@@ -37,16 +44,17 @@ const Modal: React.FC<propTypes> = ({ todosData, setTodosData, setModalVisibleSt
                 return item;
             }
         }));
-        setModalVisibleStatus(false);
+        setVisibleStatus(false);
     };
 
     const closeModal = (): void => {
         setTodosData([...todosData].map(item => item.id === currentTodoID ? { ...item, editable: false } : item)); // for remove editable css-class
-        setModalVisibleStatus(false);
+        setVisibleStatus(false);
     };
 
+    // ref={refEl}
     return (
-        <div className="modal">
+        <div className="modal" >
 
             <button className="modal__button modal__button--close" onClick={closeModal}>
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -77,6 +77,13 @@ body {
         height: 100%;
         position: relative;
     }
+    &__modal {
+        z-index: 2;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
     &__nav {
         border-radius: 10px 0 0 10px;
         padding: 20px 80px 20px 30px;
