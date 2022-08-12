@@ -48,13 +48,12 @@ const Modal: React.FC<propTypes> = (props) => {
     };
 
     const closeModal = (): void => {
-        setTodosData([...todosData].map(item => item.id === currentTodoID ? { ...item, editable: false } : item)); // for remove editable css-class
+        setTodosData([...todosData].map(item => item.id === currentTodoID ? { ...item, editable: false } : item)); // remove editable css-class
         setVisibleStatus(false);
     };
 
-    // ref={refEl}
     return (
-        <div className="modal" >
+        <div className="modal">
 
             <button className="modal__button modal__button--close" onClick={closeModal}>
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -86,8 +86,12 @@ const App: React.FC = () => {
 
   useEffect(() => {
     filteredTodosData.length === 0 ? setDataEmtyStatus(true) : setDataEmtyStatus(false);
-    console.log('filteredTodosData', filteredTodosData)
+    // console.log('filteredTodosData', filteredTodosData)
   }, [filteredTodosData]);
+
+  useEffect(() => { // remove editable css-class when modal is hidden
+    !isVisible && setTodosData([...todosData].map(item => item.id === currentTodoID ? { ...item, editable: false } : item));
+  }, [isVisible]);
 
   return (
     <div className="App">
