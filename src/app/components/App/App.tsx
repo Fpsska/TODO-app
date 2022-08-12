@@ -4,17 +4,20 @@ import { Itodo } from '../../types/todoTypes';
 
 import { getRandomArrElement } from '../../helpers/getRandomArrElement';
 
+
 import Nav from '../Nav/Nav';
 import SelectMenu from '../SelectMenu/SelectMenu';
 import Form from '../Form/Form';
 import TodoList from '../Todo/TodoList';
 import Preloader from '../Preloader/Preloader';
 import Burger from '../Burger/Burger';
+// import useBurger from '../Burger/Burger';
 import Modal from '../Modal/Modal';
 
-import './App.css';
 import '../../assets/styles/_styles.scss';
 import '../../assets/styles/_media.scss';
+import './App.css';
+
 
 // /. imports
 
@@ -90,12 +93,10 @@ const App: React.FC = () => {
 
         <div className="page__wrapper">
 
-          {isBurgerVisible &&
             <Burger
               isBurgerVisible={isBurgerVisible}
               setBurgerVisibleStatus={setBurgerVisibleStatus}
             />
-          }
 
           {isModalVisible &&
             <Modal
