@@ -59,7 +59,7 @@
         border-bottom: 2px solid lavender;
     }
     &__label-text.large {
-        max-width: calc(100vw - 520px);
+        max-width: calc(100vw - 510px);
     }
     &__label {
         font-size: 18px;
@@ -101,6 +101,7 @@
         height: 0.55rem;
         border-radius: 50%;
         background-color: #888;
+        margin: 0 10px 0 0;
     }
     &__indicator.process {
         background-color: #407aed;
