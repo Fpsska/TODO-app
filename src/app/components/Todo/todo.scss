@@ -1,4 +1,4 @@
-@import '../../assets/styles/_mixins.scss';
+@import "../../assets/styles/_mixins.scss";
 
 .todo {
     height: calc(100vh - 190px);
@@ -12,7 +12,7 @@
         align-items: center;
         justify-content: flex-start;
         position: relative;
-        width: 100%;
+        // width: 100%;
         &:hover > .todo__controllers .todo__button {
             opacity: 1;
         }
@@ -21,15 +21,16 @@
         }
     }
     &__controllers {
-        position: absolute;
-        right: 0;
-        top: 0;
+        // position: absolute;
+        // right: 0;
+        // top: 0;
+        margin: 0 0 0 auto;
         :not(:last-child) {
             margin: 0 15px 0 0;
         }
     }
     &__button {
-        opacity: 0;
+        opacity: 1;
         font-size: 14px;
         color: red;
         font-weight: 900;
@@ -47,9 +48,18 @@
     &__label-text {
         border-bottom: 2px solid transparent;
         border-radius: 4px;
+        // hide text
+        max-width: calc(100vw - 600px);
+        width: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
     &__label-text.editable {
         border-bottom: 2px solid lavender;
+    }
+    &__label-text.large {
+        max-width: calc(100vw - 520px);
     }
     &__label {
         font-size: 18px;
@@ -72,6 +82,7 @@
         line-height: 14px;
         color: #fff;
         padding: 5px 20px;
+        margin: 0 10px 0 0;
         // disable copy
         @include disableCopy;
     }

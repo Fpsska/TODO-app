@@ -61,7 +61,7 @@ const TodoTemplate: React.FC<propTypes> = (props) => {
             <label className={completed ? 'todo__label completed' : 'todo__label'} title={title} onClick={handleCompleteStatus}>
                 <input className="todo__checkbox" type="checkbox" />
                 <span className="todo__checkbox--fake"></span>
-                <span className={editable ? 'todo__label-text editable' : 'todo__label-text'}>{title}</span>
+                <span className={editable ? 'todo__label-text editable' : !category ? 'todo__label-text large' : 'todo__label-text'}>{title}</span>
             </label>
 
             {category ?
