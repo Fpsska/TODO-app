@@ -30,7 +30,6 @@ const App: React.FC = () => {
   const [isDataEmpty, setDataEmtyStatus] = useState<boolean>(true);
 
   const [isBurgerVisible, setBurgerVisibleStatus] = useState<boolean>(false);
-  const [isModalVisible, setModalVisibleStatus] = useState<boolean>(false);
 
   const [title, setTitle] = useState<string>('All');
   const [currentTodoID, setCurrentTodoID] = useState<number>(todosData[0]?.id);
@@ -96,10 +95,12 @@ const App: React.FC = () => {
 
         <div className="page__wrapper">
 
-          <Burger
-            isBurgerVisible={isBurgerVisible}
-            setBurgerVisibleStatus={setBurgerVisibleStatus}
-          />
+          <div className="page__burger" ref={refEl}>
+            <Burger
+              isBurgerVisible={isBurgerVisible}
+              setBurgerVisibleStatus={setBurgerVisibleStatus}
+            />
+          </div>
 
           <div className="page__modal" ref={refEl}>
             {isVisible &&

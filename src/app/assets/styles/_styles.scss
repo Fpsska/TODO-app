@@ -83,6 +83,8 @@ body {
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
+        max-width: 300px; 
+        width: 100%;
     }
     &__nav {
         border-radius: 10px 0 0 10px;
