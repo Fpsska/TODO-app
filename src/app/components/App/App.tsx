@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import { Itodo } from '../../types/todoTypes';
+import { Inav } from '../../types/navTypes';
 
 import { getRandomArrElement } from '../../helpers/getRandomArrElement';
 
@@ -25,6 +26,36 @@ const App: React.FC = () => {
 
   const [todosData, setTodosData] = useState<Itodo[]>([]);
   const [filteredTodosData, setFilteredTodosData] = useState<Itodo[]>([]);
+  const [navTemplatesData, setNavTemplatesData] = useState<Inav[]>([
+    {
+      id: 1,
+      text: 'All',
+      category: 'all',
+      link: '#',
+      isActive: true
+    },
+    {
+      id: 2,
+      text: 'Groceries',
+      category: 'groceries',
+      link: '#',
+      isActive: false
+    },
+    {
+      id: 4,
+      text: 'College',
+      category: 'college',
+      link: '#',
+      isActive: false
+    },
+    {
+      id: 5,
+      text: 'Payments',
+      category: 'payments',
+      link: '#',
+      isActive: false
+    }
+  ]);
 
   const [isDataTLoading, setDataLoadingStatus] = useState<boolean>(true);
   const [isDataEmpty, setDataEmtyStatus] = useState<boolean>(true);
@@ -33,6 +64,7 @@ const App: React.FC = () => {
 
   const [title, setTitle] = useState<string>('All');
   const [currentTodoID, setCurrentTodoID] = useState<number>(todosData[0]?.id);
+  const [currentNavID, setCurrentNavID] = useState<number>(navTemplatesData[0]?.id);
 
   const { refEl, isVisible, setVisibleStatus } = useAreaHandler({ initialStatus: false });
 
@@ -118,8 +150,18 @@ const App: React.FC = () => {
           </div>
 
           <div className="page__nav">
-            <SelectMenu />
+            <SelectMenu
+              todosData={todosData}
+              setFilteredTodosData={setFilteredTodosData}
+              setTitle={setTitle}
+              navTemplatesData={navTemplatesData}
+              setNavTemplatesData={setNavTemplatesData}
+              currentNavID={currentNavID}
+            />
             <Nav
+              navTemplatesData={navTemplatesData}
+              setNavTemplatesData={setNavTemplatesData}
+              setCurrentNavID={setCurrentNavID}
               todosData={todosData}
               setTodosData={setTodosData}
               filteredTodosData={filteredTodosData}

@@ -13,6 +13,7 @@ interface propTypes {
     isActive: boolean;
     navTemplatesData: Inav[];
     setNavTemplatesData: (arg: Inav[]) => void;
+    setCurrentNavID:  (arg: number) => void;
     todosData: Itodo[];
     setTodosData: (arg: Itodo[]) => void;
     filteredTodosData: Itodo[];
@@ -33,6 +34,7 @@ const NavTemplate: React.FC<propTypes> = (props) => {
         isActive,
         navTemplatesData,
         setNavTemplatesData,
+        setCurrentNavID,
         todosData,
         setTodosData,
         filteredTodosData,
@@ -52,6 +54,7 @@ const NavTemplate: React.FC<propTypes> = (props) => {
         switch (category) {
             case 'all':
                 setNavTemplatesData(navTemplatesData.map(item => item.id === id ? { ...item, isActive: true } : { ...item, isActive: false }));
+                setCurrentNavID(id);
 
                 setFilteredTodosData(todosData);
 
@@ -59,27 +62,31 @@ const NavTemplate: React.FC<propTypes> = (props) => {
                 break;
             case 'groceries':
                 setNavTemplatesData(navTemplatesData.map(item => item.id === id ? { ...item, isActive: true } : { ...item, isActive: false }));
+                setCurrentNavID(id);
 
                 setFilteredTodosData([...todosData].filter(item => item.category.toLocaleLowerCase() === `#${category}`));
 
                 setTitle(text);
                 break;
             case 'college':
-                setNavTemplatesData([...navTemplatesData].map(item => item.category === category ? { ...item, isActive: true } : { ...item, isActive: false }));
+                setNavTemplatesData([...navTemplatesData].map(item => item.id === id ? { ...item, isActive: true } : { ...item, isActive: false }));
+                setCurrentNavID(id);
 
                 setFilteredTodosData([...todosData].filter(item => item.category.toLocaleLowerCase() === `#${category}`));
 
                 setTitle(text);
                 break;
             case 'payments':
-                setNavTemplatesData([...navTemplatesData].map(item => item.category === category ? { ...item, isActive: true } : { ...item, isActive: false }));
+                setNavTemplatesData([...navTemplatesData].map(item => item.id === id ? { ...item, isActive: true } : { ...item, isActive: false }));
+                setCurrentNavID(id);
 
                 setFilteredTodosData([...todosData].filter(item => item.category.toLocaleLowerCase() === `#${category}`));
 
                 setTitle(text);
                 break;
             default:
-                setNavTemplatesData([...navTemplatesData].map(item => item.category === 'all' ? { ...item, isActive: true } : { ...item, isActive: false }));
+                setNavTemplatesData([...navTemplatesData].map(item => item.category === 'all' ? { ...item, isActive: true } : { ...item, isActive: false })); // find by categiry name
+                setCurrentNavID(navTemplatesData[0].id);
                 setFilteredTodosData(todosData);
                 setTitle('All');
         }
