@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
 import { Itodo } from '../../types/todoTypes';
-import { Inav } from '../../types/navTypes';
 
-import { getRandomArrElement } from '../../helpers/getRandomArrElement';
-
+import { useFetchTodosData } from '../../api/useFetchTodosData';
 import { useAreaHandler } from '../../hooks/useAreaHandler';
 
 import Nav from '../Nav/Nav';
@@ -19,15 +17,17 @@ import '../../assets/styles/_styles.scss';
 import '../../assets/styles/_media.scss';
 import './App.css';
 
-
 // /. imports
+
 
 const App: React.FC = () => {
 
-  const [todosData, setTodosData] = useState<Itodo[]>([]);
+  // give number argument for define limit of tetched todo items (5 as default)
+  const { todosData, setTodosData, isDataTLoading, fetchTodosData } = useFetchTodosData(5);
+
+
   const [filteredTodosData, setFilteredTodosData] = useState<Itodo[]>([]);
 
-  const [isDataTLoading, setDataLoadingStatus] = useState<boolean>(true);
   const [isDataEmpty, setDataEmtyStatus] = useState<boolean>(true);
 
   const [isBurgerVisible, setBurgerVisibleStatus] = useState<boolean>(false);
@@ -37,39 +37,6 @@ const App: React.FC = () => {
 
   const { refEl, isVisible, setVisibleStatus } = useAreaHandler({ initialStatus: false });
 
-
-  const fetchTodosData = async () => {
-    try {
-      const limit = 15;
-      const response = await fetch(`https://jsonplaceholder.typicode.com/todos?&_limit=${limit}`);
-
-      if (!response.ok) {
-        throw new Error('response error');
-      }
-
-      const data = await response.json();
-
-      data.map((item: Itodo) => { // extend array by category, status fields
-        item.category = getRandomArrElement(['#Groceries', '#College', '#Payments', '']);
-        item.status = getRandomArrElement(['waiting', 'process', 'done', '']);
-        item.completed = false;
-        item.editable = false;
-      });
-
-      setTodosData(data);
-
-      setTimeout(() => {
-        setDataLoadingStatus(false);
-      }, 1600);
-
-    } catch (err: any) {
-      setTimeout(() => {
-        setDataLoadingStatus(false);
-      }, 1600);
-
-      throw new Error(`${err.message || err}`);
-    }
-  };
 
   const openBurger = (e: React.SyntheticEvent): void => {
     e.stopPropagation();  // for correct work of burger hide/show logic
@@ -123,6 +90,7 @@ const App: React.FC = () => {
               todosData={todosData}
               setFilteredTodosData={setFilteredTodosData}
               setTitle={setTitle}
+              isDataTLoading={isDataTLoading}
             />
             <Nav
               todosData={todosData}

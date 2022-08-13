@@ -4,6 +4,10 @@
     font-size: 22px;
     border: none;
     color: #EA5959;
+    &:disabled {
+        cursor: not-allowed;
+        color: rgba($color: #525252, $alpha: 0.35);
+    }
     &:focus {
         outline: none;
     }
