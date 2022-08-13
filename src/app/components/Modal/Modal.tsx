@@ -51,8 +51,8 @@ const Modal: React.FC<propTypes> = (props) => {
                 return {
                     ...item,
                     title: inputValue,
-                    category: inputRadioCategoryValue ? `#${inputRadioCategoryValue.charAt(0).toUpperCase() + inputRadioCategoryValue.slice(1)}` : '', // set upperCase for 1st letter of getted inputRadioValue
-                    status: inputRadioStatusValue,
+                    category: inputRadioCategoryValue ? `#${(inputRadioCategoryValue.charAt(0).toUpperCase() + inputRadioCategoryValue.slice(1)).replace(/#/gi, '')}` : '', // set upperCase for 1st letter of getted inputRadioValue
+                    status: inputRadioStatusValue,  // .charAt(0).toUpperCase() + inputRadioCategoryValue.slice(1)
                     editable: false
                 };
             }
