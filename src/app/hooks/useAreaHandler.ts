@@ -8,7 +8,7 @@ interface propTypes {
 
 // /. interfaces
 
-export function useAreaHandler({ initialStatus }: propTypes) {
+export function useAreaHandler({ initialStatus }: propTypes): any {
 
     const [isVisible, setVisibleStatus] = useState<boolean>(initialStatus);
     const refEl = useRef<HTMLDivElement>(null!); // valid HTML-el (clickable) 

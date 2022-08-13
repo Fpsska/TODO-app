@@ -4,15 +4,14 @@ import React from 'react';
 
 interface propTypes {
     text: string;
-    value: string;
-    isActive: boolean
+    value: string
 }
 
 // /. interfaces
 
-const SelectTemplate: React.FC<propTypes> = ({ text, value, isActive }) => {
+const SelectTemplate: React.FC<propTypes> = ({ text, value }) => {
     return (
-        <option className={isActive ? 'nav-select__item active' : 'nav-select__item'} value={value}>{text}</option>
+        <option className="nav-select__item" value={value}>{text}</option>
     );
 };
 

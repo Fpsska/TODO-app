@@ -10,9 +10,6 @@ import './nav.scss';
 // /. imports
 
 interface propTypes {
-    navTemplatesData: Inav[];
-    setNavTemplatesData: (arg: Inav[]) => void;
-    setCurrentNavID:  (arg: number) => void;
     filteredTodosData: Itodo[];
     todosData: Itodo[];
     setTodosData: (arg: Itodo[]) => void;
@@ -26,9 +23,6 @@ interface propTypes {
 const Nav: React.FC<propTypes> = (props) => {
 
     const {
-        navTemplatesData,
-        setNavTemplatesData,
-        setCurrentNavID,
         todosData,
         setTodosData,
         filteredTodosData,
@@ -37,6 +31,36 @@ const Nav: React.FC<propTypes> = (props) => {
         isDataTLoading
     } = props;
 
+    const [navTemplatesData, setNavTemplatesData] = useState<Inav[]>([
+        {
+            id: 1,
+            text: 'All',
+            category: 'all',
+            link: '#',
+            isActive: true
+        },
+        {
+            id: 2,
+            text: 'Groceries',
+            category: 'groceries',
+            link: '#',
+            isActive: false
+        },
+        {
+            id: 4,
+            text: 'College',
+            category: 'college',
+            link: '#',
+            isActive: false
+        },
+        {
+            id: 5,
+            text: 'Payments',
+            category: 'payments',
+            link: '#',
+            isActive: false
+        }
+    ]);
 
     return (
         <nav className="nav">
@@ -51,7 +75,6 @@ const Nav: React.FC<propTypes> = (props) => {
                             category={item.category}
                             isActive={item.isActive}
                             navTemplatesData={navTemplatesData}
-                            setCurrentNavID={setCurrentNavID}
                             setNavTemplatesData={setNavTemplatesData}
                             todosData={todosData}
                             setTodosData={setTodosData}

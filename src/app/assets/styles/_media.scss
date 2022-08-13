@@ -34,7 +34,7 @@
 
 @media screen and (max-width: 425px) {
     .todo {
-        height: calc(100vh - 260px);
+        height: calc(100vh - 285px);
     }
     .todo__item {
         flex-direction: column;
@@ -60,6 +60,15 @@
     }
     .page__title {
         font-size: 22px;
+    }
+    .page__header {
+        flex-direction: column;
+        :not(:last-child) {
+            margin: 0 0 10px 0;
+        }
+    }
+    .form {
+        width: 100%;
     }
 }
 
