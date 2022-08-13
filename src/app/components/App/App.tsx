@@ -23,7 +23,7 @@ import './App.css';
 const App: React.FC = () => {
 
   // give number argument for define limit of tetched todo items (5 as default)
-  const { todosData, setTodosData, isDataTLoading, fetchTodosData } = useFetchTodosData(5);
+  const { todosData, setTodosData, isDataTLoading, fetchTodosData, error} = useFetchTodosData(5);
 
 
   const [filteredTodosData, setFilteredTodosData] = useState<Itodo[]>(todosData); // []
@@ -97,6 +97,7 @@ const App: React.FC = () => {
               setFilteredTodosData={setFilteredTodosData}
               setTitle={setTitle}
               isDataTLoading={isDataTLoading}
+              error={error}
             />
             <Nav
               todosData={todosData}
@@ -105,6 +106,7 @@ const App: React.FC = () => {
               setFilteredTodosData={setFilteredTodosData}
               setTitle={setTitle}
               isDataTLoading={isDataTLoading}
+              error={error}
             />
           </div>
           <div className="page__content">
@@ -133,22 +135,25 @@ const App: React.FC = () => {
                 todosData={todosData}
                 setFilteredTodosData={setFilteredTodosData}
                 isDataTLoading={isDataTLoading}
+                error={error}
               />
             </div>
 
             <div className="page__list">
               {isDataTLoading ?
                 <div className="page__preloader"><Preloader /></div> :
-                isDataEmpty ?
-                  <h2 className="page__message">task list is empty</h2> : // change name
-                  <TodoList
-                    todosData={todosData}
-                    setTodosData={setTodosData}
-                    filteredTodosData={filteredTodosData}
-                    setFilteredTodosData={setFilteredTodosData}
-                    setVisibleStatus={setVisibleStatus}
-                    setCurrentTodoID={setCurrentTodoID}
-                  />
+                error ?
+                  <h2 className="page__message">Error: {error}</h2> :
+                  isDataEmpty ?
+                    <h2 className="page__message">task list is empty</h2> :
+                    <TodoList
+                      todosData={todosData}
+                      setTodosData={setTodosData}
+                      filteredTodosData={filteredTodosData}
+                      setFilteredTodosData={setFilteredTodosData}
+                      setVisibleStatus={setVisibleStatus}
+                      setCurrentTodoID={setCurrentTodoID}
+                    />
               }
             </div>
 
@@ -159,6 +164,7 @@ const App: React.FC = () => {
                 todosData={todosData}
                 setTodosData={setTodosData}
                 isDataTLoading={isDataTLoading}
+                error={error}
               />
             </div>
 

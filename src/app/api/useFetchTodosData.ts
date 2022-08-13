@@ -10,6 +10,7 @@ import { getRandomArrElement } from '../helpers/getRandomArrElement';
 export function useFetchTodosData(limit = 5): any {
 
     const [todosData, setTodosData] = useState<Itodo[]>([]);
+    const [error, setError] = useState<any>(null);
     const [isDataTLoading, setDataLoadingStatus] = useState<boolean>(true);
 
 
@@ -20,19 +21,19 @@ export function useFetchTodosData(limit = 5): any {
             setTimeout(() => {
                 setDataLoadingStatus(false);
             }, 700)
-            : 'waiting';
+            : 0;
 
         return () => {
             clearTimeout(limitLoader);
         };
     }, [limit]);
 
-
     const fetchTodosData = async () => {
         try {
-            const response = await fetch(`https://jsonplaceholder.typicode.com/todos?&_limit=${limit}`);
+            const response = await fetch(`htts://jsonplaceholder.typicode.com/todos?&_limit=${limit}`);
 
             if (!response.ok) {
+                setError('Response error');
                 throw new Error('response error');
             }
 
@@ -56,10 +57,11 @@ export function useFetchTodosData(limit = 5): any {
                 setDataLoadingStatus(false);
             }, 1600);
 
-            throw new Error(`${err.message || err}`);
+            setError(err.message);
+            console.error(err.message || err);
         }
     };
 
-    return { todosData, setTodosData, isDataTLoading, fetchTodosData };
+    return { todosData, setTodosData, isDataTLoading, error, fetchTodosData };
 
 };

@@ -14,7 +14,8 @@ interface propTypes {
     todosData: Itodo[];
     setFilteredTodosData: (arg: Itodo[]) => void;
     setTitle: (arg: string) => void;
-    isDataTLoading: boolean
+    isDataTLoading: boolean;
+    error: any
 }
 
 // /. interfaces
@@ -25,7 +26,8 @@ const SelectMenu: React.FC<propTypes> = (props) => {
         todosData,
         setFilteredTodosData,
         setTitle,
-        isDataTLoading
+        isDataTLoading,
+        error
     } = props;
 
     const [selectTemplatesData] = useState<Iselect[]>([
@@ -77,9 +79,9 @@ const SelectMenu: React.FC<propTypes> = (props) => {
 
     return (
         <select className="nav-select"
-            onChange={e => selectMenuHandler(e.target.value)}
+            onChange={e => !isDataTLoading && !error && selectMenuHandler(e.target.value)}
             defaultValue={selectTemplatesData[0].value}
-            disabled={isDataTLoading}
+            disabled={isDataTLoading || error}
         >
             {selectTemplatesData.map((item: Iselect) => {
                 return (
