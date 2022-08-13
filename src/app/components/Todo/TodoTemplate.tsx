@@ -39,26 +39,30 @@ const TodoTemplate: React.FC<propTypes> = (props) => {
         setCurrentTodoID
     } = props;
 
+    // setTodosData([...todosData]
+
+
     const handleCompleteStatus = (): void => {
         setTodosData([...todosData].map(item => item.id === id ? { ...item, completed: !completed } : item));
+        // setCheckedStatus(!completed);
     };
 
     const editTodoItem = (): void => {
         setVisibleStatus(true);
 
         setCurrentTodoID(id);
+
         setTodosData([...todosData].map(item => item.id === id ? { ...item, editable: true } : { ...item, editable: false }));  // set editable css-class
     };
 
     const deleteTodoItem = (): void => {
         setTodosData([...todosData].filter(item => item.id !== id));
-        // setFilteredTodosData([...todosData].filter(item => item.id !== id));
     };
 
     return (
         <li className="todo__item">
 
-            <label className={completed ? 'todo__label completed' : 'todo__label'} title={title} onClick={handleCompleteStatus}>
+            <label className={completed ? 'todo__label completed' : 'todo__label'} onClick={handleCompleteStatus} title={title}>
                 <input className="todo__checkbox" type="checkbox" />
                 <span className="todo__checkbox--fake"></span>
                 <span className={`todo__label-text ${editable && !category && 'editable large'} ${editable && 'editable'}  ${!category && 'large'}`}>

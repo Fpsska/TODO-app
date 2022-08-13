@@ -48,31 +48,43 @@ const NavTemplate: React.FC<propTypes> = (props) => {
         setTodoCount(array.length);
     }, [todosData]);
 
+    // SAVE TODO DATA IN FILTERED DATA
+
     const filterTodoItems = (): void => {
         switch (category) {
             case 'all':
                 setNavTemplatesData(navTemplatesData.map(item => item.id === id ? { ...item, isActive: true } : { ...item, isActive: false }));
+
                 setFilteredTodosData(todosData);
+
                 setTitle(text);
                 break;
             case 'groceries':
                 setNavTemplatesData(navTemplatesData.map(item => item.id === id ? { ...item, isActive: true } : { ...item, isActive: false }));
+
                 setFilteredTodosData([...todosData].filter(item => item.category.toLocaleLowerCase() === `#${category}`));
-                setTitle(text);
+
+                setTitle(text); // 
                 break;
             case 'college':
                 setNavTemplatesData([...navTemplatesData].map(item => item.id === id ? { ...item, isActive: true } : { ...item, isActive: false }));
+
                 setFilteredTodosData([...todosData].filter(item => item.category.toLocaleLowerCase() === `#${category}`));
+
                 setTitle(text);
                 break;
             case 'payments':
                 setNavTemplatesData([...navTemplatesData].map(item => item.id === id ? { ...item, isActive: true } : { ...item, isActive: false }));
+
                 setFilteredTodosData([...todosData].filter(item => item.category.toLocaleLowerCase() === `#${category}`));
+
                 setTitle(text);
                 break;
             default:
-                setNavTemplatesData([...navTemplatesData].map(item => item.category === 'all' ? { ...item, isActive: true } : { ...item, isActive: false })); 
+                setNavTemplatesData([...navTemplatesData].map(item => item.category === 'all' ? { ...item, isActive: true } : { ...item, isActive: false }));
+
                 setFilteredTodosData(todosData);
+
                 setTitle('All');
         }
     };

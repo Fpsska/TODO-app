@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { Itodo } from '../../types/todoTypes';
 
@@ -10,7 +10,10 @@ interface propTypes {
     todosData: Itodo[],
     setTodosData: (arg: any[]) => any;
     setVisibleStatus: (arg: boolean) => void;
-    currentTodoID: number
+    currentTodoID: number,
+
+    filteredTodosData: Itodo[],
+    setFilteredTodosData: (arg: any[]) => any;
 }
 
 // /. interfaces
@@ -21,34 +24,45 @@ const Modal: React.FC<propTypes> = (props) => {
         todosData,
         setTodosData,
         setVisibleStatus,
-        currentTodoID
+        currentTodoID,
+
+        filteredTodosData,
+        setFilteredTodosData
     } = props;
 
     const [inputValue, setInputValue] = useState<string>('');
     const [inputRadioCategoryValue, setInputRadioCategoryValue] = useState<string>('');
     const [inputRadioStatusValue, setInputRadioStatusValue] = useState<string>('');
 
+
+    useEffect(() => { // display, save initial todo item property if changes is not accepted/not did
+        setInputValue([...filteredTodosData].filter(item => item.id === currentTodoID)[0].title);
+        setInputRadioCategoryValue([...filteredTodosData].filter(item => item.id === currentTodoID)[0].category);
+        setInputRadioStatusValue([...filteredTodosData].filter(item => item.id === currentTodoID)[0].status);
+    }, [currentTodoID]);
+
+    // setFilteredTodosData([...todosData]
+
     const formSubmitHandler = (e: React.SyntheticEvent): any => {
         e.preventDefault();
 
-        setTodosData([...todosData].map(item => {
+        setTodosData([...filteredTodosData].map(item => {
             if (item.id === currentTodoID) {
                 return {
                     ...item,
-                    title: inputValue,                                                                                                                  // uncategorized
+                    title: inputValue,
                     category: inputRadioCategoryValue ? `#${inputRadioCategoryValue.charAt(0).toUpperCase() + inputRadioCategoryValue.slice(1)}` : '', // set upperCase for 1st letter of getted inputRadioValue
                     status: inputRadioStatusValue,
                     editable: false
                 };
-            } else {
-                return item;
             }
+            return item;
         }));
         setVisibleStatus(false);
     };
 
     const closeModal = (): void => {
-        setTodosData([...todosData].map(item => item.id === currentTodoID ? { ...item, editable: false } : item)); // remove editable css-class
+        setTodosData([...filteredTodosData].map(item => item.id === currentTodoID ? { ...item, editable: false } : item)); // remove editable css-class
         setVisibleStatus(false);
     };
 
@@ -71,6 +85,7 @@ const Modal: React.FC<propTypes> = (props) => {
                             className="modal__input"
                             type="text"
                             placeholder="Write new task title inside"
+                            value={inputValue}
                             onChange={e => setInputValue(e.target.value)}
                             required
                         />

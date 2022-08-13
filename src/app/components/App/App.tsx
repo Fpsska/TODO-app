@@ -26,7 +26,7 @@ const App: React.FC = () => {
   const { todosData, setTodosData, isDataTLoading, fetchTodosData } = useFetchTodosData(5);
 
 
-  const [filteredTodosData, setFilteredTodosData] = useState<Itodo[]>([]);
+  const [filteredTodosData, setFilteredTodosData] = useState<Itodo[]>(todosData); // []
 
   const [isDataEmpty, setDataEmtyStatus] = useState<boolean>(true);
 
@@ -43,18 +43,19 @@ const App: React.FC = () => {
     setBurgerVisibleStatus(true);
   };
 
-  useEffect(() => { // call at initial render
+  useEffect(() => { // get todosData at initial App.tsx render
     fetchTodosData();
   }, []);
 
   useEffect(() => {
     todosData.length === 0 ? setDataEmtyStatus(true) : setDataEmtyStatus(false); // check length of todosData[] for handle display alternative content
-    setFilteredTodosData(todosData);
+    setFilteredTodosData(todosData); // update filteredTodosData[]
+    // console.log('todosData', todosData)
   }, [todosData]);
 
   useEffect(() => {
     filteredTodosData.length === 0 ? setDataEmtyStatus(true) : setDataEmtyStatus(false);
-    // console.log('filteredTodosData', filteredTodosData)
+    console.log('!!! filteredTodosData', filteredTodosData)
   }, [filteredTodosData]);
 
   useEffect(() => { // remove editable css-class when modal is hidden
@@ -79,6 +80,11 @@ const App: React.FC = () => {
               <Modal
                 todosData={todosData}
                 setTodosData={setTodosData}
+
+
+                filteredTodosData={filteredTodosData}
+                setFilteredTodosData={setFilteredTodosData}
+
                 setVisibleStatus={setVisibleStatus}
                 currentTodoID={currentTodoID}
               />
@@ -134,7 +140,7 @@ const App: React.FC = () => {
               {isDataTLoading ?
                 <div className="page__preloader"><Preloader /></div> :
                 isDataEmpty ?
-                  <h2 className="page__title page__title--empty">no matches</h2> :
+                  <h2 className="page__title page__title--empty">task list is empty</h2> :
                   <TodoList
                     todosData={todosData}
                     setTodosData={setTodosData}
