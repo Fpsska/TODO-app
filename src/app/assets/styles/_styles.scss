@@ -1,3 +1,7 @@
+@import '../styles/mixins';
+
+// /. imports
+
 *,
 *:before,
 *::after {
@@ -104,8 +108,12 @@ body {
         font-size: 31px;
         font-weight: 700;
         color: #000;
+        // hide text
+        @include sliceText;
+        max-width: calc(100vw - 680px);
+        width: 100%;
     }
-    &__title--empty {
+    &__message {
         font-size: 20px;
         font-weight: 400;
         text-align: center;

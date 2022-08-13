@@ -125,7 +125,7 @@ const App: React.FC = () => {
             }
 
             <div className="page__header">
-              <h1 className="page__title">{title} Tasks</h1>
+              <h1 className="page__title" title={`${title} Tasks`}>{title} Tasks</h1>
 
               <Form
                 role={'search'}
@@ -140,7 +140,7 @@ const App: React.FC = () => {
               {isDataTLoading ?
                 <div className="page__preloader"><Preloader /></div> :
                 isDataEmpty ?
-                  <h2 className="page__title page__title--empty">task list is empty</h2> :
+                  <h2 className="page__message">task list is empty</h2> : // change name
                   <TodoList
                     todosData={todosData}
                     setTodosData={setTodosData}

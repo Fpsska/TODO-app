@@ -12,7 +12,6 @@
         align-items: center;
         justify-content: flex-start;
         position: relative;
-        // width: 100%;
         &:hover > .todo__controllers .todo__button {
             opacity: 1;
         }
@@ -21,9 +20,6 @@
         }
     }
     &__controllers {
-        // position: absolute;
-        // right: 0;
-        // top: 0;
         margin: 0 0 0 auto;
         :not(:last-child) {
             margin: 0 15px 0 0;
@@ -49,11 +45,9 @@
         border-bottom: 2px solid transparent;
         border-radius: 4px;
         // hide text
+        @include sliceText;
         max-width: calc(100vw - 600px);
         width: 100%;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
     }
     &__label-text.editable {
         border-bottom: 2px solid lavender;

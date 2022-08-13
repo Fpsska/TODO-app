@@ -14,6 +14,9 @@
         border-bottom: 1px solid #d8d8d8;
         padding: 15px 65px 15px 35px;
     }
+    .page__title {
+        max-width: calc(100vw - 400px);
+    }
     .page__content {
         padding: 15px 35px 15px 35px;
         position: static;
@@ -32,10 +35,25 @@
     }
 }
 
-@media screen and (max-width: 425px) {
-    .todo {
-        height: calc(100vh - 285px);
+@media screen and (max-width: 600px) {
+    .page__header {
+        flex-direction: column;
+        :not(:last-child) {
+            margin: 0 0 10px 0;
+        }
     }
+    .page__title {
+        max-width: 100%;
+    }
+    .form {
+        width: 100%;
+    }
+    .todo {
+        height: calc(100vh - 295px);
+    }
+}
+
+@media screen and (max-width: 425px) {
     .todo__item {
         flex-direction: column;
         align-items: flex-start;
@@ -43,7 +61,7 @@
     .todo__category.todo__category {
         margin: 10px auto 0 auto;
     }
-    .todo__indicator.todo__indicator  {
+    .todo__indicator.todo__indicator {
         margin: 10px auto 0 auto;
     }
     .todo__label {
@@ -57,18 +75,6 @@
     }
     .form__input {
         padding: 10px 15px 10px 15px;
-    }
-    .page__title {
-        font-size: 22px;
-    }
-    .page__header {
-        flex-direction: column;
-        :not(:last-child) {
-            margin: 0 0 10px 0;
-        }
-    }
-    .form {
-        width: 100%;
     }
 }
 
@@ -92,4 +98,3 @@
         width: 100%;
     }
 }
-
