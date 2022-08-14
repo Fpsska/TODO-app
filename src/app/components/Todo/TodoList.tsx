@@ -1,6 +1,4 @@
-import React, { useContext } from 'react';
-
-import { MyContext } from '../Layout/Layout';
+import React from 'react';
 
 import { Itodo } from '../../types/todoTypes';
 
@@ -11,22 +9,22 @@ import './todo.scss';
 // /. imports
 
 interface propTypes {
-    setVisibleStatus: (arg: boolean) => void
+    todosData: Itodo[];
+    setTodosData: (arg: Itodo[]) => void;
+    filteredTodosData: Itodo[];
+    setVisibleStatus: (arg: boolean) => void;
     setCurrentTodoID: (arg: number) => void
 }
 
 const TodoList: React.FC<propTypes> = (props) => {
 
     const {
+        todosData,
+        setTodosData,
+        filteredTodosData,
         setVisibleStatus,
         setCurrentTodoID
     } = props;
-
-    const {
-        todosData,
-        setTodosData,
-        filteredTodosData
-    } = useContext(MyContext);
 
     return (
         <ul className="todo">
@@ -43,7 +41,7 @@ const TodoList: React.FC<propTypes> = (props) => {
 
                         todosData={todosData}
                         setTodosData={setTodosData}
-                        
+
                         setVisibleStatus={setVisibleStatus}
                         setCurrentTodoID={setCurrentTodoID}
                     />

@@ -142,6 +142,9 @@ const App: React.FC = () => {
                     </>
                     :
                     <TodoList
+                      todosData={todosData}
+                      setTodosData={setTodosData}
+                      filteredTodosData={filteredTodosData}
                       setVisibleStatus={setVisibleStatus}
                       setCurrentTodoID={setCurrentTodoID}
                     />
