@@ -2,6 +2,13 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+###### _designed by [unknown](https://www.figma.com/file/R6hvtSf6QuvqCNHpp0qImX/TODO-App-(Community))_
+###### _powered by_
+- [JSON-Placeholder API](https://jsonplaceholder.typicode.com/)
+- [css-spinner](https://loading.io/css/)
+
+### `Watch demo` _[Infotecs-Task](https://Fpsska.github.io/Infotecs-Task)_
+
 ## Available Scripts
 
 In the project directory, you can run:
