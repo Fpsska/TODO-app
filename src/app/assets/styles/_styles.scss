@@ -87,13 +87,17 @@ body {
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        max-width: 300px; 
+        max-width: 300px;
         width: 100%;
     }
     &__nav {
         border-radius: 10px 0 0 10px;
-        padding: 20px 80px 20px 30px;
+        padding: 20px 35px 20px 30px;
         border-right: 1px solid #d8d8d8;
+        flex: 0 1 15%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
     &__content {
         flex: 1;
@@ -108,6 +112,8 @@ body {
         font-size: 31px;
         font-weight: 700;
         color: #000;
+        // disable copy
+        @include disableCopy;
         // hide text
         @include sliceText;
         max-width: calc(100vw - 680px);
@@ -137,21 +143,33 @@ body {
     &__preloader {
         display: flex;
         justify-content: center;
-        align-items: center;      
-        height: 100%;  
+        align-items: center;
+        height: 100%;
     }
     &__button {
         background-color: transparent;
         border: none;
         position: absolute;
         right: 1rem;
-        top: .75rem;
+        top: 0.75rem;
         &:hover svg {
             fill: #000;
         }
         svg {
             fill: #777;
-            transition: all .25s linear;
+            transition: all 0.25s linear;
         }
     }
+}
+
+.resizer {
+    position: absolute;
+    width: 0.5rem;
+    height: 0.5rem;
+    background-color: #000;
+    top: 0;
+    right: 0;
+    cursor: col-resize;
+    transition: all 0.35s linear;
+    opacity: 0;
 }

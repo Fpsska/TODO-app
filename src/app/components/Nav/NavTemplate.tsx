@@ -97,9 +97,10 @@ const NavTemplate: React.FC<propTypes> = (props) => {
                 href={link}
                 onClick={() => !isDataTLoading && !error && filterTodoItems()}
             >
-                {text}
-                {' '}
-                <span>({category === 'all' ? todosData.length : todoCount})</span>
+                <span title={`${text} (${category === 'all' ? todosData.length : todoCount})`}
+                >
+                    {`${text} (${category === 'all' ? todosData.length : todoCount})`}
+                </span>
             </a>
         </li>
     );

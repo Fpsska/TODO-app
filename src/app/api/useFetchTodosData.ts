@@ -30,7 +30,7 @@ export function useFetchTodosData(limit = 5): any {
 
     const fetchTodosData = async () => {
         try {
-            const response = await fetch(`htts://jsonplaceholder.typicode.com/todos?&_limit=${limit}`);
+            const response = await fetch(`https://jsonplaceholder.typicode.com/todos?&_limit=${limit}`);
 
             if (!response.ok) {
                 setError('Response error');
