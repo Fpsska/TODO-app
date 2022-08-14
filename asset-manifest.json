@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/Fpsska/Infotecs-Task/static/css/main.5c5f706c.css",
-    "main.js": "/Fpsska/Infotecs-Task/static/js/main.450dacee.js",
-    "static/js/787.e8a87bbe.chunk.js": "/Fpsska/Infotecs-Task/static/js/787.e8a87bbe.chunk.js",
-    "index.html": "/Fpsska/Infotecs-Task/index.html",
-    "static/media/check-icon.svg": "/Fpsska/Infotecs-Task/static/media/check-icon.c45ccbae9fc618444a13.svg",
-    "main.5c5f706c.css.map": "/Fpsska/Infotecs-Task/static/css/main.5c5f706c.css.map",
-    "main.450dacee.js.map": "/Fpsska/Infotecs-Task/static/js/main.450dacee.js.map",
-    "787.e8a87bbe.chunk.js.map": "/Fpsska/Infotecs-Task/static/js/787.e8a87bbe.chunk.js.map"
+    "main.css": "/Infotecs-Task/static/css/main.0d9445d2.css",
+    "main.js": "/Infotecs-Task/static/js/main.b08cf6de.js",
+    "static/js/787.e8a87bbe.chunk.js": "/Infotecs-Task/static/js/787.e8a87bbe.chunk.js",
+    "index.html": "/Infotecs-Task/index.html",
+    "static/media/check-icon.svg": "/Infotecs-Task/static/media/check-icon.c45ccbae9fc618444a13.svg",
+    "main.0d9445d2.css.map": "/Infotecs-Task/static/css/main.0d9445d2.css.map",
+    "main.b08cf6de.js.map": "/Infotecs-Task/static/js/main.b08cf6de.js.map",
+    "787.e8a87bbe.chunk.js.map": "/Infotecs-Task/static/js/787.e8a87bbe.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.5c5f706c.css",
-    "static/js/main.450dacee.js"
+    "static/css/main.0d9445d2.css",
+    "static/js/main.b08cf6de.js"
   ]
 }
