@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+
+import { MyContext } from '../Layout/Layout';
 
 import { Inav } from '../../types/navTypes';
-import { Itodo } from '../../types/todoTypes';
 
 // /. imports
 
@@ -14,13 +15,6 @@ interface propTypes {
 
     navTemplatesData: Inav[];
     setNavTemplatesData: (arg: Inav[]) => void;
-
-    todosData: Itodo[];
-    setTodosData: (arg: Itodo[]) => void;
-    setFilteredTodosData: (arg: Itodo[]) => void;
-    setTitle: (arg: string) => void;
-    isDataTLoading: boolean;
-    error: any
 }
 
 // /. interfaces
@@ -33,17 +27,20 @@ const NavTemplate: React.FC<propTypes> = (props) => {
         category,
         link,
         isActive,
-
+        
         navTemplatesData,
-        setNavTemplatesData,
-
-        todosData,
-        setTodosData,
-        setFilteredTodosData,
-        setTitle,
-        isDataTLoading,
-        error
+        setNavTemplatesData
     } = props;
+
+    const {
+        todosData,
+        setFilteredTodosData,
+        isDataTLoading,
+        error,
+        setTitle
+    } = useContext(MyContext);
+
+    // console.log(title);
 
     const [todoCount, setTodoCount] = useState<number>(0);
 
@@ -52,7 +49,7 @@ const NavTemplate: React.FC<propTypes> = (props) => {
         setTodoCount(array.length);
     }, [todosData]);
 
-    
+
     const filterTodoItems = (): void => {
         switch (category) {
             case 'all':
@@ -67,7 +64,7 @@ const NavTemplate: React.FC<propTypes> = (props) => {
 
                 setFilteredTodosData([...todosData].filter(item => item.category.toLocaleLowerCase() === `#${category}`));
 
-                setTitle(text);  
+                setTitle(text);
                 break;
             case 'college':
                 setNavTemplatesData([...navTemplatesData].map(item => item.id === id ? { ...item, isActive: true } : { ...item, isActive: false }));

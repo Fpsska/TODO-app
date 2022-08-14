@@ -1,7 +1,7 @@
-import React from 'react';
+import React  from 'react';
 import ReactDOM from 'react-dom/client';
 
-import App from './app/components/App/App';
+import Layout from './app/components/Layout/Layout';
 import reportWebVitals from './reportWebVitals';
 
 // /. imports
@@ -9,9 +9,10 @@ import reportWebVitals from './reportWebVitals';
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
 root.render(
   <React.StrictMode>
-    <App />
+    <Layout />
   </React.StrictMode>
 );
 

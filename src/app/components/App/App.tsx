@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 
-import { Itodo } from '../../types/todoTypes';
+import { MyContext } from '../Layout/Layout';
 
-import { useFetchTodosData } from '../../api/useFetchTodosData';
 import { useAreaHandler } from '../../hooks/useAreaHandler';
 
 import Nav from '../Nav/Nav';
@@ -22,32 +21,24 @@ import './App.css';
 
 const App: React.FC = () => {
 
-  // give number argument for define limit of tetched todo items (5 as default)
-  const { data, isDataTLoading, fetchTodosData, error } = useFetchTodosData(5);
-
-  const [todosData, setTodosData] = useState<Itodo[]>(data); // []
-
-  const [filteredTodosData, setFilteredTodosData] = useState<Itodo[]>(todosData); // []
+  const {
+    todosData,
+    setTodosData,
+    filteredTodosData,
+    setFilteredTodosData,
+    isDataTLoading,
+    error,
+    title,
+    setTitle
+  } = useContext(MyContext);
 
   const [isDataEmpty, setDataEmptyStatus] = useState<boolean>(true);
 
   const [isBurgerVisible, setBurgerVisibleStatus] = useState<boolean>(false);
 
-  const [title, setTitle] = useState<string>('All');
   const [currentTodoID, setCurrentTodoID] = useState<number>(todosData[0]?.id);
 
   const { refEl, isVisible, setVisibleStatus } = useAreaHandler({ initialStatus: false });
-
-
-  useEffect(() => { // get todosData at initial App.tsx render
-    fetchTodosData();
-  }, []);
-  useEffect(() => { // save data from hook
-    setTodosData(data);
-  }, [data]);
-  useEffect(() => { // save data from hook
-    setFilteredTodosData(todosData);
-  }, [todosData]);
 
 
   useEffect(() => {
@@ -97,18 +88,12 @@ const App: React.FC = () => {
           <div className="page__nav">
             <SelectMenu
               todosData={todosData}
-              setTitle={setTitle}
-              isDataTLoading={isDataTLoading}
-              error={error}
-            />
-            <Nav
-              todosData={todosData}
-              setTodosData={setTodosData}
               setFilteredTodosData={setFilteredTodosData}
               setTitle={setTitle}
               isDataTLoading={isDataTLoading}
               error={error}
             />
+            <Nav />
           </div>
           <div className="page__content">
 
@@ -157,9 +142,6 @@ const App: React.FC = () => {
                     </>
                     :
                     <TodoList
-                      todosData={todosData}
-                      setTodosData={setTodosData}
-                      filteredTodosData={filteredTodosData}
                       setVisibleStatus={setVisibleStatus}
                       setCurrentTodoID={setCurrentTodoID}
                     />

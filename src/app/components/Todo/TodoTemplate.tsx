@@ -28,6 +28,7 @@ const TodoTemplate: React.FC<propTypes> = (props) => {
         status,
         completed,
         editable,
+
         todosData,
         setTodosData,
         

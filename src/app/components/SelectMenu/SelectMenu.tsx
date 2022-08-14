@@ -12,6 +12,7 @@ import './select.scss';
 
 interface propTypes {
     todosData: Itodo[];
+    setFilteredTodosData: (arg: Itodo[]) => void;
     setTitle: (arg: string) => void;
     isDataTLoading: boolean;
     error: any
@@ -23,6 +24,7 @@ const SelectMenu: React.FC<propTypes> = (props) => {
 
     const {
         todosData,
+        setFilteredTodosData,
         setTitle,
         isDataTLoading,
         error
@@ -52,27 +54,27 @@ const SelectMenu: React.FC<propTypes> = (props) => {
     ]);
 
     const selectMenuHandler = (value: string): void => {
-        // switch (value) {
-        //     case 'all':
-        //         setFilteredTodosData(todosData);
-        //         setTitle('All');
-        //         break;
-        //     case 'groceries':
-        //         setFilteredTodosData([...todosData].filter(item => item.category.toLocaleLowerCase() === `#${value}`));
-        //         setTitle('Groceries');
-        //         break;
-        //     case 'college':
-        //         setFilteredTodosData([...todosData].filter(item => item.category.toLocaleLowerCase() === `#${value}`));
-        //         setTitle('College');
-        //         break;
-        //     case 'payments':
-        //         setFilteredTodosData([...todosData].filter(item => item.category.toLocaleLowerCase() === `#${value}`));
-        //         setTitle('Payments');
-        //         break;
-        //     default:
-        //         setFilteredTodosData(todosData);
-        //         setTitle('All');
-        // };
+        switch (value) {
+            case 'all':
+                setFilteredTodosData(todosData);
+                setTitle('All');
+                break;
+            case 'groceries':
+                setFilteredTodosData([...todosData].filter(item => item.category.toLocaleLowerCase() === `#${value}`));
+                setTitle('Groceries');
+                break;
+            case 'college':
+                setFilteredTodosData([...todosData].filter(item => item.category.toLocaleLowerCase() === `#${value}`));
+                setTitle('College');
+                break;
+            case 'payments':
+                setFilteredTodosData([...todosData].filter(item => item.category.toLocaleLowerCase() === `#${value}`));
+                setTitle('Payments');
+                break;
+            default:
+                setFilteredTodosData(todosData);
+                setTitle('All');
+        };
     };
 
     return (

@@ -9,27 +9,7 @@ import './nav.scss';
 
 // /. imports
 
-interface propTypes {
-    todosData: Itodo[];
-    setTodosData: (arg: Itodo[]) => void;
-    setFilteredTodosData: (arg: Itodo[]) => void;
-    setTitle: (arg: string) => void;
-    isDataTLoading: boolean;
-    error: any
-}
-
-// /. interfaces
-
-const Nav: React.FC<propTypes> = (props) => {
-
-    const {
-        todosData,
-        setTodosData,
-        setFilteredTodosData,
-        setTitle,
-        isDataTLoading,
-        error
-    } = props;
+const Nav: React.FC = () => {
 
     const [navTemplatesData, setNavTemplatesData] = useState<Inav[]>([
         {
@@ -77,13 +57,6 @@ const Nav: React.FC<propTypes> = (props) => {
 
                             navTemplatesData={navTemplatesData}
                             setNavTemplatesData={setNavTemplatesData}
-
-                            todosData={todosData}
-                            setTodosData={setTodosData}
-                            setFilteredTodosData={setFilteredTodosData}
-                            setTitle={setTitle}
-                            isDataTLoading={isDataTLoading}
-                            error={error}
                         />
                     );
                 })}
