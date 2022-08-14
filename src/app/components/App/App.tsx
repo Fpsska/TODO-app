@@ -23,12 +23,13 @@ import './App.css';
 const App: React.FC = () => {
 
   // give number argument for define limit of tetched todo items (5 as default)
-  const { todosData, setTodosData, isDataTLoading, fetchTodosData, error} = useFetchTodosData(5);
+  const { data, isDataTLoading, fetchTodosData, error } = useFetchTodosData(5);
 
+  const [todosData, setTodosData] = useState<Itodo[]>(data); // []
 
   const [filteredTodosData, setFilteredTodosData] = useState<Itodo[]>(todosData); // []
 
-  const [isDataEmpty, setDataEmtyStatus] = useState<boolean>(true);
+  const [isDataEmpty, setDataEmptyStatus] = useState<boolean>(true);
 
   const [isBurgerVisible, setBurgerVisibleStatus] = useState<boolean>(false);
 
@@ -38,29 +39,36 @@ const App: React.FC = () => {
   const { refEl, isVisible, setVisibleStatus } = useAreaHandler({ initialStatus: false });
 
 
-  const openBurger = (e: React.SyntheticEvent): void => {
-    e.stopPropagation();  // for correct work of burger hide/show logic
-    setBurgerVisibleStatus(true);
-  };
-
   useEffect(() => { // get todosData at initial App.tsx render
     fetchTodosData();
   }, []);
+  useEffect(() => { // save data from hook
+    setTodosData(data);
+  }, [data]);
+  useEffect(() => { // save data from hook
+    setFilteredTodosData(todosData);
+  }, [todosData]);
+
 
   useEffect(() => {
-    todosData.length === 0 ? setDataEmtyStatus(true) : setDataEmtyStatus(false); // check length of todosData[] for handle display alternative content
-    setFilteredTodosData(todosData); // update filteredTodosData[]
+    todosData.length === 0 ? setDataEmptyStatus(true) : setDataEmptyStatus(false); // check length of todosData[] for handle display alternative content
     // console.log('todosData', todosData)
   }, [todosData]);
 
   useEffect(() => {
-    filteredTodosData.length === 0 ? setDataEmtyStatus(true) : setDataEmtyStatus(false);
+    filteredTodosData.length === 0 ? setDataEmptyStatus(true) : setDataEmptyStatus(false);
     // console.log('!!! filteredTodosData', filteredTodosData)
   }, [filteredTodosData]);
 
   useEffect(() => { // remove editable css-class when modal is hidden
     !isVisible && setTodosData([...todosData].map(item => item.id === currentTodoID ? { ...item, editable: false } : item));
   }, [isVisible]);
+
+
+  const openBurger = (e: React.SyntheticEvent): void => {
+    e.stopPropagation();  // for correct work of burger hide/show logic
+    setBurgerVisibleStatus(true);
+  };
 
   return (
     <div className="App">
@@ -80,11 +88,6 @@ const App: React.FC = () => {
               <Modal
                 todosData={todosData}
                 setTodosData={setTodosData}
-
-
-                filteredTodosData={filteredTodosData}
-                setFilteredTodosData={setFilteredTodosData}
-
                 setVisibleStatus={setVisibleStatus}
                 currentTodoID={currentTodoID}
               />
@@ -94,7 +97,6 @@ const App: React.FC = () => {
           <div className="page__nav">
             <SelectMenu
               todosData={todosData}
-              setFilteredTodosData={setFilteredTodosData}
               setTitle={setTitle}
               isDataTLoading={isDataTLoading}
               error={error}
@@ -102,7 +104,6 @@ const App: React.FC = () => {
             <Nav
               todosData={todosData}
               setTodosData={setTodosData}
-              filteredTodosData={filteredTodosData}
               setFilteredTodosData={setFilteredTodosData}
               setTitle={setTitle}
               isDataTLoading={isDataTLoading}
@@ -133,6 +134,7 @@ const App: React.FC = () => {
                 role={'search'}
                 text={'Find a task'}
                 todosData={todosData}
+                setTodosData={setTodosData}
                 setFilteredTodosData={setFilteredTodosData}
                 isDataTLoading={isDataTLoading}
                 error={error}
@@ -145,12 +147,19 @@ const App: React.FC = () => {
                 error ?
                   <h2 className="page__message">Error: {error}</h2> :
                   isDataEmpty ?
-                    <h2 className="page__message">task list is empty</h2> :
+                    <>
+                      {
+                        title === 'All' ?
+                          <h2 className="page__message">Task list is empty</h2>
+                          :
+                          <h2 className="page__message">{title} task list is empty</h2>
+                      }
+                    </>
+                    :
                     <TodoList
                       todosData={todosData}
                       setTodosData={setTodosData}
                       filteredTodosData={filteredTodosData}
-                      setFilteredTodosData={setFilteredTodosData}
                       setVisibleStatus={setVisibleStatus}
                       setCurrentTodoID={setCurrentTodoID}
                     />
@@ -163,6 +172,7 @@ const App: React.FC = () => {
                 text={'Add a new task inside'}
                 todosData={todosData}
                 setTodosData={setTodosData}
+                setFilteredTodosData={setFilteredTodosData}
                 isDataTLoading={isDataTLoading}
                 error={error}
               />

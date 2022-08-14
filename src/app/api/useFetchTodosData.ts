@@ -9,7 +9,7 @@ import { getRandomArrElement } from '../helpers/getRandomArrElement';
 
 export function useFetchTodosData(limit = 5): any {
 
-    const [todosData, setTodosData] = useState<Itodo[]>([]);
+    const [data, setData] = useState<Itodo[]>([]);
     const [error, setError] = useState<any>(null);
     const [isDataTLoading, setDataLoadingStatus] = useState<boolean>(true);
 
@@ -17,7 +17,7 @@ export function useFetchTodosData(limit = 5): any {
     useEffect(() => { // display Preloader component after update limit prop
         setDataLoadingStatus(true);
 
-        const limitLoader = todosData.length !== 0 ?
+        const limitLoader = data.length !== 0 ?
             setTimeout(() => {
                 setDataLoadingStatus(false);
             }, 700)
@@ -46,7 +46,7 @@ export function useFetchTodosData(limit = 5): any {
                 item.editable = false;
             });
 
-            setTodosData(data);
+            setData(data);
 
             setTimeout(() => {
                 setDataLoadingStatus(false);
@@ -62,6 +62,6 @@ export function useFetchTodosData(limit = 5): any {
         }
     };
 
-    return { todosData, setTodosData, isDataTLoading, error, fetchTodosData };
+    return { data, isDataTLoading, error, fetchTodosData }; // todosData, setTodosData,
 
 };

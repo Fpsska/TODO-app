@@ -11,9 +11,6 @@ interface propTypes {
     setTodosData: (arg: any[]) => any;
     setVisibleStatus: (arg: boolean) => void;
     currentTodoID: number,
-
-    filteredTodosData: Itodo[],
-    setFilteredTodosData: (arg: any[]) => any;
 }
 
 // /. interfaces
@@ -24,10 +21,7 @@ const Modal: React.FC<propTypes> = (props) => {
         todosData,
         setTodosData,
         setVisibleStatus,
-        currentTodoID,
-
-        filteredTodosData,
-        setFilteredTodosData
+        currentTodoID
     } = props;
 
     const [inputValue, setInputValue] = useState<string>('');
@@ -36,23 +30,22 @@ const Modal: React.FC<propTypes> = (props) => {
 
 
     useEffect(() => { // display, save initial todo item property if changes is not accepted/not did
-        setInputValue([...filteredTodosData].filter(item => item.id === currentTodoID)[0].title);
-        setInputRadioCategoryValue([...filteredTodosData].filter(item => item.id === currentTodoID)[0].category);
-        setInputRadioStatusValue([...filteredTodosData].filter(item => item.id === currentTodoID)[0].status);
+        setInputValue([...todosData].filter(item => item.id === currentTodoID)[0].title);
+        setInputRadioCategoryValue([...todosData].filter(item => item.id === currentTodoID)[0].category);
+        setInputRadioStatusValue([...todosData].filter(item => item.id === currentTodoID)[0].status);
     }, [currentTodoID]);
 
-    // setFilteredTodosData([...todosData]
 
     const formSubmitHandler = (e: React.SyntheticEvent): any => {
         e.preventDefault();
 
-        setTodosData([...filteredTodosData].map(item => {
+        inputValue && setTodosData([...todosData].map(item => {
             if (item.id === currentTodoID) {
                 return {
                     ...item,
                     title: inputValue,
                     category: inputRadioCategoryValue ? `#${(inputRadioCategoryValue.charAt(0).toUpperCase() + inputRadioCategoryValue.slice(1)).replace(/#/gi, '')}` : '', // set upperCase for 1st letter of getted inputRadioValue
-                    status: inputRadioStatusValue,  // .charAt(0).toUpperCase() + inputRadioCategoryValue.slice(1)
+                    status: inputRadioStatusValue,
                     editable: false
                 };
             }
@@ -62,7 +55,7 @@ const Modal: React.FC<propTypes> = (props) => {
     };
 
     const closeModal = (): void => {
-        setTodosData([...filteredTodosData].map(item => item.id === currentTodoID ? { ...item, editable: false } : item)); // remove editable css-class
+        setTodosData([...todosData].map(item => item.id === currentTodoID ? { ...item, editable: false } : item)); // remove editable css-class
         setVisibleStatus(false);
     };
 

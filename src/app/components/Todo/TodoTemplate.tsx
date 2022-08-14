@@ -11,11 +11,9 @@ interface propTypes {
     status: string;
     completed: boolean,
     editable: boolean,
-    filteredTodosData: Itodo[];
     todosData: Itodo[];
     setTodosData: (arg: Itodo[]) => void;
-    setFilteredTodosData: (arg: Itodo[]) => void;
-    setVisibleStatus: (arg: boolean) => void
+    setVisibleStatus: (arg: boolean) => void;
     setCurrentTodoID: (arg: number) => void
 }
 
@@ -30,21 +28,16 @@ const TodoTemplate: React.FC<propTypes> = (props) => {
         status,
         completed,
         editable,
-        filteredTodosData,
         todosData,
         setTodosData,
-        setFilteredTodosData,
-
+        
         setVisibleStatus,
         setCurrentTodoID
     } = props;
 
-    // setTodosData([...todosData]
-
-
+    
     const handleCompleteStatus = (): void => {
         setTodosData([...todosData].map(item => item.id === id ? { ...item, completed: !completed } : item));
-        // setCheckedStatus(!completed);
     };
 
     const editTodoItem = (): void => {

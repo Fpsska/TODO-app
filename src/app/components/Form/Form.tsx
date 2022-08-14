@@ -10,8 +10,8 @@ interface propTypes {
     role: string
     text: string;
     todosData: Itodo[];
-    setFilteredTodosData?: (arg: Itodo[]) => void;
-    setTodosData?: (arg: Itodo[]) => void;
+    setTodosData: (arg: Itodo[]) => void;
+    setFilteredTodosData: (arg: Itodo[]) => void;
     isDataTLoading: boolean;
     error: any
 }
@@ -23,9 +23,9 @@ const Form: React.FC<propTypes> = (props) => {
     const {
         role,
         text,
-        setFilteredTodosData,
         todosData,
         setTodosData,
+        setFilteredTodosData,
         isDataTLoading,
         error
     } = props;
@@ -35,15 +35,15 @@ const Form: React.FC<propTypes> = (props) => {
     const formRef = useRef<HTMLFormElement>(null!);
 
     const findTodoItem = (searchInputValue: string): void => {
-        setFilteredTodosData && setFilteredTodosData([...todosData].filter(item => RegExp(searchInputValue.trim(), 'gi').test(item.title)));
+        setFilteredTodosData([...todosData].filter(item => RegExp(searchInputValue.trim(), 'gi').test(item.title)));
     };
 
     const formSubmitHandler = (e: React.SyntheticEvent): void => {
-        e.preventDefault();  // disable refresh page afted submit form 
+        e.preventDefault();  // disable refresh page after submit form 
 
         switch (role) {
             case 'add':
-                setTodosData && setTodosData([...todosData, { // create todo item
+                setTodosData([...todosData, { // create todo item
                     id: +new Date(),
                     title: createInputValue,
                     category: '',

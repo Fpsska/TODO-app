@@ -10,7 +10,6 @@ import './nav.scss';
 // /. imports
 
 interface propTypes {
-    filteredTodosData: Itodo[];
     todosData: Itodo[];
     setTodosData: (arg: Itodo[]) => void;
     setFilteredTodosData: (arg: Itodo[]) => void;
@@ -26,7 +25,6 @@ const Nav: React.FC<propTypes> = (props) => {
     const {
         todosData,
         setTodosData,
-        filteredTodosData,
         setFilteredTodosData,
         setTitle,
         isDataTLoading,
@@ -76,11 +74,12 @@ const Nav: React.FC<propTypes> = (props) => {
                             text={item.text}
                             category={item.category}
                             isActive={item.isActive}
+
                             navTemplatesData={navTemplatesData}
                             setNavTemplatesData={setNavTemplatesData}
+
                             todosData={todosData}
                             setTodosData={setTodosData}
-                            filteredTodosData={filteredTodosData}
                             setFilteredTodosData={setFilteredTodosData}
                             setTitle={setTitle}
                             isDataTLoading={isDataTLoading}

@@ -95,9 +95,7 @@ body {
         padding: 20px 35px 20px 30px;
         border-right: 1px solid #d8d8d8;
         flex: 0 1 15%;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+        @include sliceText;
     }
     &__content {
         flex: 1;

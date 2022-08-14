@@ -11,11 +11,12 @@ interface propTypes {
     category: string;
     link: string;
     isActive: boolean;
+
     navTemplatesData: Inav[];
     setNavTemplatesData: (arg: Inav[]) => void;
+
     todosData: Itodo[];
     setTodosData: (arg: Itodo[]) => void;
-    filteredTodosData: Itodo[];
     setFilteredTodosData: (arg: Itodo[]) => void;
     setTitle: (arg: string) => void;
     isDataTLoading: boolean;
@@ -32,11 +33,12 @@ const NavTemplate: React.FC<propTypes> = (props) => {
         category,
         link,
         isActive,
+
         navTemplatesData,
         setNavTemplatesData,
+
         todosData,
         setTodosData,
-        filteredTodosData,
         setFilteredTodosData,
         setTitle,
         isDataTLoading,
@@ -50,8 +52,7 @@ const NavTemplate: React.FC<propTypes> = (props) => {
         setTodoCount(array.length);
     }, [todosData]);
 
-    // SAVE TODO DATA IN FILTERED DATA
-
+    
     const filterTodoItems = (): void => {
         switch (category) {
             case 'all':
@@ -66,7 +67,7 @@ const NavTemplate: React.FC<propTypes> = (props) => {
 
                 setFilteredTodosData([...todosData].filter(item => item.category.toLocaleLowerCase() === `#${category}`));
 
-                setTitle(text); // 
+                setTitle(text);  
                 break;
             case 'college':
                 setNavTemplatesData([...navTemplatesData].map(item => item.id === id ? { ...item, isActive: true } : { ...item, isActive: false }));

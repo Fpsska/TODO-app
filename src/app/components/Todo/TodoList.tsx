@@ -9,23 +9,21 @@ import './todo.scss';
 // /. imports
 
 interface propTypes {
-    filteredTodosData: Itodo[];
     todosData: Itodo[];
     setTodosData: (arg: Itodo[]) => void;
-    setFilteredTodosData: (arg: Itodo[]) => void;
+    filteredTodosData: Itodo[];
     setVisibleStatus: (arg: boolean) => void
-    setCurrentTodoID: (arg: number) => void;
+    setCurrentTodoID: (arg: number) => void
 }
 
 const TodoList: React.FC<propTypes> = (props) => {
 
     const {
-        filteredTodosData,
         todosData,
         setTodosData,
-        setFilteredTodosData,
         setVisibleStatus,
-        setCurrentTodoID,
+        filteredTodosData,
+        setCurrentTodoID
     } = props;
 
     return (
@@ -40,10 +38,8 @@ const TodoList: React.FC<propTypes> = (props) => {
                         status={item.status}
                         completed={item.completed}
                         editable={item.editable}
-                        filteredTodosData={filteredTodosData}
                         todosData={todosData}
                         setTodosData={setTodosData}
-                        setFilteredTodosData={setFilteredTodosData}
                         setVisibleStatus={setVisibleStatus}
                         setCurrentTodoID={setCurrentTodoID}
                     />
