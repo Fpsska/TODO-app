@@ -11,10 +11,12 @@ import TodoList from '../Todo/TodoList';
 import Preloader from '../Preloader/Preloader';
 import Burger from '../Burger/Burger';
 import Modal from '../Modal/Modal';
+import CategoryForm from '../CategoryForm/CategoryForm';
 
 import '../../assets/styles/_styles.scss';
 import '../../assets/styles/_media.scss';
 import './App.css';
+
 
 // /. imports
 
@@ -94,7 +96,9 @@ const App: React.FC = () => {
               error={error}
             />
             <Nav />
+            <div className="page__category-form"> <CategoryForm /> </div>
           </div>
+
           <div className="page__content">
 
             {!isBurgerVisible &&

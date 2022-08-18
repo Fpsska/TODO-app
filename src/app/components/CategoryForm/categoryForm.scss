@@ -1,0 +1,45 @@
+.category {
+    :not(:last-child) {
+        margin: 0 0 10px 0;
+    }
+    &__form {
+        display: flex;
+        flex-direction: column;
+    }
+    &__input {
+        padding: 5px 7px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+    }
+    &__button--form.category__button--form {
+        display: block;
+        text-align: center;
+        padding: 10px;
+        border-radius: 4px;
+        border: 1px solid rgba(95, 94, 94, 0.449);
+        transition: all 0.35s linear;
+        &:hover {
+            border: 1px solid transparent;
+            background-color: #4dd599;
+            color: #fff;
+        }
+    }
+    &__button {
+        background-color: transparent;
+        border: none;
+        display: flex;
+        align-items: center;
+        :not(:last-child) {
+            margin: 0 5px 0 0;
+        }
+        svg {
+            transition: all 0.35s linear;
+            transform: rotate(0deg);
+        }
+    }
+    &__button.visible {
+        svg {
+            transform: rotate(180deg);
+        }
+    }
+}

@@ -97,6 +97,9 @@ body {
         flex: 0 1 15%;
         @include sliceText;
     }
+    &__category-form {
+        margin: 20px 0 0 0;
+    }
     &__content {
         flex: 1;
         border-radius: 0 10px 10px 0;
