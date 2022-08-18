@@ -41,6 +41,7 @@ const App: React.FC = () => {
   const [isDataEmpty, setDataEmptyStatus] = useState<boolean>(true);
 
   const [isBurgerVisible, setBurgerVisibleStatus] = useState<boolean>(false);
+  const [isFormVisible, setFormVisibleStatus] = useState<boolean>(false);
 
   const [currentTodoID, setCurrentTodoID] = useState<number>(todosData[0]?.id);
 
@@ -175,16 +176,20 @@ const App: React.FC = () => {
           </div>
 
           <div className="page__nav">
-            <SelectMenu
-              todosData={todosData}
-              setFilteredTodosData={setFilteredTodosData}
-              setTitle={setTitle}
-              isDataTLoading={isDataTLoading}
-              error={error}
-              selectTemplatesData={selectTemplatesData} />
+            <div className="page__nav-select">
+              <SelectMenu
+                todosData={todosData}
+                setFilteredTodosData={setFilteredTodosData}
+                setTitle={setTitle}
+                isDataTLoading={isDataTLoading}
+                error={error}
+                selectTemplatesData={selectTemplatesData}
+              />
+            </div>
             <Nav
               navTemplatesData={navTemplatesData}
-              setNavTemplatesData={setNavTemplatesData} />
+              setNavTemplatesData={setNavTemplatesData}
+            />
             <div className="page__category-form">
               <CategoryForm
                 navTemplatesData={navTemplatesData}
@@ -192,7 +197,10 @@ const App: React.FC = () => {
                 categoryTemplatesData={categoryTemplatesData}
                 setCategoryTemplatesData={setCategoryTemplatesData}
                 selectTemplatesData={selectTemplatesData}
-                setSelectTemplatesData={setSelectTemplatesData} />
+                setSelectTemplatesData={setSelectTemplatesData}
+                isFormVisible={isFormVisible}
+                setFormVisibleStatus={setFormVisibleStatus}
+              />
             </div>
           </div>
 
@@ -248,6 +256,8 @@ const App: React.FC = () => {
                       filteredTodosData={filteredTodosData}
                       setVisibleStatus={setVisibleStatus}
                       setCurrentTodoID={setCurrentTodoID}
+
+                      isFormVisible={isFormVisible}
                     />
               }
             </div>

@@ -18,7 +18,35 @@
     .page__nav {
         border-right: none;
         border-bottom: 1px solid #d8d8d8;
-        padding: 15px 65px 15px 35px;
+        padding: 0 0 10px 0;
+
+        flex: none;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .page__nav-select {
+        display: block;
+        width: 100%;
+        padding: 15px 45px 0px 35px;
+        margin: 0 0 10px 0;
+    }
+    .page__category-form {
+        margin: 0;
+    }
+    .category__form {
+        flex-direction: row;
+    }
+    .category__input {
+        margin: 0 5px 0 0;
+    }
+    .category__button.visible {
+        text-align: center;
+        margin: 0 auto 10px auto;
+    }
+    .page__header {
+        margin: 0 0 15px 0;
     }
     .page__title {
         max-width: calc(100vw - 400px);
@@ -31,7 +59,10 @@
         text-align: center;
     }
     .todo {
-        height: calc(100vh - 255px);
+        height: calc(100vh - 260px);
+    }
+    .todo.minimized {
+        height: calc(100vh - 310px) !important;
     }
     .todo__label-text {
         max-width: calc(100vw - 320px);
@@ -56,6 +87,9 @@
     }
     .todo {
         height: calc(100vh - 295px);
+    }
+    .todo.minimized {
+        height: calc(100vh - 355px) !important;
     }
 }
 
@@ -88,14 +122,18 @@
     .page__content {
         padding: 15px 22px 15px 22px;
     }
-    .page__nav {
-        padding: 15px 55px 15px 20px;
+    .page__nav-select {
+        padding: 12px 45px 0 20px;
     }
     .todo__label-text {
         max-width: calc(100vw - 110px);
     }
     .todo__label-text.large {
         max-width: calc(100vw - 110px);
+    }
+    .page__button,
+    .burger__button {
+        top: 1.15rem;
     }
 }
 

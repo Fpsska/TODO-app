@@ -14,7 +14,9 @@ interface propTypes {
     categoryTemplatesData: Icategory[];
     setCategoryTemplatesData: (arg: Icategory[]) => void;
     selectTemplatesData: Iselect[];
-    setSelectTemplatesData: (arg: Iselect[]) => void
+    setSelectTemplatesData: (arg: Iselect[]) => void;
+    isFormVisible: boolean;
+    setFormVisibleStatus: (arg: boolean) => void
 }
 
 // /. interfaces
@@ -27,10 +29,12 @@ const CategoryForm: React.FC<propTypes> = (props) => {
         categoryTemplatesData,
         setCategoryTemplatesData,
         selectTemplatesData,
-        setSelectTemplatesData
+        setSelectTemplatesData,
+        isFormVisible,
+        setFormVisibleStatus
     } = props;
 
-    const [isFormVisible, setFormVisibleStatus] = useState<boolean>(false);
+    // const [isFormVisible, setFormVisibleStatus] = useState<boolean>(false);
     const [inputValue, setInputValue] = useState<string>('');
 
     const formRef = useRef<HTMLFormElement>(null!);

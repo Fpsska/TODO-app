@@ -13,7 +13,9 @@ interface propTypes {
     setTodosData: (arg: Itodo[]) => void;
     filteredTodosData: Itodo[];
     setVisibleStatus: (arg: boolean) => void;
-    setCurrentTodoID: (arg: number) => void
+    setCurrentTodoID: (arg: number) => void;
+
+    isFormVisible: boolean
 }
 
 const TodoList: React.FC<propTypes> = (props) => {
@@ -23,11 +25,12 @@ const TodoList: React.FC<propTypes> = (props) => {
         setTodosData,
         filteredTodosData,
         setVisibleStatus,
-        setCurrentTodoID
+        setCurrentTodoID,
+        isFormVisible
     } = props;
 
     return (
-        <ul className="todo">
+        <ul className={isFormVisible ? 'todo minimized' : 'todo'}>
             {filteredTodosData.map((item: Itodo) => {
                 return (
                     <TodoTemplate

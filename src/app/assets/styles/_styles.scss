@@ -57,7 +57,7 @@ body {
     height: 100vh;
     margin: 0;
     padding: 0;
-    overflow: hidden;
+    // overflow: hidden;
 }
 
 // /.NULLSTYLES
@@ -96,6 +96,10 @@ body {
         border-right: 1px solid #d8d8d8;
         flex: 0 1 15%;
         @include sliceText;
+    }
+    &__nav-select {
+        display: none;
+        padding: 20px 35px 20px 30px;
     }
     &__category-form {
         margin: 20px 0 0 0;
