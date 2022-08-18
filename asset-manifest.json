@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/Infotecs-Task/static/css/main.0d9445d2.css",
-    "main.js": "/Infotecs-Task/static/js/main.b08cf6de.js",
+    "main.css": "/Infotecs-Task/static/css/main.69c7996f.css",
+    "main.js": "/Infotecs-Task/static/js/main.0b8d6121.js",
     "static/js/787.e8a87bbe.chunk.js": "/Infotecs-Task/static/js/787.e8a87bbe.chunk.js",
     "index.html": "/Infotecs-Task/index.html",
-    "static/media/check-icon.svg": "/Infotecs-Task/static/media/check-icon.c45ccbae9fc618444a13.svg",
-    "main.0d9445d2.css.map": "/Infotecs-Task/static/css/main.0d9445d2.css.map",
-    "main.b08cf6de.js.map": "/Infotecs-Task/static/js/main.b08cf6de.js.map",
+    "static/media/check-icon.svg": "/Infotecs-Task/static/media/check-icon.e5f2f8c60bff53426875.svg",
+    "main.69c7996f.css.map": "/Infotecs-Task/static/css/main.69c7996f.css.map",
+    "main.0b8d6121.js.map": "/Infotecs-Task/static/js/main.0b8d6121.js.map",
     "787.e8a87bbe.chunk.js.map": "/Infotecs-Task/static/js/787.e8a87bbe.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.0d9445d2.css",
-    "static/js/main.b08cf6de.js"
+    "static/css/main.69c7996f.css",
+    "static/js/main.0b8d6121.js"
   ]
 }
