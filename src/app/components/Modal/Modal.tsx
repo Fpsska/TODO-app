@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import { Itodo } from '../../types/todoTypes';
+import { Icategory } from '../../types/categoryTypes';
 
 import './modal.scss';
 
@@ -10,7 +11,8 @@ interface propTypes {
     todosData: Itodo[],
     setTodosData: (arg: any[]) => any;
     setVisibleStatus: (arg: boolean) => void;
-    currentTodoID: number,
+    currentTodoID: number;
+    categoryTemplatesData: Icategory[]
 }
 
 // /. interfaces
@@ -21,7 +23,8 @@ const Modal: React.FC<propTypes> = (props) => {
         todosData,
         setTodosData,
         setVisibleStatus,
-        currentTodoID
+        currentTodoID,
+        categoryTemplatesData
     } = props;
 
     const [inputValue, setInputValue] = useState<string>('');
@@ -88,26 +91,20 @@ const Modal: React.FC<propTypes> = (props) => {
                         <fieldset className="modal__categories">
                             <legend className="modal__title">Category:</legend>
 
-                            <label className="modal__label">
-                                <input className="modal__radio" type="radio" name="category" value="groceries" onChange={e => setInputRadioCategoryValue(e.target.value)} />
-                                <span className="modal__radio--fake"></span>
-                                groceries
-                            </label>
-                            <label className="modal__label">
-                                <input className="modal__radio" type="radio" name="category" value="college" onChange={e => setInputRadioCategoryValue(e.target.value)} />
-                                <span className="modal__radio--fake"></span>
-                                college
-                            </label>
-                            <label className="modal__label">
-                                <input className="modal__radio" type="radio" name="category" value="payments" onChange={e => setInputRadioCategoryValue(e.target.value)} />
-                                <span className="modal__radio--fake"></span>
-                                payments
-                            </label>
-                            <label className="modal__label">
-                                <input className="modal__radio" type="radio" name="category" value="" onChange={e => setInputRadioCategoryValue(e.target.value)} />
-                                <span className="modal__radio--fake"></span>
-                                none
-                            </label>
+                            <>
+                                {
+                                    categoryTemplatesData.map(item => {
+                                        return (
+                                            <label className="modal__label" key={item.id}>
+                                                <input className="modal__radio" type="radio" name={item.name} value={item.value} onChange={e => setInputRadioCategoryValue(e.target.value)} />
+                                                <span className="modal__radio--fake"></span>
+                                                {item.text}
+                                            </label>
+                                        );
+                                    })
+                                }
+                            </>
+
                         </fieldset>
 
                         <fieldset className="modal__statuses">

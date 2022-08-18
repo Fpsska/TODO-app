@@ -1,5 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 
+import { Inav } from '../../types/navTypes';
+import { Icategory } from '../../types/categoryTypes';
+
 import { MyContext } from '../Layout/Layout';
 
 import { useAreaHandler } from '../../hooks/useAreaHandler';
@@ -39,6 +42,64 @@ const App: React.FC = () => {
   const [isBurgerVisible, setBurgerVisibleStatus] = useState<boolean>(false);
 
   const [currentTodoID, setCurrentTodoID] = useState<number>(todosData[0]?.id);
+
+  const [navTemplatesData, setNavTemplatesData] = useState<Inav[]>([
+    {
+      id: 1,
+      text: 'All',
+      category: 'all',
+      link: '#',
+      isActive: true
+    },
+    {
+      id: 2,
+      text: 'Groceries',
+      category: 'groceries',
+      link: '#',
+      isActive: false
+    },
+    {
+      id: 4,
+      text: 'College',
+      category: 'college',
+      link: '#',
+      isActive: false
+    },
+    {
+      id: 5,
+      text: 'Payments',
+      category: 'payments',
+      link: '#',
+      isActive: false
+    }
+  ]);
+
+  const [categoryTemplatesData, setCategoryTemplatesData] = useState<Icategory[]>([
+    {
+      id: 1,
+      name: 'category',
+      text: 'groceries',
+      value: 'groceries'
+    },
+    {
+      id: 2,
+      name: 'category',
+      text: 'college',
+      value: 'college'
+    },
+    {
+      id: 3,
+      name: 'category',
+      text: 'payments',
+      value: 'payments'
+    },
+    {
+      id: 4,
+      name: 'category',
+      text: 'none',
+      value: ''
+    }
+  ]);
 
   const { refEl, isVisible, setVisibleStatus } = useAreaHandler({ initialStatus: false });
 
@@ -83,6 +144,8 @@ const App: React.FC = () => {
                 setTodosData={setTodosData}
                 setVisibleStatus={setVisibleStatus}
                 currentTodoID={currentTodoID}
+
+                categoryTemplatesData={categoryTemplatesData}
               />
             }
           </div>
@@ -95,8 +158,16 @@ const App: React.FC = () => {
               isDataTLoading={isDataTLoading}
               error={error}
             />
-            <Nav />
-            <div className="page__category-form"> <CategoryForm /> </div>
+            <Nav
+              navTemplatesData={navTemplatesData}
+              setNavTemplatesData={setNavTemplatesData} />
+            <div className="page__category-form">
+              <CategoryForm
+                navTemplatesData={navTemplatesData}
+                setNavTemplatesData={setNavTemplatesData}
+                categoryTemplatesData={categoryTemplatesData}
+                setCategoryTemplatesData={setCategoryTemplatesData} />
+            </div>
           </div>
 
           <div className="page__content">

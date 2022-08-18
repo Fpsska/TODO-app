@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { Inav } from '../../types/navTypes';
-import { Itodo } from '../../types/todoTypes';
 
 import NavTemplate from './NavTemplate';
 
@@ -9,38 +8,14 @@ import './nav.scss';
 
 // /. imports
 
-const Nav: React.FC = () => {
+interface propTypes {
+    navTemplatesData: Inav[];
+    setNavTemplatesData: (arg: Inav[]) => void
+}
 
-    const [navTemplatesData, setNavTemplatesData] = useState<Inav[]>([
-        {
-            id: 1,
-            text: 'All',
-            category: 'all',
-            link: '#',
-            isActive: true
-        },
-        {
-            id: 2,
-            text: 'Groceries',
-            category: 'groceries',
-            link: '#',
-            isActive: false
-        },
-        {
-            id: 4,
-            text: 'College',
-            category: 'college',
-            link: '#',
-            isActive: false
-        },
-        {
-            id: 5,
-            text: 'Payments',
-            category: 'payments',
-            link: '#',
-            isActive: false
-        }
-    ]);
+// /. interfaces
+
+const Nav: React.FC<propTypes> = ({ navTemplatesData, setNavTemplatesData }) => {
 
     return (
         <nav className="nav">

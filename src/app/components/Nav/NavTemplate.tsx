@@ -27,7 +27,7 @@ const NavTemplate: React.FC<propTypes> = (props) => {
         category,
         link,
         isActive,
-        
+
         navTemplatesData,
         setNavTemplatesData
     } = props;
@@ -59,22 +59,8 @@ const NavTemplate: React.FC<propTypes> = (props) => {
 
                 setTitle(text);
                 break;
-            case 'groceries':
+            case category:
                 setNavTemplatesData(navTemplatesData.map(item => item.id === id ? { ...item, isActive: true } : { ...item, isActive: false }));
-
-                setFilteredTodosData([...todosData].filter(item => item.category.toLocaleLowerCase() === `#${category}`));
-
-                setTitle(text);
-                break;
-            case 'college':
-                setNavTemplatesData([...navTemplatesData].map(item => item.id === id ? { ...item, isActive: true } : { ...item, isActive: false }));
-
-                setFilteredTodosData([...todosData].filter(item => item.category.toLocaleLowerCase() === `#${category}`));
-
-                setTitle(text);
-                break;
-            case 'payments':
-                setNavTemplatesData([...navTemplatesData].map(item => item.id === id ? { ...item, isActive: true } : { ...item, isActive: false }));
 
                 setFilteredTodosData([...todosData].filter(item => item.category.toLocaleLowerCase() === `#${category}`));
 
