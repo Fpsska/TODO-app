@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Iselect } from '../../types/selectTypes';
 
 import { Itodo } from '../../types/todoTypes';
+import { Icategory } from '../../types/categoryTypes';
 
 import SelectTemplate from './SelectTemplate';
 
@@ -15,7 +16,8 @@ interface propTypes {
     setFilteredTodosData: (arg: Itodo[]) => void;
     setTitle: (arg: string) => void;
     isDataTLoading: boolean;
-    error: any
+    error: any;
+    selectTemplatesData: Iselect[]
 }
 
 // /. interfaces
@@ -27,31 +29,10 @@ const SelectMenu: React.FC<propTypes> = (props) => {
         setFilteredTodosData,
         setTitle,
         isDataTLoading,
-        error
+        error,
+        selectTemplatesData
     } = props;
 
-    const [selectTemplatesData] = useState<Iselect[]>([
-        {
-            id: 1,
-            text: 'All',
-            value: 'all'
-        },
-        {
-            id: 2,
-            text: 'Groceries',
-            value: 'groceries'
-        },
-        {
-            id: 3,
-            text: 'College',
-            value: 'college'
-        },
-        {
-            id: 4,
-            text: 'Payments',
-            value: 'payments'
-        }
-    ]);
 
     const selectMenuHandler = (value: string): void => {
         switch (value) {
@@ -59,17 +40,9 @@ const SelectMenu: React.FC<propTypes> = (props) => {
                 setFilteredTodosData(todosData);
                 setTitle('All');
                 break;
-            case 'groceries':
+            case value:
                 setFilteredTodosData([...todosData].filter(item => item.category.toLocaleLowerCase() === `#${value}`));
-                setTitle('Groceries');
-                break;
-            case 'college':
-                setFilteredTodosData([...todosData].filter(item => item.category.toLocaleLowerCase() === `#${value}`));
-                setTitle('College');
-                break;
-            case 'payments':
-                setFilteredTodosData([...todosData].filter(item => item.category.toLocaleLowerCase() === `#${value}`));
-                setTitle('Payments');
+                setTitle(value.charAt(0).toUpperCase() + value.slice(1));
                 break;
             default:
                 setFilteredTodosData(todosData);

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 
 import { Inav } from '../../types/navTypes';
 import { Icategory } from '../../types/categoryTypes';
+import { Iselect } from '../../types/selectTypes';
 
 import { MyContext } from '../Layout/Layout';
 
@@ -101,6 +102,29 @@ const App: React.FC = () => {
     }
   ]);
 
+  const [selectTemplatesData, setSelectTemplatesData] = useState<Iselect[]>([
+    {
+      id: 1,
+      text: 'All',
+      value: 'all'
+    },
+    {
+      id: 2,
+      text: 'Groceries',
+      value: 'groceries'
+    },
+    {
+      id: 3,
+      text: 'College',
+      value: 'college'
+    },
+    {
+      id: 4,
+      text: 'Payments',
+      value: 'payments'
+    }
+  ]);
+
   const { refEl, isVisible, setVisibleStatus } = useAreaHandler({ initialStatus: false });
 
 
@@ -157,7 +181,7 @@ const App: React.FC = () => {
               setTitle={setTitle}
               isDataTLoading={isDataTLoading}
               error={error}
-            />
+              selectTemplatesData={selectTemplatesData} />
             <Nav
               navTemplatesData={navTemplatesData}
               setNavTemplatesData={setNavTemplatesData} />
@@ -166,7 +190,9 @@ const App: React.FC = () => {
                 navTemplatesData={navTemplatesData}
                 setNavTemplatesData={setNavTemplatesData}
                 categoryTemplatesData={categoryTemplatesData}
-                setCategoryTemplatesData={setCategoryTemplatesData} />
+                setCategoryTemplatesData={setCategoryTemplatesData}
+                selectTemplatesData={selectTemplatesData}
+                setSelectTemplatesData={setSelectTemplatesData} />
             </div>
           </div>
 
