@@ -42,7 +42,7 @@ const Modal: React.FC<propTypes> = (props) => {
     const formSubmitHandler = (e: React.SyntheticEvent): any => {
         e.preventDefault();
 
-        inputValue && setTodosData([...todosData].map(item => {
+        setTodosData([...todosData].map(item => {
             if (item.id === currentTodoID) {
                 return {
                     ...item,
@@ -54,6 +54,7 @@ const Modal: React.FC<propTypes> = (props) => {
             }
             return item;
         }));
+
         setVisibleStatus(false);
     };
 
@@ -73,7 +74,7 @@ const Modal: React.FC<propTypes> = (props) => {
 
             <div className="modal__wrapper">
 
-                <form className="modal__form" onSubmit={e => formSubmitHandler(e)}>
+                <form className="modal__form" onSubmit={e => inputValue && formSubmitHandler(e)}>
 
                     <fieldset className="modal__inputs">
                         <legend className="modal__title">Title:</legend>

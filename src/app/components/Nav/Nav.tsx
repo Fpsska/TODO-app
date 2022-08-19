@@ -13,12 +13,21 @@ interface propTypes {
     setNavTemplatesData: (arg: Inav[]) => void;
     setCurrentNavID: (arg: number) => void;
     setCurrentCategoryID: (arg: number) => void;
+    setEditableStatus: (arg: boolean) => void
 }
 
 // /. interfaces
 
 
-const Nav: React.FC<propTypes> = ({ navTemplatesData, setNavTemplatesData, setCurrentNavID, setCurrentCategoryID  }) => {
+const Nav: React.FC<propTypes> = (props) => {
+
+    const {
+        navTemplatesData,
+        setNavTemplatesData,
+        setCurrentNavID,
+        setCurrentCategoryID,
+        setEditableStatus
+    } = props;
 
     return (
         <nav className="nav">
@@ -37,6 +46,7 @@ const Nav: React.FC<propTypes> = ({ navTemplatesData, setNavTemplatesData, setCu
                             setNavTemplatesData={setNavTemplatesData}
                             setCurrentNavID={setCurrentNavID}
                             setCurrentCategoryID={setCurrentCategoryID}
+                            setEditableStatus={setEditableStatus}
                         />
                     );
                 })}

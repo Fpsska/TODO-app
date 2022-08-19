@@ -1,6 +1,26 @@
+@import "../../assets/styles/mixins";
+
+// /. imports
+
 .title {
+    width: 100%;
+    &__input {
+        background-color: transparent;
+        border: none;
+        margin: 0;
+        font-size: 31px;
+        font-weight: 700;
+        color: #000;
+        pointer-events: none;
+        cursor: default;
+        // hide text
+        @include sliceText;
+        max-width: calc(100vw - 680px);
+        width: 100%;
+    }
     &__input.editable {
         color: #888;
         text-decoration: underline;
+        pointer-events: all;
     }
 }

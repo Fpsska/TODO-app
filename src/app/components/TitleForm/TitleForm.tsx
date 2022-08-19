@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { Inav } from '../../types/navTypes';
 import { Itodo } from '../../types/todoTypes';
@@ -44,8 +44,7 @@ const TitleForm: React.FC<propTypes> = (props) => {
     const formSubmitHandler = (e: React.FormEvent): void => {
         e.preventDefault();
 
-        console.log(inputTitleValue)
-        inputTitleValue && setNavTemplatesData([...navTemplatesData].map(item => { // update text, category in navTemplatesData[]
+        setNavTemplatesData([...navTemplatesData].map(item => { // update text, category in navTemplatesData[]
             if (item.id === currentNavID) {
                 return {
                     ...item,
@@ -56,11 +55,11 @@ const TitleForm: React.FC<propTypes> = (props) => {
             return item;
         }));
 
+
         const currentCategory = `#${[...navTemplatesData].find(item => item.id === currentNavID)?.category}`; // return string 'all/college'
 
-        inputTitleValue && setTodosData([...todosData].map(item => { // update category name of todoData[] items of current category value
+        setTodosData([...todosData].map(item => { // update category name of todoData[] items of current category value
             if (item.category.toLocaleLowerCase() === currentCategory) {
-                // console.log('item.category', item.category)
                 return {
                     ...item,
                     category: inputTitleValue ? `#${(inputTitleValue.charAt(0).toUpperCase() + inputTitleValue.slice(1)).trim().replace(/#/gi, '')}` : '',
@@ -70,7 +69,7 @@ const TitleForm: React.FC<propTypes> = (props) => {
         }));
 
 
-        inputTitleValue && setCategoryTemplatesData([...categoryTemplatesData].map(item => { // // update text, value in categoryTemplatesData[]
+        setCategoryTemplatesData([...categoryTemplatesData].map(item => { // // update text, value in categoryTemplatesData[]
             if (item.id === currentCategoryID) {
                 return {
                     ...item,
@@ -85,9 +84,23 @@ const TitleForm: React.FC<propTypes> = (props) => {
         setEditableStatus(false);
     };
 
+
+    useEffect(() => {
+        const keyHandler = (e: KeyboardEvent): void => {
+            if (e.code === 'Escape' && isEditable) {
+                setEditableStatus(false);
+            }
+        }
+
+        document.addEventListener('keydown', keyHandler);
+        return () => {
+            document.removeEventListener('keydown', keyHandler); 
+        };
+    }, [isEditable])
+
     return (
         <div className="title">
-            <form className="title__form" onSubmit={formSubmitHandler}>
+            <form className="title__form" onSubmit={e => inputTitleValue && formSubmitHandler(e)}>
                 <input
                     className={isEditable ? 'title__input editable' : 'title__input'}
                     type="text"

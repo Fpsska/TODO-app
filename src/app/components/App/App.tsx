@@ -152,6 +152,7 @@ const App: React.FC = () => {
     setInputTitleValue(title);
   }, [title]);
 
+
   const openBurger = (e: React.SyntheticEvent): void => {
     e.stopPropagation();  // for correct work of burger hide/show logic
     setBurgerVisibleStatus(true);
@@ -206,6 +207,7 @@ const App: React.FC = () => {
               setNavTemplatesData={setNavTemplatesData}
               setCurrentNavID={setCurrentNavID}
               setCurrentCategoryID={setCurrentCategoryID}
+              setEditableStatus={setEditableStatus}
             />
             <div className="page__category-form">
               <CategoryForm
@@ -251,15 +253,18 @@ const App: React.FC = () => {
                 setTodosData={setTodosData}
                 setEditableStatus={setEditableStatus}
                 categoryTemplatesData={categoryTemplatesData}
-                setCategoryTemplatesData={setCategoryTemplatesData} 
+                setCategoryTemplatesData={setCategoryTemplatesData}
                 currentCategoryID={currentCategoryID}
               />
 
-              <button className="page__button page__button--edit" onClick={editCategoryName}>
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M13.23 1H11.77L3.52002 9.25L3.35999 9.46997L1 13.59L2.41003 15L6.53003 12.64L6.75 12.48L15 4.22998V2.77002L13.23 1ZM2.41003 13.59L3.92004 10.59L5.37 12.04L2.41003 13.59ZM6.23999 11.53L4.46997 9.76001L12.47 1.76001L14.24 3.53003L6.23999 11.53Z" fill="#C5C5C5" />
-                </svg>
-              </button>
+              <>
+                {inputTitleValue !== 'All' &&
+                  <button className="page__button page__button--edit" onClick={editCategoryName}>
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M13.23 1H11.77L3.52002 9.25L3.35999 9.46997L1 13.59L2.41003 15L6.53003 12.64L6.75 12.48L15 4.22998V2.77002L13.23 1ZM2.41003 13.59L3.92004 10.59L5.37 12.04L2.41003 13.59ZM6.23999 11.53L4.46997 9.76001L12.47 1.76001L14.24 3.53003L6.23999 11.53Z" fill="#C5C5C5" />
+                    </svg>
+                  </button>}
+              </>
 
               <Form
                 role={'search'}
