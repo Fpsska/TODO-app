@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import { Inav } from '../../types/navTypes';
 import { Itodo } from '../../types/todoTypes';
 import { Icategory } from '../../types/categoryTypes';
+import { Iselect } from '../../types/selectTypes';
 
 import './titleForm.scss'
 
@@ -20,7 +21,10 @@ interface propTypes {
     setEditableStatus: (arg: boolean) => void;
     categoryTemplatesData: Icategory[];
     setCategoryTemplatesData: (arg: Icategory[]) => void;
-    currentCategoryID: number
+    currentCategoryID: number;
+    selectTemplatesData: Iselect[];
+    setSelectTemplatesData: (arg: Iselect[]) => void;
+    currentNavSelectID: number;
 }
 
 const TitleForm: React.FC<propTypes> = (props) => {
@@ -37,7 +41,10 @@ const TitleForm: React.FC<propTypes> = (props) => {
         setEditableStatus,
         categoryTemplatesData,
         setCategoryTemplatesData,
-        currentCategoryID
+        currentCategoryID,
+        selectTemplatesData,
+        setSelectTemplatesData,
+        currentNavSelectID,
     } = props;
 
 
@@ -55,11 +62,30 @@ const TitleForm: React.FC<propTypes> = (props) => {
             return item;
         }));
 
+        setSelectTemplatesData([...selectTemplatesData].map(item => { // update text, value in selectTemplatesData[]
+            if (item.id === currentNavSelectID) {
+                return {
+                    ...item,
+                    text: inputTitleValue, // displayed in UI
+                    value: inputTitleValue.toLocaleLowerCase().trim() // logic
+                };
+            }
+            return item;
+        }));
 
-        const currentCategory = `#${[...navTemplatesData].find(item => item.id === currentNavID)?.category}`; // return string 'all/college'
+
+        
+        const currentCategoryFromNav = `#${[...navTemplatesData].find(item => item.id === currentNavID)?.category}`; // return string 'all/college'
+        const currentCategoryFromNavSelect = `#${[...selectTemplatesData].find(item => item.id === currentNavSelectID)?.value}`;
 
         setTodosData([...todosData].map(item => { // update category name of todoData[] items of current category value
-            if (item.category.toLocaleLowerCase() === currentCategory) {
+            if (item.category.toLocaleLowerCase() === currentCategoryFromNav) {
+                return {
+                    ...item,
+                    category: inputTitleValue ? `#${(inputTitleValue.charAt(0).toUpperCase() + inputTitleValue.slice(1)).trim().replace(/#/gi, '')}` : '',
+                };
+            }
+            if (item.category.toLocaleLowerCase() === currentCategoryFromNavSelect) {
                 return {
                     ...item,
                     category: inputTitleValue ? `#${(inputTitleValue.charAt(0).toUpperCase() + inputTitleValue.slice(1)).trim().replace(/#/gi, '')}` : '',
@@ -73,7 +99,7 @@ const TitleForm: React.FC<propTypes> = (props) => {
             if (item.id === currentCategoryID) {
                 return {
                     ...item,
-                    text: inputTitleValue.toLocaleLowerCase().trim(), // display in UI
+                    text: inputTitleValue.toLocaleLowerCase().trim(), // displayed in UI
                     value: inputTitleValue.toLocaleLowerCase().trim() // logic
                 }
             }

@@ -2,6 +2,9 @@
     .page__nav {
         flex: 0 1 25%;
     }
+    .title__input {
+        margin: 0 0 0 -8px;
+    }
 }
 
 @media screen and (max-width: 768px) {
@@ -52,9 +55,6 @@
         padding: 15px 35px 15px 35px;
         position: static;
     }
-    // .page__title { err title
-    //     text-align: center;
-    // }
     .page__button--edit {
         left: 0;
     }
@@ -66,7 +66,7 @@
         height: calc(100vh - 260px);
     }
     .todo.minimized {
-        height: calc(100vh - 310px) !important;
+        height: calc(100vh - 310px);
     }
     .todo__label-text {
         max-width: calc(100vw - 320px);
@@ -96,7 +96,7 @@
         height: calc(100vh - 295px);
     }
     .todo.minimized {
-        height: calc(100vh - 355px) !important;
+        height: calc(100vh - 355px);
     }
 }
 

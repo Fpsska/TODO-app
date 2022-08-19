@@ -128,6 +128,7 @@ const App: React.FC = () => {
 
   const [currentTodoID, setCurrentTodoID] = useState<number>(todosData[0]?.id);
   const [currentNavID, setCurrentNavID] = useState<number>(navTemplatesData[0]?.id);
+  const [currentNavSelectID, setCurrentNavSelectID] = useState<number>(selectTemplatesData[0]?.id);
   const [currentCategoryID, setCurrentCategoryID] = useState<number>(categoryTemplatesData[0]?.id);
 
 
@@ -200,6 +201,9 @@ const App: React.FC = () => {
                 isDataTLoading={isDataTLoading}
                 error={error}
                 selectTemplatesData={selectTemplatesData}
+                setCurrentNavSelectID={setCurrentNavSelectID}
+                setEditableStatus={setEditableStatus}
+                setCurrentCategoryID={setCurrentCategoryID}
               />
             </div>
             <Nav
@@ -255,6 +259,9 @@ const App: React.FC = () => {
                 categoryTemplatesData={categoryTemplatesData}
                 setCategoryTemplatesData={setCategoryTemplatesData}
                 currentCategoryID={currentCategoryID}
+                selectTemplatesData={selectTemplatesData} 
+                setSelectTemplatesData={setSelectTemplatesData}
+                currentNavSelectID={currentNavSelectID}
               />
 
               <>
