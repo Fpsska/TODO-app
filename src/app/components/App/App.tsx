@@ -128,6 +128,7 @@ const App: React.FC = () => {
 
   const [currentTodoID, setCurrentTodoID] = useState<number>(todosData[0]?.id);
   const [currentNavID, setCurrentNavID] = useState<number>(navTemplatesData[0]?.id);
+  const [currentCategoryID, setCurrentCategoryID] = useState<number>(categoryTemplatesData[0]?.id);
 
 
   const { refEl, isVisible, setVisibleStatus } = useAreaHandler({ initialStatus: false });
@@ -204,6 +205,7 @@ const App: React.FC = () => {
               navTemplatesData={navTemplatesData}
               setNavTemplatesData={setNavTemplatesData}
               setCurrentNavID={setCurrentNavID}
+              setCurrentCategoryID={setCurrentCategoryID}
             />
             <div className="page__category-form">
               <CategoryForm
@@ -248,6 +250,9 @@ const App: React.FC = () => {
                 todosData={todosData}
                 setTodosData={setTodosData}
                 setEditableStatus={setEditableStatus}
+                categoryTemplatesData={categoryTemplatesData}
+                setCategoryTemplatesData={setCategoryTemplatesData} 
+                currentCategoryID={currentCategoryID}
               />
 
               <button className="page__button page__button--edit" onClick={editCategoryName}>

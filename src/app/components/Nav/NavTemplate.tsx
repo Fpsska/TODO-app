@@ -15,7 +15,8 @@ interface propTypes {
 
     navTemplatesData: Inav[];
     setNavTemplatesData: (arg: Inav[]) => void;
-    setCurrentNavID: (arg: number) => void
+    setCurrentNavID: (arg: number) => void;
+    setCurrentCategoryID: (arg: number) => void;
 }
 
 // /. interfaces
@@ -31,7 +32,8 @@ const NavTemplate: React.FC<propTypes> = (props) => {
 
         navTemplatesData,
         setNavTemplatesData,
-        setCurrentNavID
+        setCurrentNavID,
+        setCurrentCategoryID
     } = props;
 
     const {
@@ -62,6 +64,7 @@ const NavTemplate: React.FC<propTypes> = (props) => {
 
                 setTitle(text);
                 setCurrentNavID(id);
+                setCurrentCategoryID(id);
                 break;
             case category:
                 setNavTemplatesData(navTemplatesData.map(item => item.id === id ? { ...item, isActive: true } : { ...item, isActive: false }));
@@ -70,6 +73,7 @@ const NavTemplate: React.FC<propTypes> = (props) => {
 
                 setTitle(text);
                 setCurrentNavID(id);
+                setCurrentCategoryID(id);
                 break;
             default:
                 setNavTemplatesData([...navTemplatesData].map(item => item.category === 'all' ? { ...item, isActive: true } : { ...item, isActive: false }));
@@ -78,6 +82,7 @@ const NavTemplate: React.FC<propTypes> = (props) => {
 
                 setTitle('All');
                 setCurrentNavID(id);
+                setCurrentCategoryID(id);
         }
     };
 

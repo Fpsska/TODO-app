@@ -11,12 +11,14 @@ import './nav.scss';
 interface propTypes {
     navTemplatesData: Inav[];
     setNavTemplatesData: (arg: Inav[]) => void;
-    setCurrentNavID: (arg: number) => void
+    setCurrentNavID: (arg: number) => void;
+    setCurrentCategoryID: (arg: number) => void;
 }
 
 // /. interfaces
 
-const Nav: React.FC<propTypes> = ({ navTemplatesData, setNavTemplatesData, setCurrentNavID }) => {
+
+const Nav: React.FC<propTypes> = ({ navTemplatesData, setNavTemplatesData, setCurrentNavID, setCurrentCategoryID  }) => {
 
     return (
         <nav className="nav">
@@ -34,6 +36,7 @@ const Nav: React.FC<propTypes> = ({ navTemplatesData, setNavTemplatesData, setCu
                             navTemplatesData={navTemplatesData}
                             setNavTemplatesData={setNavTemplatesData}
                             setCurrentNavID={setCurrentNavID}
+                            setCurrentCategoryID={setCurrentCategoryID}
                         />
                     );
                 })}

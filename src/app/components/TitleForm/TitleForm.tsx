@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Inav } from '../../types/navTypes';
 import { Itodo } from '../../types/todoTypes';
+import { Icategory } from '../../types/categoryTypes';
 
 import './titleForm.scss'
 
@@ -16,7 +17,10 @@ interface propTypes {
     currentNavID: number;
     todosData: Itodo[];
     setTodosData: (arg: Itodo[]) => void;
-    setEditableStatus: (arg: boolean) => void
+    setEditableStatus: (arg: boolean) => void;
+    categoryTemplatesData: Icategory[];
+    setCategoryTemplatesData: (arg: Icategory[]) => void;
+    currentCategoryID: number
 }
 
 const TitleForm: React.FC<propTypes> = (props) => {
@@ -30,7 +34,10 @@ const TitleForm: React.FC<propTypes> = (props) => {
         currentNavID,
         todosData,
         setTodosData,
-        setEditableStatus
+        setEditableStatus,
+        categoryTemplatesData,
+        setCategoryTemplatesData,
+        currentCategoryID
     } = props;
 
 
@@ -42,11 +49,11 @@ const TitleForm: React.FC<propTypes> = (props) => {
             if (item.id === currentNavID) {
                 return {
                     ...item,
-                    text: inputTitleValue, category: inputTitleValue.toLocaleLowerCase().trim()
+                    text: inputTitleValue,
+                    category: inputTitleValue.toLocaleLowerCase().trim()
                 };
-            } else {
-                return item;
             }
+            return item;
         }));
 
         const currentCategory = `#${[...navTemplatesData].find(item => item.id === currentNavID)?.category}`; // return string 'all/college'
@@ -61,6 +68,18 @@ const TitleForm: React.FC<propTypes> = (props) => {
             }
             return item;
         }));
+
+
+        inputTitleValue && setCategoryTemplatesData([...categoryTemplatesData].map(item => { // // update text, value in categoryTemplatesData[]
+            if (item.id === currentCategoryID) {
+                return {
+                    ...item,
+                    text: inputTitleValue.toLocaleLowerCase().trim(), // display in UI
+                    value: inputTitleValue.toLocaleLowerCase().trim() // logic
+                }
+            }
+            return item;
+        }))
 
         // disable editing after submit form
         setEditableStatus(false);
