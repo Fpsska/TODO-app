@@ -15,6 +15,7 @@ interface propTypes {
 
     navTemplatesData: Inav[];
     setNavTemplatesData: (arg: Inav[]) => void;
+    setCurrentNavID: (arg: number) => void
 }
 
 // /. interfaces
@@ -29,7 +30,8 @@ const NavTemplate: React.FC<propTypes> = (props) => {
         isActive,
 
         navTemplatesData,
-        setNavTemplatesData
+        setNavTemplatesData,
+        setCurrentNavID
     } = props;
 
     const {
@@ -43,6 +45,7 @@ const NavTemplate: React.FC<propTypes> = (props) => {
     // console.log(title);
 
     const [todoCount, setTodoCount] = useState<number>(0);
+
 
     useEffect(() => { // set current todo items count for each category
         const array = [...todosData].filter(item => item.category.toLocaleLowerCase() === `#${category}`);
@@ -58,6 +61,7 @@ const NavTemplate: React.FC<propTypes> = (props) => {
                 setFilteredTodosData(todosData);
 
                 setTitle(text);
+                setCurrentNavID(id);
                 break;
             case category:
                 setNavTemplatesData(navTemplatesData.map(item => item.id === id ? { ...item, isActive: true } : { ...item, isActive: false }));
@@ -65,6 +69,7 @@ const NavTemplate: React.FC<propTypes> = (props) => {
                 setFilteredTodosData([...todosData].filter(item => item.category.toLocaleLowerCase() === `#${category}`));
 
                 setTitle(text);
+                setCurrentNavID(id);
                 break;
             default:
                 setNavTemplatesData([...navTemplatesData].map(item => item.category === 'all' ? { ...item, isActive: true } : { ...item, isActive: false }));
@@ -72,6 +77,7 @@ const NavTemplate: React.FC<propTypes> = (props) => {
                 setFilteredTodosData(todosData);
 
                 setTitle('All');
+                setCurrentNavID(id);
         }
     };
 

@@ -16,6 +16,7 @@ import Preloader from '../Preloader/Preloader';
 import Burger from '../Burger/Burger';
 import Modal from '../Modal/Modal';
 import CategoryForm from '../CategoryForm/CategoryForm';
+import TitleForm from '../TitleForm/TitleForm';
 
 import '../../assets/styles/_styles.scss';
 import '../../assets/styles/_media.scss';
@@ -43,7 +44,8 @@ const App: React.FC = () => {
   const [isBurgerVisible, setBurgerVisibleStatus] = useState<boolean>(false);
   const [isFormVisible, setFormVisibleStatus] = useState<boolean>(false);
 
-  const [currentTodoID, setCurrentTodoID] = useState<number>(todosData[0]?.id);
+  const [isEditable, setEditableStatus] = useState<boolean>(false);
+  const [inputTitleValue, setInputTitleValue] = useState<string>(title);
 
   const [navTemplatesData, setNavTemplatesData] = useState<Inav[]>([
     {
@@ -75,7 +77,6 @@ const App: React.FC = () => {
       isActive: false
     }
   ]);
-
   const [categoryTemplatesData, setCategoryTemplatesData] = useState<Icategory[]>([
     {
       id: 1,
@@ -102,7 +103,6 @@ const App: React.FC = () => {
       value: ''
     }
   ]);
-
   const [selectTemplatesData, setSelectTemplatesData] = useState<Iselect[]>([
     {
       id: 1,
@@ -126,6 +126,10 @@ const App: React.FC = () => {
     }
   ]);
 
+  const [currentTodoID, setCurrentTodoID] = useState<number>(todosData[0]?.id);
+  const [currentNavID, setCurrentNavID] = useState<number>(navTemplatesData[0]?.id);
+
+
   const { refEl, isVisible, setVisibleStatus } = useAreaHandler({ initialStatus: false });
 
 
@@ -143,10 +147,20 @@ const App: React.FC = () => {
     !isVisible && setTodosData([...todosData].map(item => item.id === currentTodoID ? { ...item, editable: false } : item));
   }, [isVisible]);
 
+  useEffect(() => { // update title value
+    setInputTitleValue(title);
+  }, [title]);
 
   const openBurger = (e: React.SyntheticEvent): void => {
     e.stopPropagation();  // for correct work of burger hide/show logic
     setBurgerVisibleStatus(true);
+  };
+
+  const editCategoryName = (): void => {
+    setEditableStatus(!isEditable);
+
+
+
   };
 
   return (
@@ -189,6 +203,7 @@ const App: React.FC = () => {
             <Nav
               navTemplatesData={navTemplatesData}
               setNavTemplatesData={setNavTemplatesData}
+              setCurrentNavID={setCurrentNavID}
             />
             <div className="page__category-form">
               <CategoryForm
@@ -207,7 +222,7 @@ const App: React.FC = () => {
           <div className="page__content">
 
             {!isBurgerVisible &&
-              <button className="page__button" onClick={(e) => openBurger(e)}>
+              <button className="page__button page__button--burger" onClick={(e) => openBurger(e)}>
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <g clipPath="url(#clip0_8368_6965)">
                     <path d="M16.0002 5H0.000244141V4H16.0002V5ZM16.0002 13H0.000244141V12H16.0002V13ZM16.0002 8.99218H0.000244141V8H16.0002V8.99218Z" fill="" />
@@ -222,7 +237,24 @@ const App: React.FC = () => {
             }
 
             <div className="page__header">
-              <h1 className="page__title" title={`${title} Tasks`}>{title} Tasks</h1>
+
+              <TitleForm
+                isEditable={isEditable}
+                inputTitleValue={inputTitleValue}
+                setInputTitleValue={setInputTitleValue}
+                navTemplatesData={navTemplatesData}
+                setNavTemplatesData={setNavTemplatesData}
+                currentNavID={currentNavID}
+                todosData={todosData}
+                setTodosData={setTodosData}
+                setEditableStatus={setEditableStatus}
+              />
+
+              <button className="page__button page__button--edit" onClick={editCategoryName}>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M13.23 1H11.77L3.52002 9.25L3.35999 9.46997L1 13.59L2.41003 15L6.53003 12.64L6.75 12.48L15 4.22998V2.77002L13.23 1ZM2.41003 13.59L3.92004 10.59L5.37 12.04L2.41003 13.59ZM6.23999 11.53L4.46997 9.76001L12.47 1.76001L14.24 3.53003L6.23999 11.53Z" fill="#C5C5C5" />
+                </svg>
+              </button>
 
               <Form
                 role={'search'}

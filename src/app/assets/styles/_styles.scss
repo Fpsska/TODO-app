@@ -1,4 +1,4 @@
-@import '../styles/mixins';
+@import "../styles/mixins";
 
 // /. imports
 
@@ -137,6 +137,7 @@ body {
         flex: 1;
     }
     &__header {
+        position: relative;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -164,6 +165,32 @@ body {
             fill: #777;
             transition: all 0.25s linear;
         }
+    }
+    &__button--edit {
+        max-width: 16px;
+        left: -2rem;
+        bottom: 0;
+    }
+}
+
+.title {
+    width: 100%;
+    &__input {
+        background-color: transparent;
+        border: none;
+        margin: 0;
+        font-size: 31px;
+        font-weight: 700;
+        color: #000;
+        pointer-events: none;
+        cursor: default;
+        // hide text
+        @include sliceText;
+        max-width: calc(100vw - 680px);
+        width: 100%;
+    }
+    &__input.editable {
+        pointer-events: all;
     }
 }
 
