@@ -94,19 +94,23 @@ const TitleForm: React.FC<propTypes> = (props) => {
 
         document.addEventListener('keydown', keyHandler);
         return () => {
-            document.removeEventListener('keydown', keyHandler); 
+            document.removeEventListener('keydown', keyHandler);
         };
     }, [isEditable])
 
     return (
         <div className="title">
             <form className="title__form" onSubmit={e => inputTitleValue && formSubmitHandler(e)}>
-                <input
-                    className={isEditable ? 'title__input editable' : 'title__input'}
-                    type="text"
-                    title={`${inputTitleValue} Tasks`}
-                    value={inputTitleValue}
-                    onChange={e => setInputTitleValue(e.target.value)} />
+                {inputTitleValue === 'All' ?
+                    <h1 className="title__input general">All</h1>
+                    :
+                    <input
+                        className={isEditable ? 'title__input editable' : 'title__input'}
+                        type="text"
+                        title={`${inputTitleValue} Tasks`}
+                        value={inputTitleValue}
+                        onChange={e => setInputTitleValue(e.target.value)} />
+                }
             </form>
         </div>
     );
