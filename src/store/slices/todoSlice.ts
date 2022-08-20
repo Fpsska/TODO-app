@@ -87,18 +87,17 @@ const todoSlice = createSlice({
         },
         filterTodosDataByCategory(state, action: PayloadAction<{ category: string }>) {
             const { category } = action.payload;
-            // state.todosData = state.filteredTodosData.filter(item => item.category.toLocaleLowerCase() === category);
-            state.todosData = state.filteredTodosData.filter(item => {
+            state.filteredTodosData = state.todosData.filter(item => {
                 if (item.category.toLocaleLowerCase() === category) {
                     return item;
-                } else if (!category)
-                    return state.todosData;
+                } else if (category === '#all')
+                    return state.filteredTodosData;
             });
         },
-        editCurrentTodosDataItem(state, action: PayloadAction<{ inputValue: string, inputRadioCategoryValue: string, inputRadioStatusValue: string }>) {
-            const { inputValue, inputRadioCategoryValue, inputRadioStatusValue } = action.payload;
+        editCurrentTodosDataItem(state, action: PayloadAction<{ id: number, inputValue: string, inputRadioCategoryValue: string, inputRadioStatusValue: string }>) {
+            const { id, inputValue, inputRadioCategoryValue, inputRadioStatusValue } = action.payload;
             state.todosData.map(item => {
-                if (item.id === state.currentTodoID) {
+                if (item.id === id) {
                     return {
                         ...item,
                         title: inputValue,
@@ -107,6 +106,7 @@ const todoSlice = createSlice({
                         editable: false
                     };
                 }
+                return item;
             })
         },
         editCategoryOFCurrentTodosDataItem(state, action: PayloadAction<{ categoryValue: string }>) { //  categoryProp: string, 
@@ -115,13 +115,13 @@ const todoSlice = createSlice({
 
             // })
         },
-        switchTodosItemEditableStatus(state, action: PayloadAction<{ id: number }>) {
-            const { id } = action.payload;
-            state.todosData.map(item => item.id === id ? item.editable = true : item);
+        switchTodosItemEditableStatus(state, action: PayloadAction<{ id: number, status: boolean }>) {
+            const { id, status } = action.payload;
+            state.filteredTodosData.map(item => item.id === id ? item.editable = status : item);
         },
-        switchTodosItemCompleteStatus(state, action: PayloadAction<{ id: number }>) {
-            const { id } = action.payload;
-            state.todosData.map(item => item.id === id ? item.completed = !item.completed : item);
+        switchTodosItemCompleteStatus(state, action: PayloadAction<{ id: number, status: boolean }>) {
+            const { id, status } = action.payload;
+            state.filteredTodosData.map(item => item.id === id ? item.completed = status : item);
         },
         setTitle(state, action: PayloadAction<{ title: string }>) {
             const { title } = action.payload;
@@ -158,23 +158,22 @@ const todoSlice = createSlice({
         switchFormVisibleStatus(state, action: PayloadAction<{ status: boolean }>) {
             const { status } = action.payload;
             state.isFormVisible = status;
-        },
+        }
     },
     extraReducers: {
         [fetchTodosData.pending.type]: (state) => {
             state.status = 'loading';
         },
         [fetchTodosData.fulfilled.type]: (state, action: PayloadAction<Itodo[]>) => {
-            state.todosData = action.payload;
-
-            state.todosData.map(item => { // extend array by category, status fields
+            state.filteredTodosData = action.payload;
+            state.filteredTodosData.map(item => { // extend array by category, status fields
                 item.category = getRandomArrElement(['#Groceries', '#College', '#Payments', '']);
                 item.status = getRandomArrElement(['waiting', 'process', 'done', '']);
                 item.completed = false;
                 item.editable = false;
             })
 
-            state.filteredTodosData = action.payload;
+            state.todosData = state.filteredTodosData;
 
             state.status = 'success';
         },

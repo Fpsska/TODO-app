@@ -44,7 +44,7 @@ const SelectMenu: React.FC<propTypes> = (props) => {
                 dispatch(filterTodosDataByCategory({ category: 'all' }));
 
                 dispatch(setTitle({ title: 'All' }));
-                dispatch(switchTodosItemEditableStatus({ id: currentTodoID }));
+                dispatch(switchTodosItemEditableStatus({ id: currentTodoID, status: false }));
 
                 // dispatch(setCurrentNavSelectID([...selectTemplatesData].find(item => item.value === value)?.id));
                 // dispatch(setCurrentCategoryID([...selectTemplatesData].find(item => item.value === value)?.id));
@@ -53,7 +53,7 @@ const SelectMenu: React.FC<propTypes> = (props) => {
                 dispatch(filterTodosDataByCategory({ category: `#${value}` }));
 
                 dispatch(setTitle({ title: value.charAt(0).toUpperCase() + value.slice(1) }));
-                dispatch(switchTodosItemEditableStatus({ id: currentTodoID }));
+                dispatch(switchTodosItemEditableStatus({ id: currentTodoID, status: false }));
 
                 // dispatch(setCurrentNavSelectID([...selectTemplatesData].find(item => item.value === value)?.id));
                 // dispatch(setCurrentCategoryID([...selectTemplatesData].find(item => item.value === value)?.id));
@@ -62,7 +62,7 @@ const SelectMenu: React.FC<propTypes> = (props) => {
                 dispatch(filterTodosDataByCategory({ category: 'all' }));
 
                 dispatch(setTitle({ title: 'All' }));
-                dispatch(switchTodosItemEditableStatus({ id: currentTodoID }));
+                dispatch(switchTodosItemEditableStatus({ id: currentTodoID, status: false }));
 
             // dispatch(setCurrentNavSelectID([...selectTemplatesData].find(item => item.value === value)?.id));
             // dispatch(setCurrentCategoryID([...selectTemplatesData].find(item => item.value === value)?.id));

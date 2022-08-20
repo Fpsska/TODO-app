@@ -6,7 +6,8 @@ import {
     removeTodosDataItem,
     setCurrentTodoID,
     switchTodosItemCompleteStatus,
-    switchTodosItemEditableStatus
+    switchTodosItemEditableStatus,
+    setTodosData
 } from '../../../store/slices/todoSlice';
 
 
@@ -41,14 +42,14 @@ const TodoTemplate: React.FC<propTypes> = (props) => {
     const dispatch = useAppDispatch();
 
     const handleCompleteStatus = (): void => {
-        dispatch(switchTodosItemCompleteStatus({ id }));
+        dispatch(switchTodosItemCompleteStatus({ id, status: completed }));
     };
 
     const editTodoItem = (): void => {
         setVisibleStatus(true);
 
         dispatch(setCurrentTodoID({ id }));
-        dispatch(switchTodosItemEditableStatus({ id }));  // set editable css-class
+        dispatch(switchTodosItemEditableStatus({ id, status: true }));  // set editable css-class
     };
 
     const deleteTodoItem = (): void => {
@@ -58,10 +59,10 @@ const TodoTemplate: React.FC<propTypes> = (props) => {
     return (
         <li className="todo__item">
 
-            <label className={completed ? 'todo__label completed' : 'todo__label'} onClick={handleCompleteStatus} title={title}>
+            <label className={completed ? 'todo__label completed' : 'todo__label'} title={title} onClick={handleCompleteStatus}>
                 <input className="todo__checkbox" type="checkbox" />
                 <span className="todo__checkbox--fake"></span>
-                <span className={`todo__label-text ${editable && !category && 'editable large'} ${editable && 'editable'}  ${!category && 'large'}`}>
+                <span className={`todo__label-text ${editable && !category && 'editable large'} ${editable && 'editable'}  ${!category && 'large'}`} >
                     {title}
                 </span>
             </label>

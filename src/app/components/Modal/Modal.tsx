@@ -39,13 +39,13 @@ const Modal: React.FC<propTypes> = (props) => {
     const formSubmitHandler = (e: React.SyntheticEvent): any => {
         e.preventDefault();
 
-        dispatch(editCurrentTodosDataItem({ inputValue, inputRadioCategoryValue, inputRadioStatusValue }));
+        dispatch(editCurrentTodosDataItem({id: currentTodoID, inputValue, inputRadioCategoryValue, inputRadioStatusValue }));
 
         setVisibleStatus(false);
     };
 
     const closeModal = (): void => {
-        dispatch(switchTodosItemEditableStatus({ id: currentTodoID })); // remove editable css-class
+        dispatch(switchTodosItemEditableStatus({ id: currentTodoID, status: false })); // remove editable css-class
         setVisibleStatus(false);
     };
 

@@ -38,12 +38,13 @@ const NavTemplate: React.FC<propTypes> = (props) => {
         setEditableStatus
     } = props;
 
-    const { todosData, error, isTodosDataLoading } = useAppSelector(state => state.todoSlice);
+    const { todosData, filteredTodosData, error, isTodosDataLoading } = useAppSelector(state => state.todoSlice);
 
     const dispatch = useAppDispatch();
 
     const [todoCount, setTodoCount] = useState<number>(0);
 
+    // console.log(todosData)
 
     useEffect(() => { // set current todo items count for each category
         const array = [...todosData].filter(item => item.category.toLocaleLowerCase() === `#${category}`);
@@ -56,7 +57,7 @@ const NavTemplate: React.FC<propTypes> = (props) => {
             case 'all':
                 dispatch(switchNavActiveStatus({ id }));
 
-                dispatch(filterTodosDataByCategory({ category: '' }));
+                dispatch(filterTodosDataByCategory({ category: `#${category}` }));
 
                 dispatch(setTitle({ title: text }));
                 dispatch(setCurrentNavID({ id }));
@@ -76,7 +77,7 @@ const NavTemplate: React.FC<propTypes> = (props) => {
             default:
                 dispatch(switchNavActiveStatus({ id }));
 
-                dispatch(filterTodosDataByCategory({ category: '' }));
+                dispatch(filterTodosDataByCategory({ category: '#all' }));
 
                 dispatch(setTitle({ title: 'All' }));
                 dispatch(setCurrentNavID({ id }));

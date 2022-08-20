@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 
 import { setInputTitleValue } from '../../../store/slices/todoSlice';
 
-import { setTodosData, setFilteredTodosData } from '../../../store/slices/todoSlice';
+import { setTodosData, setFilteredTodosData, switchTodosItemEditableStatus } from '../../../store/slices/todoSlice';
 
 import { useAreaHandler } from '../../hooks/useAreaHandler';
 
@@ -69,7 +69,7 @@ const App: React.FC = () => {
   }, [filteredTodosData]);
 
   useEffect(() => { // remove editable css-class when modal is hidden
-    !modalHandler.isVisible && setTodosData([...todosData].map(item => item.id === currentTodoID ? { ...item, editable: false } : item));
+    !modalHandler.isVisible && dispatch(switchTodosItemEditableStatus({id: currentTodoID, status: false}));
   }, [modalHandler.isVisible]);
 
   useEffect(() => { // update setInputTitleValue 
@@ -195,6 +195,7 @@ const App: React.FC = () => {
                     :
                     <TodoList
                       todosData={todosData}
+                      filteredTodosData={filteredTodosData}
                       setVisibleStatus={modalHandler.setVisibleStatus}
                       isFormVisible={isFormVisible}
                     />
