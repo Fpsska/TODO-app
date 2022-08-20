@@ -92,13 +92,16 @@ const todoSlice = createSlice({
             state.filteredTodosData = action.payload;
         },
 
+        filterTodosDataByCategory(state, action: PayloadAction<{category: string}>) {
+            const {category} = action.payload;
+            state.todosData = state.filteredTodosData.filter(item => item.category.toLocaleLowerCase() === `#${category}`);
+        },
+
         setTitle(state, action: PayloadAction<string>) {
             state.title = action.payload;
         },
 
-        setNavTemplatesData(state, action: PayloadAction<Inav[]>) {
-            state.navTemplatesData = action.payload;
-        },
+
         switchNavActiveStatus(state, action: PayloadAction<{id: number}>) {
             const { id } = action.payload;
             state.navTemplatesData.map(item => item.id === id ? item.isActive === true : item.isActive = false);
@@ -145,10 +148,10 @@ export const {
     switchTodosDataLoadingStatus,
     setTodosData,
     setFilteredTodosData,
+    filterTodosDataByCategory,
 
     setTitle,
 
-    setNavTemplatesData,
     setCurrentNavID,
     switchNavActiveStatus,
 

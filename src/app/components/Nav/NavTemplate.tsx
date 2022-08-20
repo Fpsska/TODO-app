@@ -4,9 +4,10 @@ import { useAppSelector, useAppDispatch } from '../../../store/hooks';
 
 import {
     switchNavActiveStatus,
-    setCurrentCategoryID,
     setCurrentNavID,
-    setTitle
+    setCurrentCategoryID,
+    setTitle,
+    filterTodosDataByCategory
 } from '../../../store/slices/todoSlice';
 
 import { Inav } from '../../types/navTypes';
@@ -37,7 +38,7 @@ const NavTemplate: React.FC<propTypes> = (props) => {
         setEditableStatus
     } = props;
 
-    const { todosData, navTemplatesData, error, isTodosDataLoading } = useAppSelector(state => state.todoSlice);
+    const { todosData, error, isTodosDataLoading } = useAppSelector(state => state.todoSlice);
 
     const dispatch = useAppDispatch();
 
@@ -53,34 +54,33 @@ const NavTemplate: React.FC<propTypes> = (props) => {
     const filterTodoItems = (): void => {
         switch (category) {
             case 'all':
-                dispatch(switchNavActiveStatus({ id }));
+                dispatch(switchNavActiveStatus({id}));
 
-                setFilteredTodosData(todosData);
+                dispatch(filterTodosDataByCategory({category: 'all'}));
 
                 dispatch(setTitle(text));
-                setCurrentNavID(id);
-                setCurrentCategoryID(id);
+                dispatch(setCurrentNavID(id));
+                dispatch(setCurrentCategoryID(id));
                 setEditableStatus(false);
                 break;
             case category:
-                dispatch(switchNavActiveStatus({ id }));
+                dispatch(switchNavActiveStatus({id}));
 
-                setFilteredTodosData([...todosData].filter(item => item.category.toLocaleLowerCase() === `#${category}`));
+                dispatch(filterTodosDataByCategory({category: `#${category}`}))
 
                 dispatch(setTitle(text));
-                setCurrentNavID(id);
-                setCurrentCategoryID(id);
+                dispatch(setCurrentNavID(id));
+                dispatch(setCurrentCategoryID(id));
                 setEditableStatus(false);
                 break;
             default:
-                dispatch(switchNavActiveStatus({ id }));
+                dispatch(switchNavActiveStatus({id}));
 
-                setFilteredTodosData(todosData);
+                dispatch(filterTodosDataByCategory({category: 'all'}));
 
                 dispatch(setTitle('All'));
-
-                setCurrentNavID(id);
-                setCurrentCategoryID(id);
+                dispatch(setCurrentNavID(id));
+                dispatch(setCurrentCategoryID(id));
                 setEditableStatus(false);
         }
     };

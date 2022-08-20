@@ -33,6 +33,7 @@ const App: React.FC = () => {
   const {
     todosData,
     filteredTodosData,
+    navTemplatesData,
     isTodosDataLoading,
     error,
     title
@@ -45,36 +46,6 @@ const App: React.FC = () => {
 
   const [inputTitleValue, setInputTitleValue] = useState<string>('All'); // title
 
-  const [navTemplatesData, setNavTemplatesData] = useState<Inav[]>([
-    {
-      id: 1,
-      text: 'All',
-      category: 'all',
-      link: '#',
-      isActive: true
-    },
-    {
-      id: 2,
-      text: 'Groceries',
-      category: 'groceries',
-      link: '#',
-      isActive: false
-    },
-    {
-      id: 4,
-      text: 'College',
-      category: 'college',
-      link: '#',
-      isActive: false
-    },
-    {
-      id: 5,
-      text: 'Payments',
-      category: 'payments',
-      link: '#',
-      isActive: false
-    }
-  ]);
   const [categoryTemplatesData, setCategoryTemplatesData] = useState<Icategory[]>([
     {
       id: 1,
@@ -208,9 +179,6 @@ const App: React.FC = () => {
             </div>
             <Nav
               navTemplatesData={navTemplatesData}
-              setNavTemplatesData={setNavTemplatesData}
-              setCurrentNavID={setCurrentNavID}
-              setCurrentCategoryID={setCurrentCategoryID}
               setEditableStatus={titleFormHandler.setVisibleStatus}
             />
             <div className="page__category-form">
