@@ -26,11 +26,10 @@ import './App.css';
 
 const App: React.FC = () => {
 
-
   const [isDataEmpty, setDataEmptyStatus] = useState<boolean>(true);
   const [isFormVisible, setFormVisibleStatus] = useState<boolean>(false);
 
-  const [inputTitleValue, setInputTitleValue] = useState<string>(title);
+  const [inputTitleValue, setInputTitleValue] = useState<string>('All'); // title
 
   const [navTemplatesData, setNavTemplatesData] = useState<Inav[]>([
     {
@@ -111,10 +110,10 @@ const App: React.FC = () => {
     }
   ]);
 
-  const [currentTodoID, setCurrentTodoID] = useState<number>(todosData[0]?.id);
-  const [currentNavID, setCurrentNavID] = useState<number>(navTemplatesData[0]?.id);
-  const [currentNavSelectID, setCurrentNavSelectID] = useState<number>(selectTemplatesData[0]?.id);
-  const [currentCategoryID, setCurrentCategoryID] = useState<number>(categoryTemplatesData[0]?.id);
+  const [currentTodoID, setCurrentTodoID] = useState<number>(1); // todosData[0]?.id
+  const [currentNavID, setCurrentNavID] = useState<number>(1); // navTemplatesData[0]?.id
+  const [currentNavSelectID, setCurrentNavSelectID] = useState<number>(1); // selectTemplatesData[0]?.id
+  const [currentCategoryID, setCurrentCategoryID] = useState<number>(1); // categoryTemplatesData[0]?.id
 
   // /. state
 
@@ -138,9 +137,9 @@ const App: React.FC = () => {
     !modalHandler.isVisible && setTodosData([...todosData].map(item => item.id === currentTodoID ? { ...item, editable: false } : item));
   }, [modalHandler.isVisible]);
 
-  useEffect(() => { // update title value
-    setInputTitleValue(title);
-  }, [title]);
+  // useEffect(() => { // update title value
+  //   setInputTitleValue(title);
+  // }, [title]);
 
 
   const openBurger = (e: React.SyntheticEvent): void => {
