@@ -33,15 +33,18 @@ const App: React.FC = () => {
   const {
     todosData,
     filteredTodosData,
-    navTemplatesData,
-    selectTemplatesData,
     currentTodoID,
-    currentNavID,
-    currentNavSelectID,
     isTodosDataLoading,
     error,
     title
   } = useAppSelector(state => state.todoSlice);
+
+  const {
+    navTemplatesData,
+    selectTemplatesData,
+    currentNavID,
+    currentNavSelectID
+  } = useAppSelector(state => state.navSlice);
 
   const dispatch = useAppDispatch();
 

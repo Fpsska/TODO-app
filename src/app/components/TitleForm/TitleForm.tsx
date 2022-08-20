@@ -3,15 +3,16 @@ import React from 'react';
 import { useAppDispatch } from '../../../store/hooks';
 
 import {
-    editCurrentNavTemplateItem,
-    editCurrentNavSelectTemplateItem,
     editCurrentCategoryTemplateItem,
     editCategoryOFCurrentTodosDataItem
 } from '../../../store/slices/todoSlice';
+import {
+    editCurrentNavTemplateItem,
+    editCurrentNavSelectTemplateItem,
+} from '../../../store/slices/navSlice';
 
 import { Inav } from '../../types/navTypes';
 import { Itodo } from '../../types/todoTypes';
-import { Icategory } from '../../types/categoryTypes';
 import { Iselect } from '../../types/selectTypes';
 
 import './titleForm.scss'
@@ -47,7 +48,6 @@ const TitleForm: React.FC<propTypes> = (props) => {
     } = props;
 
     const dispatch = useAppDispatch();
-
 
     const formSubmitHandler = (e: React.FormEvent): void => {
         e.preventDefault();

@@ -3,12 +3,12 @@ import React from 'react';
 import { useAppDispatch } from '../../../store/hooks';
 
 import {
-    setCurrentNavSelectID,
     setCurrentCategoryID,
     switchTodosItemEditableStatus,
     filterTodosDataByCategory,
     setTitle,
 } from '../../../store/slices/todoSlice';
+import { setCurrentNavSelectID } from '../../../store/slices/navSlice';
 
 import { Iselect } from '../../types/selectTypes';
 
@@ -64,8 +64,8 @@ const SelectMenu: React.FC<propTypes> = (props) => {
                 dispatch(setTitle({ title: 'All' }));
                 dispatch(switchTodosItemEditableStatus({ id: currentTodoID }));
 
-                // dispatch(setCurrentNavSelectID([...selectTemplatesData].find(item => item.value === value)?.id));
-                // dispatch(setCurrentCategoryID([...selectTemplatesData].find(item => item.value === value)?.id));
+            // dispatch(setCurrentNavSelectID([...selectTemplatesData].find(item => item.value === value)?.id));
+            // dispatch(setCurrentCategoryID([...selectTemplatesData].find(item => item.value === value)?.id));
         };
     };
 

@@ -2,11 +2,8 @@ import React, { useState, useRef } from 'react';
 
 import { useAppDispatch } from '../../../store/hooks';
 
-import {
-    addNavTemplateItem,
-    addNewCategoryItem,
-    addNewSelectItem
-} from '../../../store/slices/todoSlice';
+import { addNewCategoryItem } from '../../../store/slices/todoSlice';
+import { addNavTemplateItem, addNewSelectItem } from '../../../store/slices/navSlice';
 
 import './categoryForm.scss';
 

@@ -3,14 +3,14 @@ import React, { useState, useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../../../store/hooks';
 
 import {
-    switchNavActiveStatus,
-    setCurrentNavID,
     setCurrentCategoryID,
     setTitle,
     filterTodosDataByCategory
 } from '../../../store/slices/todoSlice';
-
-import { Inav } from '../../types/navTypes';
+import {
+    switchNavActiveStatus,
+    setCurrentNavID,
+} from '../../../store/slices/navSlice';
 
 // /. imports
 
