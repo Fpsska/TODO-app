@@ -56,7 +56,7 @@ const NavTemplate: React.FC<propTypes> = (props) => {
             case 'all':
                 dispatch(switchNavActiveStatus({ id }));
 
-                dispatch(filterTodosDataByCategory({ category: 'all' }));
+                dispatch(filterTodosDataByCategory({ category: '' }));
 
                 dispatch(setTitle({ title: text }));
                 dispatch(setCurrentNavID({ id }));
@@ -76,7 +76,7 @@ const NavTemplate: React.FC<propTypes> = (props) => {
             default:
                 dispatch(switchNavActiveStatus({ id }));
 
-                dispatch(filterTodosDataByCategory({ category: 'all' }));
+                dispatch(filterTodosDataByCategory({ category: '' }));
 
                 dispatch(setTitle({ title: 'All' }));
                 dispatch(setCurrentNavID({ id }));

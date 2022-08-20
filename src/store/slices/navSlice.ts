@@ -32,14 +32,14 @@ const initialState: navSliceState = {
             isActive: false
         },
         {
-            id: 4,
+            id: 3,
             text: 'College',
             category: 'college',
             link: '#',
             isActive: false
         },
         {
-            id: 5,
+            id: 4,
             text: 'Payments',
             category: 'payments',
             link: '#',
@@ -81,7 +81,7 @@ const navSlice = createSlice({
     reducers: {
         switchNavActiveStatus(state, action: PayloadAction<{ id: number }>) {
             const { id } = action.payload;
-            state.navTemplatesData.map(item => item.id === id ? item.isActive === true : item.isActive = false);
+            state.navTemplatesData.map(item => item.id === id ? item.isActive = true : item.isActive = false);
         },
         setCurrentNavID(state, action: PayloadAction<{ id: number }>) {
             const { id } = action.payload;

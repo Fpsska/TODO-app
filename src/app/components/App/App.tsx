@@ -73,7 +73,7 @@ const App: React.FC = () => {
   }, [modalHandler.isVisible]);
 
   useEffect(() => { // update setInputTitleValue 
-    dispatch(setInputTitleValue({title: title}));
+    dispatch(setInputTitleValue({ title: title }));
   }, [title]);
 
 
@@ -194,7 +194,7 @@ const App: React.FC = () => {
                     </>
                     :
                     <TodoList
-                      filteredTodosData={filteredTodosData}
+                      todosData={todosData}
                       setVisibleStatus={modalHandler.setVisibleStatus}
                       isFormVisible={isFormVisible}
                     />

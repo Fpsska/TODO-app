@@ -9,7 +9,7 @@ import './todo.scss';
 // /. imports
 
 interface propTypes {
-    filteredTodosData: Itodo[];
+    todosData: Itodo[];
     setVisibleStatus: (arg: boolean) => void;
     isFormVisible: boolean
 }
@@ -17,14 +17,14 @@ interface propTypes {
 const TodoList: React.FC<propTypes> = (props) => {
 
     const {
-        filteredTodosData,
+        todosData,
         setVisibleStatus,
         isFormVisible
     } = props;
 
     return (
         <ul className={isFormVisible ? 'todo minimized' : 'todo'}>
-            {filteredTodosData.map((item: Itodo) => {
+            {todosData.map((item: Itodo) => {
                 return (
                     <TodoTemplate
                         key={item.id}

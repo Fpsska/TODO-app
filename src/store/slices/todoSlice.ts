@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction, current } from '@reduxjs/toolkit';
 
 import { fetchTodosData } from '../../app/api/fetchTodosData';
 
@@ -78,7 +78,7 @@ const todoSlice = createSlice({
         setTodosData(state, action: PayloadAction<Itodo[]>) {
             state.todosData = action.payload;
         },
-        setFilteredTodosData(state, action: PayloadAction<Itodo[]>) {
+        setFilteredTodosData(state, action: PayloadAction<Itodo[]>) { // FORM.TSX
             state.filteredTodosData = action.payload;
         },
         removeTodosDataItem(state, action: PayloadAction<{ id: number }>) {
@@ -87,7 +87,13 @@ const todoSlice = createSlice({
         },
         filterTodosDataByCategory(state, action: PayloadAction<{ category: string }>) {
             const { category } = action.payload;
-            state.todosData = state.filteredTodosData.filter(item => item.category.toLocaleLowerCase() === category);
+            // state.todosData = state.filteredTodosData.filter(item => item.category.toLocaleLowerCase() === category);
+            state.todosData = state.filteredTodosData.filter(item => {
+                if (item.category.toLocaleLowerCase() === category) {
+                    return item;
+                } else if (!category)
+                    return state.todosData;
+            });
         },
         editCurrentTodosDataItem(state, action: PayloadAction<{ inputValue: string, inputRadioCategoryValue: string, inputRadioStatusValue: string }>) {
             const { inputValue, inputRadioCategoryValue, inputRadioStatusValue } = action.payload;
@@ -103,10 +109,10 @@ const todoSlice = createSlice({
                 }
             })
         },
-        editCategoryOFCurrentTodosDataItem(state, action: PayloadAction<{categoryValue: string }>) { //  categoryProp: string, 
+        editCategoryOFCurrentTodosDataItem(state, action: PayloadAction<{ categoryValue: string }>) { //  categoryProp: string, 
             // const {  categoryValue } = action.payload; // categoryProp,
             // state.todosData.map(item => {
-                
+
             // })
         },
         switchTodosItemEditableStatus(state, action: PayloadAction<{ id: number }>) {
