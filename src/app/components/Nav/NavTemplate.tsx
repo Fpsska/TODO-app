@@ -54,33 +54,33 @@ const NavTemplate: React.FC<propTypes> = (props) => {
     const filterTodoItems = (): void => {
         switch (category) {
             case 'all':
-                dispatch(switchNavActiveStatus({id}));
+                dispatch(switchNavActiveStatus({ id }));
 
-                dispatch(filterTodosDataByCategory({category: 'all'}));
+                dispatch(filterTodosDataByCategory({ category: 'all' }));
 
-                dispatch(setTitle(text));
-                dispatch(setCurrentNavID(id));
-                dispatch(setCurrentCategoryID(id));
+                dispatch(setTitle({ title: text }));
+                dispatch(setCurrentNavID({ id }));
+                dispatch(setCurrentCategoryID({ id }));
                 setEditableStatus(false);
                 break;
             case category:
-                dispatch(switchNavActiveStatus({id}));
+                dispatch(switchNavActiveStatus({ id }));
 
-                dispatch(filterTodosDataByCategory({category: `#${category}`}))
+                dispatch(filterTodosDataByCategory({ category: `#${category}` }))
 
-                dispatch(setTitle(text));
-                dispatch(setCurrentNavID(id));
-                dispatch(setCurrentCategoryID(id));
+                dispatch(setTitle({ title: text }));
+                dispatch(setCurrentNavID({ id }));
+                dispatch(setCurrentCategoryID({ id }));
                 setEditableStatus(false);
                 break;
             default:
-                dispatch(switchNavActiveStatus({id}));
+                dispatch(switchNavActiveStatus({ id }));
 
-                dispatch(filterTodosDataByCategory({category: 'all'}));
+                dispatch(filterTodosDataByCategory({ category: 'all' }));
 
-                dispatch(setTitle('All'));
-                dispatch(setCurrentNavID(id));
-                dispatch(setCurrentCategoryID(id));
+                dispatch(setTitle({ title: 'All' }));
+                dispatch(setCurrentNavID({ id }));
+                dispatch(setCurrentCategoryID({ id }));
                 setEditableStatus(false);
         }
     };

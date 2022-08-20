@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { useAppDispatch } from '../../../store/hooks';
+
 import { Itodo } from '../../types/todoTypes';
 
 // /. imports
@@ -36,6 +38,7 @@ const TodoTemplate: React.FC<propTypes> = (props) => {
         setCurrentTodoID
     } = props;
 
+    const dispatch = useAppDispatch();
     
     const handleCompleteStatus = (): void => {
         setTodosData([...todosData].map(item => item.id === id ? { ...item, completed: !completed } : item));

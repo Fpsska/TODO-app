@@ -100,26 +100,26 @@ const initialState: todoSliceState = {
     ],
     selectTemplatesData: [
         {
-          id: 1,
-          text: 'All',
-          value: 'all'
+            id: 1,
+            text: 'All',
+            value: 'all'
         },
         {
-          id: 2,
-          text: 'Groceries',
-          value: 'groceries'
+            id: 2,
+            text: 'Groceries',
+            value: 'groceries'
         },
         {
-          id: 3,
-          text: 'College',
-          value: 'college'
+            id: 3,
+            text: 'College',
+            value: 'college'
         },
         {
-          id: 4,
-          text: 'Payments',
-          value: 'payments'
+            id: 4,
+            text: 'Payments',
+            value: 'payments'
         }
-      ],
+    ],
     currentNavID: 1,
 
     currentCategoryID: 1,
@@ -136,8 +136,9 @@ const todoSlice = createSlice({
     name: 'todoSlice',
     initialState,
     reducers: {
-        switchTodosDataLoadingStatus(state, action: PayloadAction<boolean>) {
-            state.isTodosDataLoading = action.payload;
+        switchTodosDataLoadingStatus(state, action: PayloadAction<{status: boolean}>) {
+            const { status } = action.payload;
+            state.isTodosDataLoading = status;
         },
         setTodosData(state, action: PayloadAction<Itodo[]>) {
             state.todosData = action.payload;
@@ -151,7 +152,7 @@ const todoSlice = createSlice({
             state.todosData = state.filteredTodosData.filter(item => item.category.toLocaleLowerCase() === category);
         },
         editCurrentTodosDataItem(state, action: PayloadAction<{ inputValue: string, inputRadioCategoryValue: string, inputRadioStatusValue: string }>) {
-            const {inputValue, inputRadioCategoryValue, inputRadioStatusValue} = action.payload;
+            const { inputValue, inputRadioCategoryValue, inputRadioStatusValue } = action.payload;
             state.todosData.map(item => {
                 if (item.id === state.currentTodoID) {
                     return {
@@ -162,16 +163,17 @@ const todoSlice = createSlice({
                         editable: false
                     };
                 }
-            })  
+            })
         },
-        switchTodosItemEditableStatus(state, action: PayloadAction<{id: number}>) {
-            const {id} = action.payload;
+        switchTodosItemEditableStatus(state, action: PayloadAction<{ id: number }>) {
+            const { id } = action.payload;
             state.todosData.map(item => item.id === id ? item.editable = true : item);
 
         },
 
-        setTitle(state, action: PayloadAction<string>) {
-            state.title = action.payload;
+        setTitle(state, action: PayloadAction<{ title: string }>) {
+            const { title } = action.payload;
+            state.title = title;
         },
 
 
@@ -179,27 +181,31 @@ const todoSlice = createSlice({
             const { id } = action.payload;
             state.navTemplatesData.map(item => item.id === id ? item.isActive === true : item.isActive = false);
         },
-        setCurrentNavID(state, action: PayloadAction<number>) {
-            state.currentNavID = action.payload;
+        setCurrentNavID(state, action: PayloadAction<{ id: number }>) {
+            const { id } = action.payload;
+            state.currentNavID = id;
         },
         addNavTemplateItem(state, action: PayloadAction<any>) {
             state.navTemplatesData.push(action.payload);
         },
 
-        setCurrentCategoryID(state, action: PayloadAction<number>) {
-            state.currentNavID = action.payload;
+        setCurrentCategoryID(state, action: PayloadAction<{ id: number }>) {
+            const { id } = action.payload;
+            state.currentCategoryID = id;
         },
         addNewCategoryItem(state, action: PayloadAction<any>) {
             state.categoryTemplatesData.push(action.payload);
         },
 
 
-        setCurrentNavSelectID(state, action: PayloadAction<number>) {
-            state.currentNavSelectID = action.payload;
+        setCurrentNavSelectID(state, action: PayloadAction<{ id: number }>) {
+            const { id } = action.payload;
+            state.currentNavSelectID = id;
         },
         addNewSelectItem(state, action: PayloadAction<any>) {
             state.selectTemplatesData.push(action.payload);
         },
+
 
 
     },
@@ -247,6 +253,7 @@ export const {
 
     setCurrentNavSelectID,
     addNewSelectItem
+
 
 
 } = todoSlice.actions;
