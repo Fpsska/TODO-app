@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 
-import { MyContext } from '../../context/context';
-
 import { Itodo } from '../../types/todoTypes';
 
 import { useFetchTodosData } from '../../api/useFetchTodosData';
@@ -20,17 +18,6 @@ const Layout: React.FC = () => {
     const [filteredTodosData, setFilteredTodosData] = useState<Itodo[]>(todosData); // []
     const [title, setTitle] = useState<string>('All');
 
-    const contextData = {
-        todosData,
-        setTodosData,
-        filteredTodosData,
-        setFilteredTodosData,
-        isDataTLoading,
-        error,
-        title,
-        setTitle
-    }
-
     useEffect(() => { // get todosData at initial App.tsx render
         fetchTodosData();
     }, []);
@@ -43,11 +30,7 @@ const Layout: React.FC = () => {
         setFilteredTodosData(todosData);
     }, [todosData]);
 
-    return (
-        <MyContext.Provider value={contextData}>
-            <App />
-        </MyContext.Provider>
-    );
+    return (<App />);
 };
 
 export default Layout;
