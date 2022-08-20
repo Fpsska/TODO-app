@@ -4,7 +4,8 @@ import { useAppDispatch } from '../../../store/hooks';
 
 import {
     editCurrentCategoryTemplateItem,
-    editCategoryOFCurrentTodosDataItem
+    editCategoryOFCurrentTodosDataItem,
+    setInputTitleValue
 } from '../../../store/slices/todoSlice';
 import {
     editCurrentNavTemplateItem,
@@ -24,7 +25,6 @@ interface propTypes {
     isEditable: boolean;
     inputTitleValue: string;
     setEditableStatus: (arg: boolean) => void;
-    setInputTitleValue: (arg: string) => void;
     todosData: Itodo[];
     navTemplatesData: Inav[];
     selectTemplatesData: Iselect[];
@@ -38,7 +38,6 @@ const TitleForm: React.FC<propTypes> = (props) => {
         refEl,
         isEditable,
         inputTitleValue,
-        setInputTitleValue,
         setEditableStatus,
         todosData,
         navTemplatesData,
@@ -121,7 +120,7 @@ const TitleForm: React.FC<propTypes> = (props) => {
                         type="text"
                         title={`${inputTitleValue} Tasks`}
                         value={inputTitleValue}
-                        onChange={e => setInputTitleValue(e.target.value)} />
+                        onChange={e => dispatch(setInputTitleValue({title: e.target.value}))} />
                 }
             </form>
         </div>

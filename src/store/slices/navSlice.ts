@@ -69,7 +69,7 @@ const initialState: navSliceState = {
         }
     ],
     currentNavID: 1,
-    currentNavSelectID: 1,
+    currentNavSelectID: 1
 };
 
 // /. initialState

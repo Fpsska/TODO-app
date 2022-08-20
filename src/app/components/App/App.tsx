@@ -2,11 +2,9 @@ import React, { useState, useEffect } from 'react';
 
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 
-import { setTodosData, setFilteredTodosData, setTitle } from '../../../store/slices/todoSlice';
+import { setInputTitleValue } from '../../../store/slices/todoSlice';
 
-import { Inav } from '../../types/navTypes';
-import { Icategory } from '../../types/categoryTypes';
-import { Iselect } from '../../types/selectTypes';
+import { setTodosData, setFilteredTodosData } from '../../../store/slices/todoSlice';
 
 import { useAreaHandler } from '../../hooks/useAreaHandler';
 
@@ -35,8 +33,10 @@ const App: React.FC = () => {
     filteredTodosData,
     currentTodoID,
     isTodosDataLoading,
+    isFormVisible,
     error,
-    title
+    title,
+    inputTitleValue
   } = useAppSelector(state => state.todoSlice);
 
   const {
@@ -49,9 +49,6 @@ const App: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const [isDataEmpty, setDataEmptyStatus] = useState<boolean>(true);
-  const [isFormVisible, setFormVisibleStatus] = useState<boolean>(false);
-
-  const [inputTitleValue, setInputTitleValue] = useState<string>(title); // title
 
   // /. state
 
@@ -75,9 +72,9 @@ const App: React.FC = () => {
     !modalHandler.isVisible && setTodosData([...todosData].map(item => item.id === currentTodoID ? { ...item, editable: false } : item));
   }, [modalHandler.isVisible]);
 
-  // useEffect(() => { // update title value
-  //   setInputTitleValue(title);
-  // }, [title]);
+  useEffect(() => { // update setInputTitleValue 
+    dispatch(setInputTitleValue({title: title}));
+  }, [title]);
 
 
   const openBurger = (e: React.SyntheticEvent): void => {
@@ -125,10 +122,7 @@ const App: React.FC = () => {
               setEditableStatus={titleFormHandler.setVisibleStatus}
             />
             <div className="page__category-form">
-              <CategoryForm
-                isFormVisible={isFormVisible}
-                setFormVisibleStatus={setFormVisibleStatus}
-              />
+              <CategoryForm />
             </div>
           </div>
 
@@ -156,7 +150,6 @@ const App: React.FC = () => {
                 isEditable={titleFormHandler.isVisible}
                 setEditableStatus={titleFormHandler.setVisibleStatus}
                 inputTitleValue={inputTitleValue}
-                setInputTitleValue={setInputTitleValue}
                 todosData={todosData}
                 navTemplatesData={navTemplatesData}
                 selectTemplatesData={selectTemplatesData}

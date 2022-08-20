@@ -12,17 +12,15 @@ import { getRandomArrElement } from '../../app/helpers/getRandomArrElement';
 interface todoSliceState {
     todosData: Itodo[];
     filteredTodosData: Itodo[];
+    categoryTemplatesData: Icategory[];
     isTodosDataLoading: boolean;
+    isFormVisible: boolean;
     status: string;
     error: any;
-
     title: string;
-
-    categoryTemplatesData: Icategory[];
-
+    inputTitleValue: string;
     currentCategoryID: number;
     currentTodoID: number;
-
 }
 
 // /. interfaces
@@ -30,13 +28,6 @@ interface todoSliceState {
 const initialState: todoSliceState = {
     todosData: [],
     filteredTodosData: [],
-    isTodosDataLoading: true,
-    status: '',
-    error: null,
-
-    title: 'All',
-
-
     categoryTemplatesData: [
         {
             id: 1,
@@ -63,7 +54,12 @@ const initialState: todoSliceState = {
             value: ''
         }
     ],
-
+    isTodosDataLoading: true,
+    isFormVisible: false,
+    status: '',
+    error: null,
+    title: 'All',
+    inputTitleValue: '',
     currentCategoryID: 1,
     currentTodoID: 1
 };
@@ -85,7 +81,6 @@ const todoSlice = createSlice({
         setFilteredTodosData(state, action: PayloadAction<Itodo[]>) {
             state.filteredTodosData = action.payload;
         },
-
         removeTodosDataItem(state, action: PayloadAction<{ id: number }>) {
             const { id } = action.payload;
             state.todosData = state.todosData.filter(item => item.id !== id);
@@ -109,10 +104,10 @@ const todoSlice = createSlice({
             })
         },
         editCategoryOFCurrentTodosDataItem(state, action: PayloadAction<{categoryValue: string }>) { //  categoryProp: string, 
-            const {  categoryValue } = action.payload; // categoryProp,
-            state.todosData.map(item => {
+            // const {  categoryValue } = action.payload; // categoryProp,
+            // state.todosData.map(item => {
                 
-            })
+            // })
         },
         switchTodosItemEditableStatus(state, action: PayloadAction<{ id: number }>) {
             const { id } = action.payload;
@@ -122,12 +117,14 @@ const todoSlice = createSlice({
             const { id } = action.payload;
             state.todosData.map(item => item.id === id ? item.completed = !item.completed : item);
         },
-
         setTitle(state, action: PayloadAction<{ title: string }>) {
             const { title } = action.payload;
             state.title = title;
         },
-
+        setInputTitleValue(state, action: PayloadAction<{ title: string }>) {
+            const { title } = action.payload;
+            state.inputTitleValue = title;
+        },
         setCurrentCategoryID(state, action: PayloadAction<{ id: number }>) {
             const { id } = action.payload;
             state.currentCategoryID = id;
@@ -148,10 +145,13 @@ const todoSlice = createSlice({
                 return item;
             })
         },
-
         setCurrentTodoID(state, action: PayloadAction<{ id: number }>) {
             const { id } = action.payload;
             state.currentTodoID = id;
+        },
+        switchFormVisibleStatus(state, action: PayloadAction<{ status: boolean }>) {
+            const { status } = action.payload;
+            state.isFormVisible = status;
         },
     },
     extraReducers: {
@@ -189,14 +189,13 @@ export const {
     editCategoryOFCurrentTodosDataItem,
     switchTodosItemEditableStatus,
     switchTodosItemCompleteStatus,
-
     setTitle,
-
+    setInputTitleValue,
     setCurrentCategoryID,
     addNewCategoryItem,
     editCurrentCategoryTemplateItem,
-
-    setCurrentTodoID
+    setCurrentTodoID,
+    switchFormVisibleStatus
 } = todoSlice.actions;
 
 export default todoSlice.reducer;

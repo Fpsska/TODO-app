@@ -1,6 +1,8 @@
 import React, { useState, useRef } from 'react';
 
-import { useAppDispatch } from '../../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+
+import { switchFormVisibleStatus } from '../../../store/slices/todoSlice';
 
 import { addNewCategoryItem } from '../../../store/slices/todoSlice';
 import { addNavTemplateItem, addNewSelectItem } from '../../../store/slices/navSlice';
@@ -9,19 +11,10 @@ import './categoryForm.scss';
 
 // /. imports 
 
-interface propTypes {
-    isFormVisible: boolean;
-    setFormVisibleStatus: (arg: boolean) => void
-}
 
-// /. interfaces
+const CategoryForm: React.FC = () => {
 
-const CategoryForm: React.FC<propTypes> = (props) => {
-
-    const {
-        isFormVisible,
-        setFormVisibleStatus
-    } = props;
+    const { isFormVisible } = useAppSelector(state => state.todoSlice);
 
     const dispatch = useAppDispatch();
 
@@ -53,7 +46,7 @@ const CategoryForm: React.FC<propTypes> = (props) => {
             value: inputValue.trim().toLocaleLowerCase()
         }));
 
-        setFormVisibleStatus(false);
+        dispatch(switchFormVisibleStatus({ status: false }));
 
         // clear the input value after the extend arrays logic has worked
         formRef.current.reset();
@@ -63,7 +56,7 @@ const CategoryForm: React.FC<propTypes> = (props) => {
     return (
         <div className="category">
 
-            <button className={isFormVisible ? 'category__button visible' : 'category__button'} onClick={() => setFormVisibleStatus(!isFormVisible)}>
+            <button className={isFormVisible ? 'category__button visible' : 'category__button'} onClick={() => dispatch(switchFormVisibleStatus({ status: !isFormVisible }))}>
                 <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M6 1V11" stroke="#868686" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                     <path d="M1 6H11" stroke="#868686" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
