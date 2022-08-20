@@ -104,12 +104,7 @@ const App: React.FC = () => {
           <div className="page__modal" ref={modalHandler.refEl}>
             {modalHandler.isVisible &&
               <Modal
-                todosData={todosData}
-                setTodosData={setTodosData}
                 setVisibleStatus={modalHandler.setVisibleStatus}
-                currentTodoID={currentTodoID}
-
-                categoryTemplatesData={categoryTemplatesData}
               />
             }
           </div>

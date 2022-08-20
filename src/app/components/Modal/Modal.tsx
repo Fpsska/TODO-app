@@ -1,18 +1,16 @@
 import React, { useState, useEffect } from 'react';
 
-import { Itodo } from '../../types/todoTypes';
-import { Icategory } from '../../types/categoryTypes';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+
+import { editCurrentTodosDataItem, switchTodosItemEditableStatus } from '../../../store/slices/todoSlice';
+
 
 import './modal.scss';
 
 // /. imports 
 
 interface propTypes {
-    todosData: Itodo[],
-    setTodosData: (arg: any[]) => any;
     setVisibleStatus: (arg: boolean) => void;
-    currentTodoID: number;
-    categoryTemplatesData: Icategory[]
 }
 
 // /. interfaces
@@ -20,17 +18,16 @@ interface propTypes {
 const Modal: React.FC<propTypes> = (props) => {
 
     const {
-        todosData,
-        setTodosData,
         setVisibleStatus,
-        currentTodoID,
-        categoryTemplatesData
     } = props;
+
+    const { categoryTemplatesData, todosData, currentTodoID } = useAppSelector(state => state.todoSlice);
 
     const [inputValue, setInputValue] = useState<string>('');
     const [inputRadioCategoryValue, setInputRadioCategoryValue] = useState<string>('');
     const [inputRadioStatusValue, setInputRadioStatusValue] = useState<string>('');
 
+    const dispatch = useAppDispatch();
 
     useEffect(() => { // display, save initial todo item property if changes is not accepted/not did
         setInputValue([...todosData].filter(item => item.id === currentTodoID)[0].title);
@@ -42,24 +39,13 @@ const Modal: React.FC<propTypes> = (props) => {
     const formSubmitHandler = (e: React.SyntheticEvent): any => {
         e.preventDefault();
 
-        setTodosData([...todosData].map(item => {
-            if (item.id === currentTodoID) {
-                return {
-                    ...item,
-                    title: inputValue,
-                    category: inputRadioCategoryValue ? `#${(inputRadioCategoryValue.charAt(0).toUpperCase() + inputRadioCategoryValue.slice(1)).replace(/#/gi, '')}` : '', // set upperCase for 1st letter of getted inputRadioValue
-                    status: inputRadioStatusValue,
-                    editable: false
-                };
-            }
-            return item;
-        }));
+        dispatch(editCurrentTodosDataItem({ inputValue, inputRadioCategoryValue, inputRadioStatusValue }));
 
         setVisibleStatus(false);
     };
 
     const closeModal = (): void => {
-        setTodosData([...todosData].map(item => item.id === currentTodoID ? { ...item, editable: false } : item)); // remove editable css-class
+        dispatch(switchTodosItemEditableStatus({ id: currentTodoID })); // remove editable css-class
         setVisibleStatus(false);
     };
 

@@ -27,6 +27,7 @@ interface todoSliceState {
 
     currentCategoryID: number;
     currentNavSelectID: number;
+    currentTodoID: number;
 
 }
 
@@ -122,7 +123,8 @@ const initialState: todoSliceState = {
     currentNavID: 1,
 
     currentCategoryID: 1,
-    currentNavSelectID: 1
+    currentNavSelectID: 1,
+    currentTodoID: 1
 
 
 };
@@ -147,6 +149,25 @@ const todoSlice = createSlice({
         filterTodosDataByCategory(state, action: PayloadAction<{ category: string }>) {
             const { category } = action.payload;
             state.todosData = state.filteredTodosData.filter(item => item.category.toLocaleLowerCase() === category);
+        },
+        editCurrentTodosDataItem(state, action: PayloadAction<{ inputValue: string, inputRadioCategoryValue: string, inputRadioStatusValue: string }>) {
+            const {inputValue, inputRadioCategoryValue, inputRadioStatusValue} = action.payload;
+            state.todosData.map(item => {
+                if (item.id === state.currentTodoID) {
+                    return {
+                        ...item,
+                        title: inputValue,
+                        category: inputRadioCategoryValue ? `#${(inputRadioCategoryValue.charAt(0).toUpperCase() + inputRadioCategoryValue.slice(1)).replace(/#/gi, '')}` : '', // set upperCase for 1st letter of getted inputRadioValue
+                        status: inputRadioStatusValue,
+                        editable: false
+                    };
+                }
+            })  
+        },
+        switchTodosItemEditableStatus(state, action: PayloadAction<{id: number}>) {
+            const {id} = action.payload;
+            state.todosData.map(item => item.id === id ? item.editable = true : item);
+
         },
 
         setTitle(state, action: PayloadAction<string>) {
@@ -180,6 +201,7 @@ const todoSlice = createSlice({
             state.selectTemplatesData.push(action.payload);
         },
 
+
     },
     extraReducers: {
         [fetchTodosData.pending.type]: (state) => {
@@ -211,6 +233,8 @@ export const {
     setTodosData,
     setFilteredTodosData,
     filterTodosDataByCategory,
+    editCurrentTodosDataItem,
+    switchTodosItemEditableStatus,
 
     setTitle,
 
@@ -223,6 +247,7 @@ export const {
 
     setCurrentNavSelectID,
     addNewSelectItem
+
 
 } = todoSlice.actions;
 
