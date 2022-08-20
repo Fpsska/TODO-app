@@ -13,7 +13,9 @@ interface todoSliceState {
     filteredTodosData: Itodo[];
     isTodosDataLoading: boolean;
     status: string;
-    error: any
+    error: any;
+
+    title: string
 }
 
 // /. interfaces
@@ -23,7 +25,9 @@ const initialState: todoSliceState = {
     filteredTodosData: [],
     isTodosDataLoading: true,
     status: '',
-    error: null
+    error: null,
+
+    title: 'All'
 };
 
 // /. initialState
@@ -35,6 +39,16 @@ const todoSlice = createSlice({
     reducers: {
         switchTodosDataLoadingStatus(state, action: PayloadAction<boolean>) {
             state.isTodosDataLoading = action.payload;
+        },
+        setTodosData(state, action: PayloadAction<Itodo[]>) {
+            state.todosData = action.payload;
+        },
+        setFilteredTodosData(state, action: PayloadAction<Itodo[]>) {
+            state.filteredTodosData = action.payload;
+        },
+
+        setTitle(state, action: PayloadAction<string>) {
+            state.title = action.payload;
         }
     },
     extraReducers: {
@@ -63,7 +77,11 @@ const todoSlice = createSlice({
 });
 
 export const {
-    switchTodosDataLoadingStatus
+    switchTodosDataLoadingStatus,
+    setTodosData,
+    setFilteredTodosData,
+
+    setTitle
 } = todoSlice.actions;
 
 export default todoSlice.reducer;

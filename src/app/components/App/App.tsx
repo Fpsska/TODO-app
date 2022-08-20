@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react';
 
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+
+import { setTodosData, setFilteredTodosData, setTitle } from '../../../store/slices/todoSlice';
+
 import { Inav } from '../../types/navTypes';
 import { Icategory } from '../../types/categoryTypes';
 import { Iselect } from '../../types/selectTypes';
@@ -25,6 +29,16 @@ import './App.css';
 
 
 const App: React.FC = () => {
+
+  const {
+    todosData,
+    filteredTodosData,
+    isTodosDataLoading,
+    error,
+    title
+  } = useAppSelector(state => state.todoSlice);
+
+  const dispatch = useAppDispatch();
 
   const [isDataEmpty, setDataEmptyStatus] = useState<boolean>(true);
   const [isFormVisible, setFormVisibleStatus] = useState<boolean>(false);
@@ -184,7 +198,7 @@ const App: React.FC = () => {
                 todosData={todosData}
                 setFilteredTodosData={setFilteredTodosData}
                 setTitle={setTitle}
-                isDataTLoading={isDataTLoading}
+                isDataTLoading={isTodosDataLoading}
                 error={error}
                 selectTemplatesData={selectTemplatesData}
                 setCurrentNavSelectID={setCurrentNavSelectID}
@@ -267,13 +281,13 @@ const App: React.FC = () => {
                 todosData={todosData}
                 setTodosData={setTodosData}
                 setFilteredTodosData={setFilteredTodosData}
-                isDataTLoading={isDataTLoading}
+                isDataTLoading={isTodosDataLoading}
                 error={error}
               />
             </div>
 
             <div className="page__list">
-              {isDataTLoading ?
+              {isTodosDataLoading ?
                 <div className="page__preloader"><Preloader /></div> :
                 error ?
                   <h2 className="page__message">Error: {error}</h2> :
@@ -306,7 +320,7 @@ const App: React.FC = () => {
                 todosData={todosData}
                 setTodosData={setTodosData}
                 setFilteredTodosData={setFilteredTodosData}
-                isDataTLoading={isDataTLoading}
+                isDataTLoading={isTodosDataLoading}
                 error={error}
               />
             </div>
