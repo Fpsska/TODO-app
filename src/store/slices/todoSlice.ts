@@ -147,6 +147,10 @@ const todoSlice = createSlice({
             state.filteredTodosData = action.payload;
         },
 
+        removeTodosDataItem(state, action: PayloadAction<{ id: number }>) {
+            const { id } = action.payload;
+            state.todosData = state.todosData.filter(item => item.id !== id);
+        },
         filterTodosDataByCategory(state, action: PayloadAction<{ category: string }>) {
             const { category } = action.payload;
             state.todosData = state.filteredTodosData.filter(item => item.category.toLocaleLowerCase() === category);
@@ -168,7 +172,10 @@ const todoSlice = createSlice({
         switchTodosItemEditableStatus(state, action: PayloadAction<{ id: number }>) {
             const { id } = action.payload;
             state.todosData.map(item => item.id === id ? item.editable = true : item);
-
+        },
+        switchTodosItemCompleteStatus(state, action: PayloadAction<{ id: number }>) {
+            const { id } = action.payload;
+            state.todosData.map(item => item.id === id ? item.completed = !item.completed : item);
         },
 
         setTitle(state, action: PayloadAction<{ title: string }>) {
@@ -206,6 +213,10 @@ const todoSlice = createSlice({
             state.selectTemplatesData.push(action.payload);
         },
 
+        setCurrentTodoID(state, action: PayloadAction<{ id: number }>) {
+            const { id } = action.payload;
+            state.currentTodoID = id;
+        },
 
 
     },
@@ -238,9 +249,11 @@ export const {
     switchTodosDataLoadingStatus,
     setTodosData,
     setFilteredTodosData,
+    removeTodosDataItem,
     filterTodosDataByCategory,
     editCurrentTodosDataItem,
     switchTodosItemEditableStatus,
+    switchTodosItemCompleteStatus,
 
     setTitle,
 
@@ -252,9 +265,9 @@ export const {
     addNewCategoryItem,
 
     setCurrentNavSelectID,
-    addNewSelectItem
+    addNewSelectItem,
 
-
+    setCurrentTodoID
 
 } = todoSlice.actions;
 

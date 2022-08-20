@@ -2,6 +2,13 @@ import React from 'react';
 
 import { useAppDispatch } from '../../../store/hooks';
 
+import {
+    removeTodosDataItem,
+    setCurrentTodoID,
+    switchTodosItemCompleteStatus,
+    switchTodosItemEditableStatus
+} from '../../../store/slices/todoSlice';
+
 import { Itodo } from '../../types/todoTypes';
 
 // /. imports
@@ -33,27 +40,26 @@ const TodoTemplate: React.FC<propTypes> = (props) => {
 
         todosData,
         setTodosData,
-        
+
         setVisibleStatus,
         setCurrentTodoID
     } = props;
 
     const dispatch = useAppDispatch();
-    
+
     const handleCompleteStatus = (): void => {
-        setTodosData([...todosData].map(item => item.id === id ? { ...item, completed: !completed } : item));
+        dispatch(switchTodosItemCompleteStatus({id}));
     };
 
     const editTodoItem = (): void => {
         setVisibleStatus(true);
 
-        setCurrentTodoID(id);
-
-        setTodosData([...todosData].map(item => item.id === id ? { ...item, editable: true } : { ...item, editable: false }));  // set editable css-class
+        dispatch(setCurrentTodoID({ id }));
+        dispatch(switchTodosItemEditableStatus({ id }));    // set editable css-class
     };
 
     const deleteTodoItem = (): void => {
-        setTodosData([...todosData].filter(item => item.id !== id));
+        dispatch(removeTodosDataItem({id}));
     };
 
     return (
