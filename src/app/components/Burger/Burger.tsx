@@ -1,65 +1,38 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 
 import './burger.scss';
 
 // /. imports
 
 interface propTypes {
-    setBurgerVisibleStatus: (arg: boolean) => any;
-    isBurgerVisible: boolean
+    isVisible: boolean;
+    setVisibleStatus: (arg: boolean) => any
 }
 
 // /. interfaces
 
-const Burger: React.FC<propTypes> = ({ isBurgerVisible, setBurgerVisibleStatus }) => {
+const Burger: React.FC<propTypes> = ({ isVisible, setVisibleStatus }) => {
 
     const [isContentVisible, setContentVisibleStatus] = useState<boolean>(false);
 
-    const burgerRef = useRef<HTMLDivElement>(null!);
     const contentRef = useRef<HTMLDivElement>(null!);
 
     const burgerClose = (): void => {
-        setBurgerVisibleStatus(false);
+        setVisibleStatus(false);
     };
 
     useEffect(() => {
-        isBurgerVisible && !contentRef.current ?
+        isVisible && !contentRef.current ?
             setTimeout(() => {
                 setContentVisibleStatus(true);
             }, 300)
             :
             setContentVisibleStatus(false);
-    }, [isBurgerVisible]);
+    }, [isVisible]);
 
-    useEffect(() => {
-        const keyHandler = (e: KeyboardEvent): void => {
-            if (e.code === 'Escape' && isBurgerVisible) {
-                setBurgerVisibleStatus(false);
-            }
-        };
-
-        const areaHandler = (e: any): void => {
-            const validArea = burgerRef.current.contains(e.target);
-            const validElements =
-                e.target.className === 'burger__wrapper' ||
-                e.target.className === 'page__button' ||
-                e.target.className === 'burger__button';
-
-            if (!validArea && !validElements) {
-                setBurgerVisibleStatus(false);
-            }
-        };
-
-        document.addEventListener('click', areaHandler);
-        document.addEventListener('keydown', keyHandler);
-        return () => {
-            document.removeEventListener('click', areaHandler);
-            document.removeEventListener('keydown', keyHandler);
-        };
-    }, [isBurgerVisible]);
 
     return (
-        <div className={isBurgerVisible ? 'burger visible' : 'burger'} ref={burgerRef}>
+        <div className={isVisible ? 'burger visible' : 'burger'}>
             <div className="burger__wrapper">
                 {isContentVisible &&
                     <div className="burger__content" ref={contentRef}>

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import { Inav } from '../../types/navTypes';
 import { Itodo } from '../../types/todoTypes';
@@ -10,41 +10,44 @@ import './titleForm.scss'
 // /. imports
 
 interface propTypes {
+    refEl: any;
     isEditable: boolean;
     inputTitleValue: string;
+    currentNavID: number;
+    currentCategoryID: number;
+    currentNavSelectID: number;
+    setEditableStatus: (arg: boolean) => void;
     setInputTitleValue: (arg: string) => void;
     navTemplatesData: Inav[];
     setNavTemplatesData: (arg: Inav[]) => void;
-    currentNavID: number;
     todosData: Itodo[];
     setTodosData: (arg: Itodo[]) => void;
-    setEditableStatus: (arg: boolean) => void;
     categoryTemplatesData: Icategory[];
     setCategoryTemplatesData: (arg: Icategory[]) => void;
-    currentCategoryID: number;
     selectTemplatesData: Iselect[];
     setSelectTemplatesData: (arg: Iselect[]) => void;
-    currentNavSelectID: number;
+
 }
 
 const TitleForm: React.FC<propTypes> = (props) => {
 
     const {
+        refEl,
         isEditable,
         inputTitleValue,
+        currentNavID,
+        currentNavSelectID,
+        currentCategoryID,
         setInputTitleValue,
         navTemplatesData,
         setNavTemplatesData,
-        currentNavID,
         todosData,
         setTodosData,
         setEditableStatus,
         categoryTemplatesData,
         setCategoryTemplatesData,
-        currentCategoryID,
         selectTemplatesData,
-        setSelectTemplatesData,
-        currentNavSelectID,
+        setSelectTemplatesData
     } = props;
 
 
@@ -74,7 +77,7 @@ const TitleForm: React.FC<propTypes> = (props) => {
         }));
 
 
-        
+
         const currentCategoryFromNav = `#${[...navTemplatesData].find(item => item.id === currentNavID)?.category}`; // return string 'all/college'
         const currentCategoryFromNavSelect = `#${[...selectTemplatesData].find(item => item.id === currentNavSelectID)?.value}`;
 
@@ -111,19 +114,6 @@ const TitleForm: React.FC<propTypes> = (props) => {
     };
 
 
-    useEffect(() => {
-        const keyHandler = (e: KeyboardEvent): void => {
-            if (e.code === 'Escape' && isEditable) {
-                setEditableStatus(false);
-            }
-        }
-
-        document.addEventListener('keydown', keyHandler);
-        return () => {
-            document.removeEventListener('keydown', keyHandler);
-        };
-    }, [isEditable])
-
     return (
         <div className="title">
             <form className="title__form" onSubmit={e => inputTitleValue && formSubmitHandler(e)}>
@@ -131,6 +121,7 @@ const TitleForm: React.FC<propTypes> = (props) => {
                     <h1 className="title__input general">All</h1>
                     :
                     <input
+                        ref={refEl}
                         className={isEditable ? 'title__input editable' : 'title__input'}
                         type="text"
                         title={`${inputTitleValue} Tasks`}

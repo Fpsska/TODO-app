@@ -40,11 +40,8 @@ const App: React.FC = () => {
   } = useContext(MyContext);
 
   const [isDataEmpty, setDataEmptyStatus] = useState<boolean>(true);
-
-  const [isBurgerVisible, setBurgerVisibleStatus] = useState<boolean>(false);
   const [isFormVisible, setFormVisibleStatus] = useState<boolean>(false);
 
-  const [isEditable, setEditableStatus] = useState<boolean>(false);
   const [inputTitleValue, setInputTitleValue] = useState<string>(title);
 
   const [navTemplatesData, setNavTemplatesData] = useState<Inav[]>([
@@ -131,9 +128,13 @@ const App: React.FC = () => {
   const [currentNavSelectID, setCurrentNavSelectID] = useState<number>(selectTemplatesData[0]?.id);
   const [currentCategoryID, setCurrentCategoryID] = useState<number>(categoryTemplatesData[0]?.id);
 
+  // /. state
 
-  const { refEl, isVisible, setVisibleStatus } = useAreaHandler({ initialStatus: false });
+  const modalHandler = useAreaHandler({ initialStatus: false });
+  const burgerHandler = useAreaHandler({ initialStatus: false });
+  const titleFormHandler = useAreaHandler({ initialStatus: false });
 
+  // /. hooks 
 
   useEffect(() => {
     todosData.length === 0 ? setDataEmptyStatus(true) : setDataEmptyStatus(false); // check length of todosData[] for handle display alternative content
@@ -146,8 +147,8 @@ const App: React.FC = () => {
   }, [filteredTodosData]);
 
   useEffect(() => { // remove editable css-class when modal is hidden
-    !isVisible && setTodosData([...todosData].map(item => item.id === currentTodoID ? { ...item, editable: false } : item));
-  }, [isVisible]);
+    !modalHandler.isVisible && setTodosData([...todosData].map(item => item.id === currentTodoID ? { ...item, editable: false } : item));
+  }, [modalHandler.isVisible]);
 
   useEffect(() => { // update title value
     setInputTitleValue(title);
@@ -156,14 +157,12 @@ const App: React.FC = () => {
 
   const openBurger = (e: React.SyntheticEvent): void => {
     e.stopPropagation();  // for correct work of burger hide/show logic
-    setBurgerVisibleStatus(true);
+    burgerHandler.setVisibleStatus(true);
   };
 
-  const editCategoryName = (): void => {
-    setEditableStatus(!isEditable);
-
-
-
+  const editCategoryName = (e: React.SyntheticEvent): void => {
+    e.stopPropagation();
+    titleFormHandler.setVisibleStatus(!titleFormHandler.isVisible);
   };
 
   return (
@@ -172,19 +171,19 @@ const App: React.FC = () => {
 
         <div className="page__wrapper">
 
-          <div className="page__burger" ref={refEl}>
+          <div className="page__burger" ref={burgerHandler.refEl}>
             <Burger
-              isBurgerVisible={isBurgerVisible}
-              setBurgerVisibleStatus={setBurgerVisibleStatus}
+              isVisible={burgerHandler.isVisible}
+              setVisibleStatus={burgerHandler.setVisibleStatus}
             />
           </div>
 
-          <div className="page__modal" ref={refEl}>
-            {isVisible &&
+          <div className="page__modal" ref={modalHandler.refEl}>
+            {modalHandler.isVisible &&
               <Modal
                 todosData={todosData}
                 setTodosData={setTodosData}
-                setVisibleStatus={setVisibleStatus}
+                setVisibleStatus={modalHandler.setVisibleStatus}
                 currentTodoID={currentTodoID}
 
                 categoryTemplatesData={categoryTemplatesData}
@@ -202,7 +201,7 @@ const App: React.FC = () => {
                 error={error}
                 selectTemplatesData={selectTemplatesData}
                 setCurrentNavSelectID={setCurrentNavSelectID}
-                setEditableStatus={setEditableStatus}
+                setEditableStatus={titleFormHandler.setVisibleStatus}
                 setCurrentCategoryID={setCurrentCategoryID}
               />
             </div>
@@ -211,7 +210,7 @@ const App: React.FC = () => {
               setNavTemplatesData={setNavTemplatesData}
               setCurrentNavID={setCurrentNavID}
               setCurrentCategoryID={setCurrentCategoryID}
-              setEditableStatus={setEditableStatus}
+              setEditableStatus={titleFormHandler.setVisibleStatus}
             />
             <div className="page__category-form">
               <CategoryForm
@@ -229,7 +228,7 @@ const App: React.FC = () => {
 
           <div className="page__content">
 
-            {!isBurgerVisible &&
+            {!burgerHandler.isVisible &&
               <button className="page__button page__button--burger" onClick={(e) => openBurger(e)}>
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <g clipPath="url(#clip0_8368_6965)">
@@ -247,26 +246,27 @@ const App: React.FC = () => {
             <div className="page__header">
 
               <TitleForm
-                isEditable={isEditable}
+                refEl={titleFormHandler.refEl}
+                isEditable={titleFormHandler.isVisible}
                 inputTitleValue={inputTitleValue}
+                currentNavID={currentNavID}
+                currentCategoryID={currentCategoryID}
+                currentNavSelectID={currentNavSelectID}
+                setEditableStatus={titleFormHandler.setVisibleStatus}
                 setInputTitleValue={setInputTitleValue}
                 navTemplatesData={navTemplatesData}
                 setNavTemplatesData={setNavTemplatesData}
-                currentNavID={currentNavID}
                 todosData={todosData}
                 setTodosData={setTodosData}
-                setEditableStatus={setEditableStatus}
                 categoryTemplatesData={categoryTemplatesData}
                 setCategoryTemplatesData={setCategoryTemplatesData}
-                currentCategoryID={currentCategoryID}
-                selectTemplatesData={selectTemplatesData} 
+                selectTemplatesData={selectTemplatesData}
                 setSelectTemplatesData={setSelectTemplatesData}
-                currentNavSelectID={currentNavSelectID}
               />
 
               <>
                 {inputTitleValue !== 'All' &&
-                  <button className="page__button page__button--edit" onClick={editCategoryName}>
+                  <button className="page__button page__button--edit" onClick={e => editCategoryName(e)}>
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M13.23 1H11.77L3.52002 9.25L3.35999 9.46997L1 13.59L2.41003 15L6.53003 12.64L6.75 12.48L15 4.22998V2.77002L13.23 1ZM2.41003 13.59L3.92004 10.59L5.37 12.04L2.41003 13.59ZM6.23999 11.53L4.46997 9.76001L12.47 1.76001L14.24 3.53003L6.23999 11.53Z" fill="#C5C5C5" />
                     </svg>
@@ -304,7 +304,7 @@ const App: React.FC = () => {
                       todosData={todosData}
                       setTodosData={setTodosData}
                       filteredTodosData={filteredTodosData}
-                      setVisibleStatus={setVisibleStatus}
+                      setVisibleStatus={modalHandler.setVisibleStatus}
                       setCurrentTodoID={setCurrentTodoID}
 
                       isFormVisible={isFormVisible}
