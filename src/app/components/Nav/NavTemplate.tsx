@@ -1,5 +1,14 @@
 import React, { useState, useEffect } from 'react';
 
+import { useAppSelector, useAppDispatch } from '../../../store/hooks';
+
+import {
+    switchNavActiveStatus,
+    setCurrentCategoryID,
+    setCurrentNavID,
+    setTitle
+} from '../../../store/slices/todoSlice';
+
 import { Inav } from '../../types/navTypes';
 
 // /. imports
@@ -11,10 +20,6 @@ interface propTypes {
     link: string;
     isActive: boolean;
 
-    navTemplatesData: Inav[];
-    setNavTemplatesData: (arg: Inav[]) => void;
-    setCurrentNavID: (arg: number) => void;
-    setCurrentCategoryID: (arg: number) => void;
     setEditableStatus: (arg: boolean) => void
 }
 
@@ -29,13 +34,12 @@ const NavTemplate: React.FC<propTypes> = (props) => {
         link,
         isActive,
 
-        navTemplatesData,
-        setNavTemplatesData,
-        setCurrentNavID,
-        setCurrentCategoryID,
         setEditableStatus
     } = props;
 
+    const { todosData, navTemplatesData, error, isTodosDataLoading } = useAppSelector(state => state.todoSlice);
+
+    const dispatch = useAppDispatch();
 
     const [todoCount, setTodoCount] = useState<number>(0);
 
@@ -49,31 +53,32 @@ const NavTemplate: React.FC<propTypes> = (props) => {
     const filterTodoItems = (): void => {
         switch (category) {
             case 'all':
-                setNavTemplatesData(navTemplatesData.map(item => item.id === id ? { ...item, isActive: true } : { ...item, isActive: false }));
+                dispatch(switchNavActiveStatus({ id }));
 
                 setFilteredTodosData(todosData);
 
-                setTitle(text);
+                dispatch(setTitle(text));
                 setCurrentNavID(id);
                 setCurrentCategoryID(id);
                 setEditableStatus(false);
                 break;
             case category:
-                setNavTemplatesData(navTemplatesData.map(item => item.id === id ? { ...item, isActive: true } : { ...item, isActive: false }));
+                dispatch(switchNavActiveStatus({ id }));
 
                 setFilteredTodosData([...todosData].filter(item => item.category.toLocaleLowerCase() === `#${category}`));
 
-                setTitle(text);
+                dispatch(setTitle(text));
                 setCurrentNavID(id);
                 setCurrentCategoryID(id);
                 setEditableStatus(false);
                 break;
             default:
-                setNavTemplatesData([...navTemplatesData].map(item => item.category === 'all' ? { ...item, isActive: true } : { ...item, isActive: false }));
+                dispatch(switchNavActiveStatus({ id }));
 
                 setFilteredTodosData(todosData);
 
-                setTitle('All');
+                dispatch(setTitle('All'));
+
                 setCurrentNavID(id);
                 setCurrentCategoryID(id);
                 setEditableStatus(false);
@@ -82,9 +87,9 @@ const NavTemplate: React.FC<propTypes> = (props) => {
 
     return (
         <li className="nav__item">
-            <a className={isActive ? 'nav__link active' : isDataTLoading || error ? 'nav__link disabled' : 'nav__link'}
+            <a className={isActive ? 'nav__link active' : isTodosDataLoading || error ? 'nav__link disabled' : 'nav__link'}
                 href={link}
-                onClick={() => !isDataTLoading && !error && filterTodoItems()}
+                onClick={() => !isTodosDataLoading && !error && filterTodoItems()}
             >
                 <span title={`${text} (${category === 'all' ? todosData.length : todoCount})`}
                 >

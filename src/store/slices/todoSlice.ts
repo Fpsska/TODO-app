@@ -3,6 +3,7 @@ import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { fetchTodosData } from '../../app/api/fetchTodosData';
 
 import { Itodo } from '../../app/types/todoTypes';
+import { Inav } from '../../app/types/navTypes';
 
 import { getRandomArrElement } from '../../app/helpers/getRandomArrElement';
 
@@ -15,7 +16,14 @@ interface todoSliceState {
     status: string;
     error: any;
 
-    title: string
+    title: string;
+
+    navTemplatesData: Inav[];
+    currentNavID: number;
+
+    currentCategoryID: number;
+    currentNavSelectID: number;
+
 }
 
 // /. interfaces
@@ -27,7 +35,44 @@ const initialState: todoSliceState = {
     status: '',
     error: null,
 
-    title: 'All'
+    title: 'All',
+
+    navTemplatesData: [
+        {
+            id: 1,
+            text: 'All',
+            category: 'all',
+            link: '#',
+            isActive: true
+        },
+        {
+            id: 2,
+            text: 'Groceries',
+            category: 'groceries',
+            link: '#',
+            isActive: false
+        },
+        {
+            id: 4,
+            text: 'College',
+            category: 'college',
+            link: '#',
+            isActive: false
+        },
+        {
+            id: 5,
+            text: 'Payments',
+            category: 'payments',
+            link: '#',
+            isActive: false
+        }
+    ],
+    currentNavID: 1,
+
+    currentCategoryID: 1,
+    currentNavSelectID: 1
+
+
 };
 
 // /. initialState
@@ -49,7 +94,27 @@ const todoSlice = createSlice({
 
         setTitle(state, action: PayloadAction<string>) {
             state.title = action.payload;
-        }
+        },
+
+        setNavTemplatesData(state, action: PayloadAction<Inav[]>) {
+            state.navTemplatesData = action.payload;
+        },
+        switchNavActiveStatus(state, action: PayloadAction<{id: number}>) {
+            const { id } = action.payload;
+            state.navTemplatesData.map(item => item.id === id ? item.isActive === true : item.isActive = false);
+        },
+        setCurrentNavID(state, action: PayloadAction<number>) {
+            state.currentNavID = action.payload;
+        },
+
+        setCurrentCategoryID(state, action: PayloadAction<number>) {
+            state.currentNavID = action.payload;
+        },
+        setCurrentNavSelectID(state, action: PayloadAction<number>) {
+            state.currentNavSelectID = action.payload;
+        },
+
+
     },
     extraReducers: {
         [fetchTodosData.pending.type]: (state) => {
@@ -81,7 +146,15 @@ export const {
     setTodosData,
     setFilteredTodosData,
 
-    setTitle
+    setTitle,
+
+    setNavTemplatesData,
+    setCurrentNavID,
+    switchNavActiveStatus,
+
+    setCurrentCategoryID,
+    setCurrentNavSelectID
+
 } = todoSlice.actions;
 
 export default todoSlice.reducer;
