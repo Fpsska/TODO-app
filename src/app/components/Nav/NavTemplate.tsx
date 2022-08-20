@@ -1,6 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
-
-import { MyContext } from '../Layout/Layout';
+import React, { useState, useEffect } from 'react';
 
 import { Inav } from '../../types/navTypes';
 
@@ -38,15 +36,6 @@ const NavTemplate: React.FC<propTypes> = (props) => {
         setEditableStatus
     } = props;
 
-    const {
-        todosData,
-        setFilteredTodosData,
-        isDataTLoading,
-        error,
-        setTitle
-    } = useContext(MyContext);
-
-    // console.log(title);
 
     const [todoCount, setTodoCount] = useState<number>(0);
 

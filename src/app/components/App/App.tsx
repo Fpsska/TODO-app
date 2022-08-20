@@ -1,10 +1,8 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { Inav } from '../../types/navTypes';
 import { Icategory } from '../../types/categoryTypes';
 import { Iselect } from '../../types/selectTypes';
-
-import { MyContext } from '../Layout/Layout';
 
 import { useAreaHandler } from '../../hooks/useAreaHandler';
 
@@ -28,16 +26,6 @@ import './App.css';
 
 const App: React.FC = () => {
 
-  const {
-    todosData,
-    setTodosData,
-    filteredTodosData,
-    setFilteredTodosData,
-    isDataTLoading,
-    error,
-    title,
-    setTitle
-  } = useContext(MyContext);
 
   const [isDataEmpty, setDataEmptyStatus] = useState<boolean>(true);
   const [isFormVisible, setFormVisibleStatus] = useState<boolean>(false);

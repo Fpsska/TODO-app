@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { Iselect } from '../../types/selectTypes';
 
 import { Itodo } from '../../types/todoTypes';
-import { Icategory } from '../../types/categoryTypes';
 
 import SelectTemplate from './SelectTemplate';
 
