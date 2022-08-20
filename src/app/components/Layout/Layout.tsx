@@ -4,8 +4,6 @@ import { useAppDispatch } from '../../../store/hooks';
 
 import { fetchTodosData } from '../../api/fetchTodosData';
 
-import { Itodo } from '../../types/todoTypes';
-
 import App from '../App/App';
 
 // /. imports
@@ -21,7 +19,7 @@ const Layout: React.FC = () => {
         dispatch(fetchTodosData(5));
     }, [])
 
-    const [title, setTitle] = useState<string>('All');
+    // const [title, setTitle] = useState<string>('All');
 
 
     // useEffect(() => { // save data from hook

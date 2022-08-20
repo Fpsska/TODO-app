@@ -136,7 +136,7 @@ const todoSlice = createSlice({
     name: 'todoSlice',
     initialState,
     reducers: {
-        switchTodosDataLoadingStatus(state, action: PayloadAction<{status: boolean}>) {
+        switchTodosDataLoadingStatus(state, action: PayloadAction<{ status: boolean }>) {
             const { status } = action.payload;
             state.isTodosDataLoading = status;
         },
@@ -169,6 +169,12 @@ const todoSlice = createSlice({
                 }
             })
         },
+        editCategoryOFCurrentTodosDataItem(state, action: PayloadAction<{categoryValue: string }>) { //  categoryProp: string, 
+            const {  categoryValue } = action.payload; // categoryProp,
+            state.todosData.map(item => {
+                
+            })
+        },
         switchTodosItemEditableStatus(state, action: PayloadAction<{ id: number }>) {
             const { id } = action.payload;
             state.todosData.map(item => item.id === id ? item.editable = true : item);
@@ -195,6 +201,19 @@ const todoSlice = createSlice({
         addNavTemplateItem(state, action: PayloadAction<any>) {
             state.navTemplatesData.push(action.payload);
         },
+        editCurrentNavTemplateItem(state, action: PayloadAction<{ text: string, category: string }>) {
+            const { text, category } = action.payload;
+            state.navTemplatesData.map(item => {
+                if (item.id === state.currentNavID) {
+                    return {
+                        ...item,
+                        text: text,
+                        category: category
+                    };
+                }
+                return item;
+            })
+        },
 
         setCurrentCategoryID(state, action: PayloadAction<{ id: number }>) {
             const { id } = action.payload;
@@ -202,6 +221,19 @@ const todoSlice = createSlice({
         },
         addNewCategoryItem(state, action: PayloadAction<any>) {
             state.categoryTemplatesData.push(action.payload);
+        },
+        editCurrentCategoryTemplateItem(state, action: PayloadAction<{ text: string, value: string }>) {
+            const { text, value } = action.payload;
+            state.categoryTemplatesData.map(item => {
+                if (item.id === state.currentCategoryID) {
+                    return {
+                        ...item,
+                        text: text, // displayed in UI
+                        value: value // logic
+                    }
+                }
+                return item;
+            })
         },
 
 
@@ -212,6 +244,20 @@ const todoSlice = createSlice({
         addNewSelectItem(state, action: PayloadAction<any>) {
             state.selectTemplatesData.push(action.payload);
         },
+        editCurrentNavSelectTemplateItem(state, action: PayloadAction<{ text: string, value: string }>) {
+            const { text, value } = action.payload;
+            state.selectTemplatesData.map(item => {
+                if (item.id === state.currentNavSelectID) {
+                    return {
+                        ...item,
+                        text: text, // displayed in UI
+                        value: value // logic
+                    };
+                }
+                return item;
+            })
+        },
+
 
         setCurrentTodoID(state, action: PayloadAction<{ id: number }>) {
             const { id } = action.payload;
@@ -252,20 +298,24 @@ export const {
     removeTodosDataItem,
     filterTodosDataByCategory,
     editCurrentTodosDataItem,
+    editCategoryOFCurrentTodosDataItem,
     switchTodosItemEditableStatus,
     switchTodosItemCompleteStatus,
 
     setTitle,
 
     setCurrentNavID,
+    editCurrentNavTemplateItem,
     switchNavActiveStatus,
     addNavTemplateItem,
 
     setCurrentCategoryID,
     addNewCategoryItem,
+    editCurrentCategoryTemplateItem,
 
     setCurrentNavSelectID,
     addNewSelectItem,
+    editCurrentNavSelectTemplateItem,
 
     setCurrentTodoID
 

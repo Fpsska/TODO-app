@@ -1,5 +1,14 @@
 import React from 'react';
 
+import { useAppDispatch } from '../../../store/hooks';
+
+import {
+    editCurrentNavTemplateItem,
+    editCurrentNavSelectTemplateItem,
+    editCurrentCategoryTemplateItem,
+    editCategoryOFCurrentTodosDataItem
+} from '../../../store/slices/todoSlice';
+
 import { Inav } from '../../types/navTypes';
 import { Itodo } from '../../types/todoTypes';
 import { Icategory } from '../../types/categoryTypes';
@@ -13,20 +22,13 @@ interface propTypes {
     refEl: any;
     isEditable: boolean;
     inputTitleValue: string;
-    currentNavID: number;
-    currentCategoryID: number;
-    currentNavSelectID: number;
     setEditableStatus: (arg: boolean) => void;
     setInputTitleValue: (arg: string) => void;
-    navTemplatesData: Inav[];
-    setNavTemplatesData: (arg: Inav[]) => void;
     todosData: Itodo[];
-    setTodosData: (arg: Itodo[]) => void;
-    categoryTemplatesData: Icategory[];
-    setCategoryTemplatesData: (arg: Icategory[]) => void;
+    navTemplatesData: Inav[];
     selectTemplatesData: Iselect[];
-    setSelectTemplatesData: (arg: Iselect[]) => void;
-
+    currentNavID: number;
+    currentNavSelectID: number
 }
 
 const TitleForm: React.FC<propTypes> = (props) => {
@@ -35,79 +37,72 @@ const TitleForm: React.FC<propTypes> = (props) => {
         refEl,
         isEditable,
         inputTitleValue,
-        currentNavID,
-        currentNavSelectID,
-        currentCategoryID,
         setInputTitleValue,
-        navTemplatesData,
-        setNavTemplatesData,
-        todosData,
-        setTodosData,
         setEditableStatus,
-        categoryTemplatesData,
-        setCategoryTemplatesData,
+        todosData,
+        navTemplatesData,
         selectTemplatesData,
-        setSelectTemplatesData
+        currentNavID,
+        currentNavSelectID
     } = props;
+
+    const dispatch = useAppDispatch();
 
 
     const formSubmitHandler = (e: React.FormEvent): void => {
         e.preventDefault();
 
-        setNavTemplatesData([...navTemplatesData].map(item => { // update text, category in navTemplatesData[]
-            if (item.id === currentNavID) {
-                return {
-                    ...item,
-                    text: inputTitleValue,
-                    category: inputTitleValue.toLocaleLowerCase().trim()
-                };
-            }
-            return item;
+        dispatch(editCurrentNavTemplateItem({  // update text, category in navTemplatesData[]
+            text: inputTitleValue,
+            category: inputTitleValue.toLocaleLowerCase().trim()
         }));
 
-        setSelectTemplatesData([...selectTemplatesData].map(item => { // update text, value in selectTemplatesData[]
-            if (item.id === currentNavSelectID) {
-                return {
-                    ...item,
-                    text: inputTitleValue, // displayed in UI
-                    value: inputTitleValue.toLocaleLowerCase().trim() // logic
-                };
-            }
-            return item;
+        dispatch(editCurrentNavSelectTemplateItem({ // update text, value in selectTemplatesData[]
+            text: inputTitleValue, // displayed in UI
+            value: inputTitleValue.toLocaleLowerCase().trim() // logic
         }));
 
+        dispatch(editCurrentCategoryTemplateItem({  // update text, value in categoryTemplatesData[]
+            text: inputTitleValue.toLocaleLowerCase().trim(), // displayed in UI
+            value: inputTitleValue.toLocaleLowerCase().trim() // logic
+        }));
 
 
         const currentCategoryFromNav = `#${[...navTemplatesData].find(item => item.id === currentNavID)?.category}`; // return string 'all/college'
         const currentCategoryFromNavSelect = `#${[...selectTemplatesData].find(item => item.id === currentNavSelectID)?.value}`;
 
-        setTodosData([...todosData].map(item => { // update category name of todoData[] items of current category value
-            if (item.category.toLocaleLowerCase() === currentCategoryFromNav) {
-                return {
-                    ...item,
-                    category: inputTitleValue ? `#${(inputTitleValue.charAt(0).toUpperCase() + inputTitleValue.slice(1)).trim().replace(/#/gi, '')}` : '',
-                };
-            }
-            if (item.category.toLocaleLowerCase() === currentCategoryFromNavSelect) {
-                return {
-                    ...item,
-                    category: inputTitleValue ? `#${(inputTitleValue.charAt(0).toUpperCase() + inputTitleValue.slice(1)).trim().replace(/#/gi, '')}` : '',
-                };
-            }
-            return item;
+        // setTodosData([...todosData].map(item => { // update category name of todoData[] items of current category value
+        //     if (item.category.toLocaleLowerCase() === currentCategoryFromNav) {
+        //         return {
+        //             ...item,
+        //             category: inputTitleValue ? `#${(inputTitleValue.charAt(0).toUpperCase() + inputTitleValue.slice(1)).trim().replace(/#/gi, '')}` : '',
+        //         };
+        //     }
+        //     if (item.category.toLocaleLowerCase() === currentCategoryFromNavSelect) {
+        //         return {
+        //             ...item,
+        //             category: inputTitleValue ? `#${(inputTitleValue.charAt(0).toUpperCase() + inputTitleValue.slice(1)).trim().replace(/#/gi, '')}` : '',
+        //         };
+        //     }
+        //     return item;
+        // }));
+
+        // [...todosData].map(item => {
+        //     if (item.category.toLocaleLowerCase() === currentCategoryFromNav) {
+        //         dispatch(editCategoryOFCurrentTodosDataItem({
+        //             categoryValue: inputTitleValue ? `#${(inputTitleValue.charAt(0).toUpperCase() + inputTitleValue.slice(1)).trim().replace(/#/gi, '')}` : ''
+        //         }));
+        //     }
+        //     if (item.category.toLocaleLowerCase() === currentCategoryFromNavSelect) {
+        //         dispatch(editCategoryOFCurrentTodosDataItem({
+        //             categoryValue: inputTitleValue ? `#${(inputTitleValue.charAt(0).toUpperCase() + inputTitleValue.slice(1)).trim().replace(/#/gi, '')}` : ''
+        //         }));
+        //     }
+        // });
+
+        dispatch(editCategoryOFCurrentTodosDataItem({
+            categoryValue: inputTitleValue ? `#${(inputTitleValue.charAt(0).toUpperCase() + inputTitleValue.slice(1)).trim().replace(/#/gi, '')}` : ''
         }));
-
-
-        setCategoryTemplatesData([...categoryTemplatesData].map(item => { // // update text, value in categoryTemplatesData[]
-            if (item.id === currentCategoryID) {
-                return {
-                    ...item,
-                    text: inputTitleValue.toLocaleLowerCase().trim(), // displayed in UI
-                    value: inputTitleValue.toLocaleLowerCase().trim() // logic
-                }
-            }
-            return item;
-        }))
 
         // disable editing after submit form
         setEditableStatus(false);

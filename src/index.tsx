@@ -1,8 +1,13 @@
-import React  from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom/client';
+
+import { Provider } from 'react-redux';
+
+import { store } from './store/store';
 
 import Layout from './app/components/Layout/Layout';
 import reportWebVitals from './reportWebVitals';
+
 
 // /. imports
 
@@ -12,7 +17,9 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <Layout />
+    <Provider store={store}>
+      <Layout />
+    </Provider>
   </React.StrictMode>
 );
 

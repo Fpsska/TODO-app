@@ -36,6 +36,8 @@ const App: React.FC = () => {
     navTemplatesData,
     selectTemplatesData,
     currentTodoID,
+    currentNavID,
+    currentNavSelectID,
     isTodosDataLoading,
     error,
     title
@@ -46,12 +48,7 @@ const App: React.FC = () => {
   const [isDataEmpty, setDataEmptyStatus] = useState<boolean>(true);
   const [isFormVisible, setFormVisibleStatus] = useState<boolean>(false);
 
-  const [inputTitleValue, setInputTitleValue] = useState<string>('All'); // title
-
-  // const [currentTodoID, setCurrentTodoID] = useState<number>(1); // todosData[0]?.id
-  // const [currentNavID, setCurrentNavID] = useState<number>(1); // navTemplatesData[0]?.id
-  // const [currentNavSelectID, setCurrentNavSelectID] = useState<number>(1); // selectTemplatesData[0]?.id
-  // const [currentCategoryID, setCurrentCategoryID] = useState<number>(1); // categoryTemplatesData[0]?.id
+  const [inputTitleValue, setInputTitleValue] = useState<string>(title); // title
 
   // /. state
 
@@ -154,20 +151,14 @@ const App: React.FC = () => {
               <TitleForm
                 refEl={titleFormHandler.refEl}
                 isEditable={titleFormHandler.isVisible}
-                inputTitleValue={inputTitleValue}
-                currentNavID={currentNavID}
-                currentCategoryID={currentCategoryID}
-                currentNavSelectID={currentNavSelectID}
                 setEditableStatus={titleFormHandler.setVisibleStatus}
+                inputTitleValue={inputTitleValue}
                 setInputTitleValue={setInputTitleValue}
-                navTemplatesData={navTemplatesData}
-                setNavTemplatesData={setNavTemplatesData}
                 todosData={todosData}
-                setTodosData={setTodosData}
-                categoryTemplatesData={categoryTemplatesData}
-                setCategoryTemplatesData={setCategoryTemplatesData}
+                navTemplatesData={navTemplatesData}
                 selectTemplatesData={selectTemplatesData}
-                setSelectTemplatesData={setSelectTemplatesData}
+                currentNavID={currentNavID}
+                currentNavSelectID={currentNavSelectID}
               />
 
               <>
