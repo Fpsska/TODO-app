@@ -9,7 +9,6 @@ import {
     switchTodosItemEditableStatus
 } from '../../../store/slices/todoSlice';
 
-import { Itodo } from '../../types/todoTypes';
 
 // /. imports
 
@@ -20,10 +19,8 @@ interface propTypes {
     status: string;
     completed: boolean,
     editable: boolean,
-    todosData: Itodo[];
-    setTodosData: (arg: Itodo[]) => void;
+
     setVisibleStatus: (arg: boolean) => void;
-    setCurrentTodoID: (arg: number) => void
 }
 
 // /. interfaces
@@ -38,28 +35,24 @@ const TodoTemplate: React.FC<propTypes> = (props) => {
         completed,
         editable,
 
-        todosData,
-        setTodosData,
-
         setVisibleStatus,
-        setCurrentTodoID
     } = props;
 
     const dispatch = useAppDispatch();
 
     const handleCompleteStatus = (): void => {
-        dispatch(switchTodosItemCompleteStatus({id}));
+        dispatch(switchTodosItemCompleteStatus({ id }));
     };
 
     const editTodoItem = (): void => {
         setVisibleStatus(true);
 
         dispatch(setCurrentTodoID({ id }));
-        dispatch(switchTodosItemEditableStatus({ id }));    // set editable css-class
+        dispatch(switchTodosItemEditableStatus({ id }));  // set editable css-class
     };
 
     const deleteTodoItem = (): void => {
-        dispatch(removeTodosDataItem({id}));
+        dispatch(removeTodosDataItem({ id }));
     };
 
     return (

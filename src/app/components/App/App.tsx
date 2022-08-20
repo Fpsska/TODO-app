@@ -34,6 +34,8 @@ const App: React.FC = () => {
     todosData,
     filteredTodosData,
     navTemplatesData,
+    selectTemplatesData,
+    currentTodoID,
     isTodosDataLoading,
     error,
     title
@@ -46,10 +48,10 @@ const App: React.FC = () => {
 
   const [inputTitleValue, setInputTitleValue] = useState<string>('All'); // title
 
-  const [currentTodoID, setCurrentTodoID] = useState<number>(1); // todosData[0]?.id
-  const [currentNavID, setCurrentNavID] = useState<number>(1); // navTemplatesData[0]?.id
-  const [currentNavSelectID, setCurrentNavSelectID] = useState<number>(1); // selectTemplatesData[0]?.id
-  const [currentCategoryID, setCurrentCategoryID] = useState<number>(1); // categoryTemplatesData[0]?.id
+  // const [currentTodoID, setCurrentTodoID] = useState<number>(1); // todosData[0]?.id
+  // const [currentNavID, setCurrentNavID] = useState<number>(1); // navTemplatesData[0]?.id
+  // const [currentNavSelectID, setCurrentNavSelectID] = useState<number>(1); // selectTemplatesData[0]?.id
+  // const [currentCategoryID, setCurrentCategoryID] = useState<number>(1); // categoryTemplatesData[0]?.id
 
   // /. state
 
@@ -112,15 +114,10 @@ const App: React.FC = () => {
           <div className="page__nav">
             <div className="page__nav-select">
               <SelectMenu
-                todosData={todosData}
-                setFilteredTodosData={setFilteredTodosData}
-                setTitle={setTitle}
+                selectTemplatesData={selectTemplatesData}
+                currentTodoID={currentTodoID}
                 isDataTLoading={isTodosDataLoading}
                 error={error}
-                selectTemplatesData={selectTemplatesData}
-                setCurrentNavSelectID={setCurrentNavSelectID}
-                setEditableStatus={titleFormHandler.setVisibleStatus}
-                setCurrentCategoryID={setCurrentCategoryID}
               />
             </div>
             <Nav
@@ -210,12 +207,8 @@ const App: React.FC = () => {
                     </>
                     :
                     <TodoList
-                      todosData={todosData}
-                      setTodosData={setTodosData}
                       filteredTodosData={filteredTodosData}
                       setVisibleStatus={modalHandler.setVisibleStatus}
-                      setCurrentTodoID={setCurrentTodoID}
-
                       isFormVisible={isFormVisible}
                     />
               }
