@@ -46,55 +46,6 @@ const App: React.FC = () => {
 
   const [inputTitleValue, setInputTitleValue] = useState<string>('All'); // title
 
-  const [categoryTemplatesData, setCategoryTemplatesData] = useState<Icategory[]>([
-    {
-      id: 1,
-      name: 'category',
-      text: 'groceries',
-      value: 'groceries'
-    },
-    {
-      id: 2,
-      name: 'category',
-      text: 'college',
-      value: 'college'
-    },
-    {
-      id: 3,
-      name: 'category',
-      text: 'payments',
-      value: 'payments'
-    },
-    {
-      id: 4,
-      name: 'category',
-      text: 'none',
-      value: ''
-    }
-  ]);
-  const [selectTemplatesData, setSelectTemplatesData] = useState<Iselect[]>([
-    {
-      id: 1,
-      text: 'All',
-      value: 'all'
-    },
-    {
-      id: 2,
-      text: 'Groceries',
-      value: 'groceries'
-    },
-    {
-      id: 3,
-      text: 'College',
-      value: 'college'
-    },
-    {
-      id: 4,
-      text: 'Payments',
-      value: 'payments'
-    }
-  ]);
-
   const [currentTodoID, setCurrentTodoID] = useState<number>(1); // todosData[0]?.id
   const [currentNavID, setCurrentNavID] = useState<number>(1); // navTemplatesData[0]?.id
   const [currentNavSelectID, setCurrentNavSelectID] = useState<number>(1); // selectTemplatesData[0]?.id
@@ -183,12 +134,6 @@ const App: React.FC = () => {
             />
             <div className="page__category-form">
               <CategoryForm
-                navTemplatesData={navTemplatesData}
-                setNavTemplatesData={setNavTemplatesData}
-                categoryTemplatesData={categoryTemplatesData}
-                setCategoryTemplatesData={setCategoryTemplatesData}
-                selectTemplatesData={selectTemplatesData}
-                setSelectTemplatesData={setSelectTemplatesData}
                 isFormVisible={isFormVisible}
                 setFormVisibleStatus={setFormVisibleStatus}
               />

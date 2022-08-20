@@ -1,20 +1,18 @@
 import React, { useState, useRef } from 'react';
 
-import { Inav } from '../../types/navTypes';
-import { Icategory } from '../../types/categoryTypes';
-import { Iselect } from '../../types/selectTypes';
+import { useAppDispatch } from '../../../store/hooks';
+
+import {
+    addNavTemplateItem,
+    addNewCategoryItem,
+    addNewSelectItem
+} from '../../../store/slices/todoSlice';
 
 import './categoryForm.scss';
 
 // /. imports 
 
 interface propTypes {
-    navTemplatesData: Inav[];
-    setNavTemplatesData: (arg: Inav[]) => void;
-    categoryTemplatesData: Icategory[];
-    setCategoryTemplatesData: (arg: Icategory[]) => void;
-    selectTemplatesData: Iselect[];
-    setSelectTemplatesData: (arg: Iselect[]) => void;
     isFormVisible: boolean;
     setFormVisibleStatus: (arg: boolean) => void
 }
@@ -24,17 +22,12 @@ interface propTypes {
 const CategoryForm: React.FC<propTypes> = (props) => {
 
     const {
-        navTemplatesData,
-        setNavTemplatesData,
-        categoryTemplatesData,
-        setCategoryTemplatesData,
-        selectTemplatesData,
-        setSelectTemplatesData,
         isFormVisible,
         setFormVisibleStatus
     } = props;
 
-    // const [isFormVisible, setFormVisibleStatus] = useState<boolean>(false);
+    const dispatch = useAppDispatch();
+
     const [inputValue, setInputValue] = useState<string>('');
 
     const formRef = useRef<HTMLFormElement>(null!);
@@ -42,31 +35,26 @@ const CategoryForm: React.FC<propTypes> = (props) => {
     const formSubmitHandler = (e: React.SyntheticEvent): void => {
         e.preventDefault();
 
-        inputValue && setNavTemplatesData([...navTemplatesData, // update navTemplatesData[]
-        {
+        dispatch(addNavTemplateItem({
             id: +new Date(),
             text: inputValue.charAt(0).toUpperCase() + inputValue.slice(1).trim(),
             category: inputValue.trim().toLocaleLowerCase(),
             link: '#',
             isActive: false
-        }]);
+        }))
 
-        inputValue && setCategoryTemplatesData([...categoryTemplatesData, // update categoryTemplatesData[]
-        {
+        dispatch(addNewCategoryItem({
             id: +new Date(),
             text: inputValue.trim(),
             value: inputValue.trim().toLocaleLowerCase(),
             name: 'category'
-        }
-        ]);
+        }));
 
-        inputValue && setSelectTemplatesData([...selectTemplatesData,   // update selectTemplatesData[]
-        {
+        dispatch(addNewSelectItem({
             id: +new Date(),
             text: inputValue.charAt(0).toUpperCase() + inputValue.slice(1).trim(),
             value: inputValue.trim().toLocaleLowerCase()
-        }
-        ]);
+        }));
 
         setFormVisibleStatus(false);
 
@@ -87,7 +75,7 @@ const CategoryForm: React.FC<propTypes> = (props) => {
             </button>
 
             {isFormVisible &&
-                <form ref={formRef} className="category__form" onSubmit={e => formSubmitHandler(e)} >
+                <form ref={formRef} className="category__form" onSubmit={e => inputValue && formSubmitHandler(e)} >
 
                     <input className="input category__input"
                         type="text"

@@ -4,6 +4,8 @@ import { fetchTodosData } from '../../app/api/fetchTodosData';
 
 import { Itodo } from '../../app/types/todoTypes';
 import { Inav } from '../../app/types/navTypes';
+import { Icategory } from '../../app/types/categoryTypes';
+import { Iselect } from '../../app/types/selectTypes';
 
 import { getRandomArrElement } from '../../app/helpers/getRandomArrElement';
 
@@ -12,6 +14,7 @@ import { getRandomArrElement } from '../../app/helpers/getRandomArrElement';
 interface todoSliceState {
     todosData: Itodo[];
     filteredTodosData: Itodo[];
+    selectTemplatesData: Iselect[];
     isTodosDataLoading: boolean;
     status: string;
     error: any;
@@ -19,6 +22,7 @@ interface todoSliceState {
     title: string;
 
     navTemplatesData: Inav[];
+    categoryTemplatesData: Icategory[];
     currentNavID: number;
 
     currentCategoryID: number;
@@ -67,6 +71,54 @@ const initialState: todoSliceState = {
             isActive: false
         }
     ],
+    categoryTemplatesData: [
+        {
+            id: 1,
+            name: 'category',
+            text: 'groceries',
+            value: 'groceries'
+        },
+        {
+            id: 2,
+            name: 'category',
+            text: 'college',
+            value: 'college'
+        },
+        {
+            id: 3,
+            name: 'category',
+            text: 'payments',
+            value: 'payments'
+        },
+        {
+            id: 4,
+            name: 'category',
+            text: 'none',
+            value: ''
+        }
+    ],
+    selectTemplatesData: [
+        {
+          id: 1,
+          text: 'All',
+          value: 'all'
+        },
+        {
+          id: 2,
+          text: 'Groceries',
+          value: 'groceries'
+        },
+        {
+          id: 3,
+          text: 'College',
+          value: 'college'
+        },
+        {
+          id: 4,
+          text: 'Payments',
+          value: 'payments'
+        }
+      ],
     currentNavID: 1,
 
     currentCategoryID: 1,
@@ -92,9 +144,9 @@ const todoSlice = createSlice({
             state.filteredTodosData = action.payload;
         },
 
-        filterTodosDataByCategory(state, action: PayloadAction<{category: string}>) {
-            const {category} = action.payload;
-            state.todosData = state.filteredTodosData.filter(item => item.category.toLocaleLowerCase() === `#${category}`);
+        filterTodosDataByCategory(state, action: PayloadAction<{ category: string }>) {
+            const { category } = action.payload;
+            state.todosData = state.filteredTodosData.filter(item => item.category.toLocaleLowerCase() === category);
         },
 
         setTitle(state, action: PayloadAction<string>) {
@@ -102,21 +154,31 @@ const todoSlice = createSlice({
         },
 
 
-        switchNavActiveStatus(state, action: PayloadAction<{id: number}>) {
+        switchNavActiveStatus(state, action: PayloadAction<{ id: number }>) {
             const { id } = action.payload;
             state.navTemplatesData.map(item => item.id === id ? item.isActive === true : item.isActive = false);
         },
         setCurrentNavID(state, action: PayloadAction<number>) {
             state.currentNavID = action.payload;
         },
+        addNavTemplateItem(state, action: PayloadAction<any>) {
+            state.navTemplatesData.push(action.payload);
+        },
 
         setCurrentCategoryID(state, action: PayloadAction<number>) {
             state.currentNavID = action.payload;
         },
+        addNewCategoryItem(state, action: PayloadAction<any>) {
+            state.categoryTemplatesData.push(action.payload);
+        },
+
+
         setCurrentNavSelectID(state, action: PayloadAction<number>) {
             state.currentNavSelectID = action.payload;
         },
-
+        addNewSelectItem(state, action: PayloadAction<any>) {
+            state.selectTemplatesData.push(action.payload);
+        },
 
     },
     extraReducers: {
@@ -154,9 +216,13 @@ export const {
 
     setCurrentNavID,
     switchNavActiveStatus,
+    addNavTemplateItem,
 
     setCurrentCategoryID,
-    setCurrentNavSelectID
+    addNewCategoryItem,
+
+    setCurrentNavSelectID,
+    addNewSelectItem
 
 } = todoSlice.actions;
 
