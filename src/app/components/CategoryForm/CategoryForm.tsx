@@ -14,7 +14,7 @@ import './categoryForm.scss';
 
 const CategoryForm: React.FC = () => {
 
-    const { isFormVisible } = useAppSelector(state => state.todoSlice);
+    const { isFormVisible, isTodosDataLoading, error } = useAppSelector(state => state.todoSlice);
 
     const dispatch = useAppDispatch();
 
@@ -65,16 +65,17 @@ const CategoryForm: React.FC = () => {
             </button>
 
             {isFormVisible &&
-                <form ref={formRef} className="category__form" onSubmit={e => inputValue && formSubmitHandler(e)} >
+                <form ref={formRef} className="category__form" onSubmit={e => inputValue && !isTodosDataLoading && !error && formSubmitHandler(e)} >
 
                     <input className="input category__input"
                         type="text"
                         placeholder="Name of new group"
                         onChange={e => setInputValue(e.target.value)}
+                        disabled={isTodosDataLoading || error}
                         required
                     />
 
-                    <button className="category__button category__button--form">Create</button>
+                    <button className="category__button category__button--form" disabled={isTodosDataLoading || error}>Create</button>
 
                 </form>
             }

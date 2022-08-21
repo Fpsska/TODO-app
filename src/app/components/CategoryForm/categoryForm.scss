@@ -3,12 +3,18 @@
         display: flex;
         flex-direction: column;
     }
+
     &__input {
         padding: 5px 7px;
         border-radius: 4px;
         border: 1px solid #ccc;
         margin: 0 0 5px 0;
+
+        &:disabled {
+            cursor: not-allowed
+        }
     }
+
     &__button--form.category__button--form {
         display: block;
         text-align: center;
@@ -16,25 +22,38 @@
         border-radius: 4px;
         border: 1px solid rgba(95, 94, 94, 0.449);
         transition: all 0.35s linear;
+
         &:hover {
             border: 1px solid transparent;
             background-color: #4dd599;
             color: #fff;
         }
+
+        &:disabled {
+            &:hover {
+                background-color: transparent;
+                color: rgba(95, 94, 94, 0.45);
+                border: 1px solid rgba($color: red, $alpha: .45);
+            }
+        }
     }
+
     &__button {
         background-color: transparent;
         border: none;
         display: flex;
         align-items: center;
+
         svg {
             transition: all 0.35s linear;
             transform: rotate(0deg);
             margin: 0 5px 0 0;
         }
     }
+
     &__button.visible {
         margin: 0 0 15px 0;
+
         svg {
             transform: rotate(180deg);
         }
