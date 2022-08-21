@@ -4,9 +4,17 @@ import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 
 import { setInputTitleValue } from '../../../store/slices/todoSlice';
 
-import { setTodosData, setFilteredTodosData, switchTodosItemEditableStatus } from '../../../store/slices/todoSlice';
+import {
+  setTodosData,
+  setFilteredTodosData,
+  switchTodosItemEditableStatus,
+  switchTodosDataEmptyStatus
+} from '../../../store/slices/todoSlice';
 
 import { useAreaHandler } from '../../hooks/useAreaHandler';
+import { filter } from '../../helpers/filter';
+
+import { Itodo } from '../../types/todoTypes';
 
 import Nav from '../Nav/Nav';
 import SelectMenu from '../SelectMenu/SelectMenu';
@@ -30,10 +38,11 @@ const App: React.FC = () => {
 
   const {
     todosData,
-    filteredTodosData,
+    filterProp,
     currentTodoID,
     isTodosDataLoading,
     isFormVisible,
+    isTodosDataEmpty,
     error,
     title,
     inputTitleValue
@@ -48,33 +57,33 @@ const App: React.FC = () => {
 
   const dispatch = useAppDispatch();
 
-  const [isDataEmpty, setDataEmptyStatus] = useState<boolean>(true);
-
-  // /. state
-
   const modalHandler = useAreaHandler({ initialStatus: false });
   const burgerHandler = useAreaHandler({ initialStatus: false });
   const titleFormHandler = useAreaHandler({ initialStatus: false });
 
   // /. hooks 
 
-  useEffect(() => {
-    todosData.length === 0 ? setDataEmptyStatus(true) : setDataEmptyStatus(false); // check length of todosData[] for handle display alternative content
-    // console.log('todosData', todosData)
-  }, [todosData]);
-
-  useEffect(() => {
-    filteredTodosData.length === 0 ? setDataEmptyStatus(true) : setDataEmptyStatus(false);
-    // console.log('!!! filteredTodosData', filteredTodosData)
-  }, [filteredTodosData]);
+  const [filteredTodosData, setFilteredTodosData] = useState<Itodo[]>(todosData);
 
   useEffect(() => { // remove editable css-class when modal is hidden
-    !modalHandler.isVisible && dispatch(switchTodosItemEditableStatus({id: currentTodoID, status: false}));
+    !modalHandler.isVisible && dispatch(switchTodosItemEditableStatus({ id: currentTodoID, status: false }));
   }, [modalHandler.isVisible]);
 
   useEffect(() => { // update setInputTitleValue 
     dispatch(setInputTitleValue({ title: title }));
   }, [title]);
+
+
+  useEffect(() => { // update todosData when filering by filterProp (category)
+    setFilteredTodosData(filter(todosData, filterProp));
+  }, [todosData, filterProp]);
+
+  useEffect(() => { // check length of filteredTodosData[] for handle display alternative content
+    filteredTodosData.length === 0 
+      ? dispatch(switchTodosDataEmptyStatus({ status: true }))
+      : dispatch(switchTodosDataEmptyStatus({ status: false }));
+    // console.log(filteredTodosData)
+  }, [filteredTodosData, filterProp])
 
 
   const openBurger = (e: React.SyntheticEvent): void => {
@@ -183,7 +192,7 @@ const App: React.FC = () => {
                 <div className="page__preloader"><Preloader /></div> :
                 error ?
                   <h2 className="page__message">Error: {error}</h2> :
-                  isDataEmpty ?
+                  isTodosDataEmpty ?
                     <>
                       {
                         title === 'All' ?
@@ -194,7 +203,6 @@ const App: React.FC = () => {
                     </>
                     :
                     <TodoList
-                      todosData={todosData}
                       filteredTodosData={filteredTodosData}
                       setVisibleStatus={modalHandler.setVisibleStatus}
                       isFormVisible={isFormVisible}

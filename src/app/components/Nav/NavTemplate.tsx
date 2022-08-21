@@ -5,7 +5,7 @@ import { useAppSelector, useAppDispatch } from '../../../store/hooks';
 import {
     setCurrentCategoryID,
     setTitle,
-    filterTodosDataByCategory
+    setFilterProp
 } from '../../../store/slices/todoSlice';
 import {
     switchNavActiveStatus,
@@ -38,13 +38,12 @@ const NavTemplate: React.FC<propTypes> = (props) => {
         setEditableStatus
     } = props;
 
-    const { todosData, filteredTodosData, error, isTodosDataLoading } = useAppSelector(state => state.todoSlice);
+    const { todosData, error, isTodosDataLoading } = useAppSelector(state => state.todoSlice);
 
     const dispatch = useAppDispatch();
 
     const [todoCount, setTodoCount] = useState<number>(0);
 
-    // console.log(todosData)
 
     useEffect(() => { // set current todo items count for each category
         const array = [...todosData].filter(item => item.category.toLocaleLowerCase() === `#${category}`);
@@ -57,7 +56,7 @@ const NavTemplate: React.FC<propTypes> = (props) => {
             case 'all':
                 dispatch(switchNavActiveStatus({ id }));
 
-                dispatch(filterTodosDataByCategory({ category: `#${category}` }));
+                dispatch(setFilterProp({ filterProp: `#${category}` }));
 
                 dispatch(setTitle({ title: text }));
                 dispatch(setCurrentNavID({ id }));
@@ -67,7 +66,7 @@ const NavTemplate: React.FC<propTypes> = (props) => {
             case category:
                 dispatch(switchNavActiveStatus({ id }));
 
-                dispatch(filterTodosDataByCategory({ category: `#${category}` }))
+                dispatch(setFilterProp({ filterProp: `#${category}` }));
 
                 dispatch(setTitle({ title: text }));
                 dispatch(setCurrentNavID({ id }));
@@ -77,7 +76,7 @@ const NavTemplate: React.FC<propTypes> = (props) => {
             default:
                 dispatch(switchNavActiveStatus({ id }));
 
-                dispatch(filterTodosDataByCategory({ category: '#all' }));
+                dispatch(setFilterProp({ filterProp: '#all' }));
 
                 dispatch(setTitle({ title: 'All' }));
                 dispatch(setCurrentNavID({ id }));

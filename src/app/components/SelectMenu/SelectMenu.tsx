@@ -5,8 +5,7 @@ import { useAppDispatch } from '../../../store/hooks';
 import {
     setCurrentCategoryID,
     switchTodosItemEditableStatus,
-    filterTodosDataByCategory,
-    setTitle,
+    setTitle
 } from '../../../store/slices/todoSlice';
 import { setCurrentNavSelectID } from '../../../store/slices/navSlice';
 
@@ -41,8 +40,6 @@ const SelectMenu: React.FC<propTypes> = (props) => {
     const selectMenuHandler = (value: string): void => {
         switch (value) {
             case 'all':
-                dispatch(filterTodosDataByCategory({ category: 'all' }));
-
                 dispatch(setTitle({ title: 'All' }));
                 dispatch(switchTodosItemEditableStatus({ id: currentTodoID, status: false }));
 
@@ -50,8 +47,6 @@ const SelectMenu: React.FC<propTypes> = (props) => {
                 // dispatch(setCurrentCategoryID([...selectTemplatesData].find(item => item.value === value)?.id));
                 break;
             case value:
-                dispatch(filterTodosDataByCategory({ category: `#${value}` }));
-
                 dispatch(setTitle({ title: value.charAt(0).toUpperCase() + value.slice(1) }));
                 dispatch(switchTodosItemEditableStatus({ id: currentTodoID, status: false }));
 
@@ -59,8 +54,6 @@ const SelectMenu: React.FC<propTypes> = (props) => {
                 // dispatch(setCurrentCategoryID([...selectTemplatesData].find(item => item.value === value)?.id));
                 break;
             default:
-                dispatch(filterTodosDataByCategory({ category: 'all' }));
-
                 dispatch(setTitle({ title: 'All' }));
                 dispatch(switchTodosItemEditableStatus({ id: currentTodoID, status: false }));
 

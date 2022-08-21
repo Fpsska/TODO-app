@@ -10,17 +10,19 @@ import { getRandomArrElement } from '../../app/helpers/getRandomArrElement';
 // /. imports
 
 interface todoSliceState {
-    todosData: Itodo[];
+    todosData: any[];
     filteredTodosData: Itodo[];
     categoryTemplatesData: Icategory[];
     isTodosDataLoading: boolean;
     isFormVisible: boolean;
+    isTodosDataEmpty: boolean;
     status: string;
     error: any;
     title: string;
     inputTitleValue: string;
     currentCategoryID: number;
     currentTodoID: number;
+    filterProp: string
 }
 
 // /. interfaces
@@ -56,12 +58,14 @@ const initialState: todoSliceState = {
     ],
     isTodosDataLoading: true,
     isFormVisible: false,
+    isTodosDataEmpty: true,
     status: '',
     error: null,
     title: 'All',
     inputTitleValue: '',
     currentCategoryID: 1,
-    currentTodoID: 1
+    currentTodoID: 1,
+    filterProp: '#all'
 };
 
 // /. initialState
@@ -83,17 +87,16 @@ const todoSlice = createSlice({
         },
         removeTodosDataItem(state, action: PayloadAction<{ id: number }>) {
             const { id } = action.payload;
-            state.todosData = state.todosData.filter(item => item.id !== id);
+            const newTodoArray = state.todosData.filter(item => item.id !== id);
+            state.todosData = newTodoArray;
         },
-        filterTodosDataByCategory(state, action: PayloadAction<{ category: string }>) {
-            const { category } = action.payload;
-            state.filteredTodosData = state.todosData.filter(item => {
-                if (item.category.toLocaleLowerCase() === category) {
-                    return item;
-                } else if (category === '#all')
-                    return state.filteredTodosData;
-            });
+
+        setFilterProp(state, action: PayloadAction<{ filterProp: string }>) {
+            const { filterProp } = action.payload;
+            state.filterProp = filterProp;
         },
+
+
         editCurrentTodosDataItem(state, action: PayloadAction<{ id: number, inputValue: string, inputRadioCategoryValue: string, inputRadioStatusValue: string }>) {
             const { id, inputValue, inputRadioCategoryValue, inputRadioStatusValue } = action.payload;
             state.todosData.map(item => {
@@ -115,14 +118,19 @@ const todoSlice = createSlice({
 
             // })
         },
+
         switchTodosItemEditableStatus(state, action: PayloadAction<{ id: number, status: boolean }>) {
             const { id, status } = action.payload;
-            state.filteredTodosData.map(item => item.id === id ? item.editable = status : item);
+            const newTodoArray = state.todosData;
+            newTodoArray.map(item => item.id === id ? item.editable = status : item);
+            state.todosData = newTodoArray;
         },
         switchTodosItemCompleteStatus(state, action: PayloadAction<{ id: number, status: boolean }>) {
             const { id, status } = action.payload;
             state.filteredTodosData.map(item => item.id === id ? item.completed = status : item);
         },
+
+
         setTitle(state, action: PayloadAction<{ title: string }>) {
             const { title } = action.payload;
             state.title = title;
@@ -158,6 +166,10 @@ const todoSlice = createSlice({
         switchFormVisibleStatus(state, action: PayloadAction<{ status: boolean }>) {
             const { status } = action.payload;
             state.isFormVisible = status;
+        },
+        switchTodosDataEmptyStatus(state, action: PayloadAction<{ status: boolean }>) {
+            const { status } = action.payload;
+            state.isTodosDataEmpty = status;
         }
     },
     extraReducers: {
@@ -165,16 +177,15 @@ const todoSlice = createSlice({
             state.status = 'loading';
         },
         [fetchTodosData.fulfilled.type]: (state, action: PayloadAction<Itodo[]>) => {
-            state.filteredTodosData = action.payload;
-            state.filteredTodosData.map(item => { // extend array by category, status fields
+            state.todosData = action.payload;
+            state.todosData.map(item => {
                 item.category = getRandomArrElement(['#Groceries', '#College', '#Payments', '']);
                 item.status = getRandomArrElement(['waiting', 'process', 'done', '']);
                 item.completed = false;
                 item.editable = false;
-            })
+            });
 
-            state.todosData = state.filteredTodosData;
-
+            console.log('todosData>', state.todosData)
             state.status = 'success';
         },
         [fetchTodosData.rejected.type]: (state, action: PayloadAction<string>) => {
@@ -189,7 +200,9 @@ export const {
     setTodosData,
     setFilteredTodosData,
     removeTodosDataItem,
-    filterTodosDataByCategory,
+
+    setFilterProp,
+
     editCurrentTodosDataItem,
     editCategoryOFCurrentTodosDataItem,
     switchTodosItemEditableStatus,
@@ -200,7 +213,8 @@ export const {
     addNewCategoryItem,
     editCurrentCategoryTemplateItem,
     setCurrentTodoID,
-    switchFormVisibleStatus
+    switchFormVisibleStatus,
+    switchTodosDataEmptyStatus
 } = todoSlice.actions;
 
 export default todoSlice.reducer;

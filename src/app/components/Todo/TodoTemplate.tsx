@@ -6,20 +6,19 @@ import {
     removeTodosDataItem,
     setCurrentTodoID,
     switchTodosItemCompleteStatus,
-    switchTodosItemEditableStatus,
-    setTodosData
+    switchTodosItemEditableStatus
 } from '../../../store/slices/todoSlice';
 
 
 // /. imports
 
 interface propTypes {
-    id: number,
+    id: number;
     title: string;
     category: string;
     status: string;
-    completed: boolean,
-    editable: boolean,
+    completed: boolean;
+    editable: boolean;
 
     setVisibleStatus: (arg: boolean) => void;
 }
@@ -59,10 +58,10 @@ const TodoTemplate: React.FC<propTypes> = (props) => {
     return (
         <li className="todo__item">
 
-            <label className={completed ? 'todo__label completed' : 'todo__label'} title={title} onClick={handleCompleteStatus}>
+            <label className={completed ? 'todo__label completed' : 'todo__label'} onClick={handleCompleteStatus} title={title}>
                 <input className="todo__checkbox" type="checkbox" />
                 <span className="todo__checkbox--fake"></span>
-                <span className={`todo__label-text ${editable && !category && 'editable large'} ${editable && 'editable'}  ${!category && 'large'}`} >
+                <span className={`todo__label-text ${editable && !category && 'editable large'} ${editable && 'editable'}  ${!category && 'large'}`}>
                     {title}
                 </span>
             </label>
