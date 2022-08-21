@@ -54,17 +54,17 @@ const NavTemplate: React.FC<propTypes> = (props) => {
     const filterTodoItems = (): void => {
         switch (category) {
             case 'all':
-                dispatch(switchNavActiveStatus({ id }));
+                dispatch(switchNavActiveStatus({ id, status: true }));
 
                 dispatch(setFilterProp({ filterProp: `#${category}` }));
 
                 dispatch(setTitle({ title: text }));
                 dispatch(setCurrentNavID({ id }));
-                dispatch(setCurrentCategoryID({ id }));
+                dispatch(setCurrentCategoryID({ id })); // for edit categoryTemplatesData[] items
                 setEditableStatus(false);
                 break;
             case category:
-                dispatch(switchNavActiveStatus({ id }));
+                dispatch(switchNavActiveStatus({ id, status: true }));
 
                 dispatch(setFilterProp({ filterProp: `#${category}` }));
 
@@ -74,7 +74,7 @@ const NavTemplate: React.FC<propTypes> = (props) => {
                 setEditableStatus(false);
                 break;
             default:
-                dispatch(switchNavActiveStatus({ id }));
+                dispatch(switchNavActiveStatus({ id, status: true }));
 
                 dispatch(setFilterProp({ filterProp: '#all' }));
 

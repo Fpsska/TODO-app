@@ -40,6 +40,7 @@ const App: React.FC = () => {
     todosData,
     filterProp,
     currentTodoID,
+    currentCategoryID,
     isTodosDataLoading,
     isFormVisible,
     isTodosDataEmpty,
@@ -123,6 +124,7 @@ const App: React.FC = () => {
                 selectTemplatesData={selectTemplatesData}
                 currentTodoID={currentTodoID}
                 isDataTLoading={isTodosDataLoading}
+                title={title}
                 error={error}
               />
             </div>
@@ -159,11 +161,10 @@ const App: React.FC = () => {
                 isEditable={titleFormHandler.isVisible}
                 setEditableStatus={titleFormHandler.setVisibleStatus}
                 inputTitleValue={inputTitleValue}
-                todosData={todosData}
-                navTemplatesData={navTemplatesData}
-                selectTemplatesData={selectTemplatesData}
                 currentNavID={currentNavID}
                 currentNavSelectID={currentNavSelectID}
+                currentCategoryID={currentCategoryID}
+                filterProp={filterProp}
               />
 
               <>

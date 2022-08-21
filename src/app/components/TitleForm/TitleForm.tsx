@@ -12,10 +12,6 @@ import {
     editCurrentNavSelectTemplateItem,
 } from '../../../store/slices/navSlice';
 
-import { Inav } from '../../types/navTypes';
-import { Itodo } from '../../types/todoTypes';
-import { Iselect } from '../../types/selectTypes';
-
 import './titleForm.scss'
 
 // /. imports
@@ -25,11 +21,10 @@ interface propTypes {
     isEditable: boolean;
     inputTitleValue: string;
     setEditableStatus: (arg: boolean) => void;
-    todosData: Itodo[];
-    navTemplatesData: Inav[];
-    selectTemplatesData: Iselect[];
     currentNavID: number;
-    currentNavSelectID: number
+    currentNavSelectID: number;
+    currentCategoryID: number;
+    filterProp: string
 }
 
 const TitleForm: React.FC<propTypes> = (props) => {
@@ -39,11 +34,10 @@ const TitleForm: React.FC<propTypes> = (props) => {
         isEditable,
         inputTitleValue,
         setEditableStatus,
-        todosData,
-        navTemplatesData,
-        selectTemplatesData,
         currentNavID,
-        currentNavSelectID
+        currentNavSelectID,
+        currentCategoryID,
+        filterProp
     } = props;
 
     const dispatch = useAppDispatch();
@@ -52,54 +46,25 @@ const TitleForm: React.FC<propTypes> = (props) => {
         e.preventDefault();
 
         dispatch(editCurrentNavTemplateItem({  // update text, category in navTemplatesData[]
+            id: currentNavID,
             text: inputTitleValue,
             category: inputTitleValue.toLocaleLowerCase().trim()
         }));
 
         dispatch(editCurrentNavSelectTemplateItem({ // update text, value in selectTemplatesData[]
+            id: currentNavSelectID,
             text: inputTitleValue, // displayed in UI
             value: inputTitleValue.toLocaleLowerCase().trim() // logic
         }));
 
         dispatch(editCurrentCategoryTemplateItem({  // update text, value in categoryTemplatesData[]
+            id: currentCategoryID,
             text: inputTitleValue.toLocaleLowerCase().trim(), // displayed in UI
             value: inputTitleValue.toLocaleLowerCase().trim() // logic
         }));
 
-
-        const currentCategoryFromNav = `#${[...navTemplatesData].find(item => item.id === currentNavID)?.category}`; // return string 'all/college'
-        const currentCategoryFromNavSelect = `#${[...selectTemplatesData].find(item => item.id === currentNavSelectID)?.value}`;
-
-        // setTodosData([...todosData].map(item => { // update category name of todoData[] items of current category value
-        //     if (item.category.toLocaleLowerCase() === currentCategoryFromNav) {
-        //         return {
-        //             ...item,
-        //             category: inputTitleValue ? `#${(inputTitleValue.charAt(0).toUpperCase() + inputTitleValue.slice(1)).trim().replace(/#/gi, '')}` : '',
-        //         };
-        //     }
-        //     if (item.category.toLocaleLowerCase() === currentCategoryFromNavSelect) {
-        //         return {
-        //             ...item,
-        //             category: inputTitleValue ? `#${(inputTitleValue.charAt(0).toUpperCase() + inputTitleValue.slice(1)).trim().replace(/#/gi, '')}` : '',
-        //         };
-        //     }
-        //     return item;
-        // }));
-
-        // [...todosData].map(item => {
-        //     if (item.category.toLocaleLowerCase() === currentCategoryFromNav) {
-        //         dispatch(editCategoryOFCurrentTodosDataItem({
-        //             categoryValue: inputTitleValue ? `#${(inputTitleValue.charAt(0).toUpperCase() + inputTitleValue.slice(1)).trim().replace(/#/gi, '')}` : ''
-        //         }));
-        //     }
-        //     if (item.category.toLocaleLowerCase() === currentCategoryFromNavSelect) {
-        //         dispatch(editCategoryOFCurrentTodosDataItem({
-        //             categoryValue: inputTitleValue ? `#${(inputTitleValue.charAt(0).toUpperCase() + inputTitleValue.slice(1)).trim().replace(/#/gi, '')}` : ''
-        //         }));
-        //     }
-        // });
-
         dispatch(editCategoryOFCurrentTodosDataItem({
+            categoryProp: filterProp, // '#all/#college'
             categoryValue: inputTitleValue ? `#${(inputTitleValue.charAt(0).toUpperCase() + inputTitleValue.slice(1)).trim().replace(/#/gi, '')}` : ''
         }));
 
@@ -120,7 +85,7 @@ const TitleForm: React.FC<propTypes> = (props) => {
                         type="text"
                         title={`${inputTitleValue} Tasks`}
                         value={inputTitleValue}
-                        onChange={e => dispatch(setInputTitleValue({title: e.target.value}))} />
+                        onChange={e => dispatch(setInputTitleValue({ title: e.target.value }))} />
                 }
             </form>
         </div>

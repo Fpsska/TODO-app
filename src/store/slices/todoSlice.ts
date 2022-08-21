@@ -87,45 +87,43 @@ const todoSlice = createSlice({
         },
         removeTodosDataItem(state, action: PayloadAction<{ id: number }>) {
             const { id } = action.payload;
-
-            const newTodoArray = state.todosData.filter(item => item.id !== id);
-            state.todosData = newTodoArray;
+            state.todosData = state.todosData.filter(item => item.id !== id);
         },
-
         setFilterProp(state, action: PayloadAction<{ filterProp: string }>) {
             const { filterProp } = action.payload;
             state.filterProp = filterProp;
         },
-
-
         editCurrentTodosDataItem(state, action: PayloadAction<{ id: number, title: string, category: string, status: string }>) {
             const { id, title, category, status } = action.payload;
 
             const currentTodoItem = state.todosData.find(item => item.id === id);
-            currentTodoItem.title = title;
-            currentTodoItem.category = category;
-            currentTodoItem.status = status;
-            currentTodoItem.editable = false;
+            if (currentTodoItem) {
+                currentTodoItem.title = title;
+                currentTodoItem.category = category;
+                currentTodoItem.status = status;
+                currentTodoItem.editable = false;
+            }
         },
-        editCategoryOFCurrentTodosDataItem(state, action: PayloadAction<{ categoryValue: string }>) { //  categoryProp: string, 
-            // const {  categoryValue } = action.payload; // categoryProp,
-            // state.todosData.map(item => {
+        editCategoryOFCurrentTodosDataItem(state, action: PayloadAction<{ categoryProp: string, categoryValue: string }>) {
+            const { categoryProp, categoryValue } = action.payload; // //  categoryProp - logic / categoryValue - UI
 
-            // })
+            const validTodosArray = state.todosData.filter(item => item.category.toLowerCase() === categoryProp)
+            if (validTodosArray) {
+                validTodosArray.map(item => item.category = categoryValue);
+            }
         },
-
         switchTodosItemEditableStatus(state, action: PayloadAction<{ id: number, status: boolean }>) {
             const { id, status } = action.payload;
             state.todosData.map(item => item.id === id ? item.editable = status : item);
         },
         switchTodosItemCompleteStatus(state, action: PayloadAction<{ id: number, status: boolean }>) {
             const { id, status } = action.payload;
-            
+
             const currentTodoItem = state.todosData.find(item => item.id === id);
-            currentTodoItem.completed = !status;
+            if (currentTodoItem) {
+                currentTodoItem.completed = !status;
+            }
         },
-
-
         setTitle(state, action: PayloadAction<{ title: string }>) {
             const { title } = action.payload;
             state.title = title;
@@ -141,18 +139,14 @@ const todoSlice = createSlice({
         addNewCategoryItem(state, action: PayloadAction<any>) {
             state.categoryTemplatesData.push(action.payload);
         },
-        editCurrentCategoryTemplateItem(state, action: PayloadAction<{ text: string, value: string }>) {
-            const { text, value } = action.payload;
-            state.categoryTemplatesData.map(item => {
-                if (item.id === state.currentCategoryID) {
-                    return {
-                        ...item,
-                        text: text, // displayed in UI
-                        value: value // logic
-                    }
-                }
-                return item;
-            })
+        editCurrentCategoryTemplateItem(state, action: PayloadAction<{ id: number, text: string, value: string }>) {
+            const { id, text, value } = action.payload;
+
+            const currentCategoryItem = state.categoryTemplatesData.find(item => item.id === id);
+            if (currentCategoryItem) {
+                currentCategoryItem.text = text;
+                currentCategoryItem.value = value;
+            }
         },
         setCurrentTodoID(state, action: PayloadAction<{ id: number }>) {
             const { id } = action.payload;

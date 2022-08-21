@@ -22,7 +22,7 @@ const CategoryForm: React.FC = () => {
 
     const formRef = useRef<HTMLFormElement>(null!);
 
-    const formSubmitHandler = (e: React.SyntheticEvent): void => {
+    const formSubmitHandler = (e: React.FormEvent): void => {
         e.preventDefault();
 
         dispatch(addNavTemplateItem({

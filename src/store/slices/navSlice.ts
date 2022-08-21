@@ -79,9 +79,9 @@ const navSlice = createSlice({
     name: 'navSlice',
     initialState,
     reducers: {
-        switchNavActiveStatus(state, action: PayloadAction<{ id: number }>) {
-            const { id } = action.payload;
-            state.navTemplatesData.map(item => item.id === id ? item.isActive = true : item.isActive = false);
+        switchNavActiveStatus(state, action: PayloadAction<{ id: number, status: boolean }>) {
+            const { id, status } = action.payload;
+            state.navTemplatesData.map(item => item.id === id ? item.isActive = status : item.isActive = false);
         },
         setCurrentNavID(state, action: PayloadAction<{ id: number }>) {
             const { id } = action.payload;
@@ -90,18 +90,14 @@ const navSlice = createSlice({
         addNavTemplateItem(state, action: PayloadAction<any>) {
             state.navTemplatesData.push(action.payload);
         },
-        editCurrentNavTemplateItem(state, action: PayloadAction<{ text: string, category: string }>) {
-            const { text, category } = action.payload;
-            state.navTemplatesData.map(item => {
-                if (item.id === state.currentNavID) {
-                    return {
-                        ...item,
-                        text: text,
-                        category: category
-                    };
-                }
-                return item;
-            })
+        editCurrentNavTemplateItem(state, action: PayloadAction<{ id: number, text: string, category: string }>) {
+            const { id, text, category } = action.payload;
+
+            const currentNavItem = state.navTemplatesData.find(item => item.id === id);
+            if (currentNavItem) {
+                currentNavItem.text = text;
+                currentNavItem.category = category;
+            }
         },
         setCurrentNavSelectID(state, action: PayloadAction<{ id: number }>) {
             const { id } = action.payload;
@@ -110,18 +106,14 @@ const navSlice = createSlice({
         addNewSelectItem(state, action: PayloadAction<any>) {
             state.selectTemplatesData.push(action.payload);
         },
-        editCurrentNavSelectTemplateItem(state, action: PayloadAction<{ text: string, value: string }>) {
-            const { text, value } = action.payload;
-            state.selectTemplatesData.map(item => {
-                if (item.id === state.currentNavSelectID) {
-                    return {
-                        ...item,
-                        text: text, // displayed in UI
-                        value: value // logic
-                    };
-                }
-                return item;
-            })
+        editCurrentNavSelectTemplateItem(state, action: PayloadAction<{ id: number, text: string, value: string }>) {
+            const { id, text, value } = action.payload;
+
+            const currentCategoryItem = state.selectTemplatesData.find(item => item.id === id);
+            if (currentCategoryItem) {
+                currentCategoryItem.text = text;
+                currentCategoryItem.value = value;
+            }
         },
     }
 });
