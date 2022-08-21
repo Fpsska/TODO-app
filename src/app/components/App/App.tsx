@@ -121,10 +121,10 @@ const App: React.FC = () => {
             <div className="page__nav-select">
               <SelectMenu
                 selectTemplatesData={selectTemplatesData}
+                navTemplatesData={navTemplatesData}
+                selectNavOption={selectNavOption}
                 currentTodoID={currentTodoID}
                 isDataTLoading={isTodosDataLoading}
-                selectNavOption={selectNavOption}
-                title={title}
                 error={error}
               />
             </div>

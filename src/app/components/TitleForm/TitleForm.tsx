@@ -64,7 +64,7 @@ const TitleForm: React.FC<propTypes> = (props) => {
         }));
 
         dispatch(editCategoryOFCurrentTodosDataItem({
-            categoryProp: filterProp, // '#all/#college'
+            categoryProp: filterProp, // '#alln / #college'
             categoryValue: inputTitleValue ? `#${(inputTitleValue.charAt(0).toUpperCase() + inputTitleValue.slice(1)).trim().replace(/#/gi, '')}` : ''
         }));
 
