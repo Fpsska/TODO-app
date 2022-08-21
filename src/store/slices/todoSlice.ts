@@ -87,6 +87,7 @@ const todoSlice = createSlice({
         },
         removeTodosDataItem(state, action: PayloadAction<{ id: number }>) {
             const { id } = action.payload;
+
             const newTodoArray = state.todosData.filter(item => item.id !== id);
             state.todosData = newTodoArray;
         },
@@ -97,20 +98,14 @@ const todoSlice = createSlice({
         },
 
 
-        editCurrentTodosDataItem(state, action: PayloadAction<{ id: number, inputValue: string, inputRadioCategoryValue: string, inputRadioStatusValue: string }>) {
-            const { id, inputValue, inputRadioCategoryValue, inputRadioStatusValue } = action.payload;
-            state.todosData.map(item => {
-                if (item.id === id) {
-                    return {
-                        ...item,
-                        title: inputValue,
-                        category: inputRadioCategoryValue ? `#${(inputRadioCategoryValue.charAt(0).toUpperCase() + inputRadioCategoryValue.slice(1)).replace(/#/gi, '')}` : '', // set upperCase for 1st letter of getted inputRadioValue
-                        status: inputRadioStatusValue,
-                        editable: false
-                    };
-                }
-                return item;
-            })
+        editCurrentTodosDataItem(state, action: PayloadAction<{ id: number, title: string, category: string, status: string }>) {
+            const { id, title, category, status } = action.payload;
+
+            const currentTodoItem = state.todosData.find(item => item.id === id);
+            currentTodoItem.title = title;
+            currentTodoItem.category = category;
+            currentTodoItem.status = status;
+            currentTodoItem.editable = false;
         },
         editCategoryOFCurrentTodosDataItem(state, action: PayloadAction<{ categoryValue: string }>) { //  categoryProp: string, 
             // const {  categoryValue } = action.payload; // categoryProp,
@@ -121,13 +116,13 @@ const todoSlice = createSlice({
 
         switchTodosItemEditableStatus(state, action: PayloadAction<{ id: number, status: boolean }>) {
             const { id, status } = action.payload;
-            const newTodoArray = state.todosData;
-            newTodoArray.map(item => item.id === id ? item.editable = status : item);
-            state.todosData = newTodoArray;
+            state.todosData.map(item => item.id === id ? item.editable = status : item);
         },
         switchTodosItemCompleteStatus(state, action: PayloadAction<{ id: number, status: boolean }>) {
             const { id, status } = action.payload;
-            state.filteredTodosData.map(item => item.id === id ? item.completed = status : item);
+            
+            const currentTodoItem = state.todosData.find(item => item.id === id);
+            currentTodoItem.completed = !status;
         },
 
 

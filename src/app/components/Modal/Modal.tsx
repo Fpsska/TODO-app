@@ -39,7 +39,12 @@ const Modal: React.FC<propTypes> = (props) => {
     const formSubmitHandler = (e: React.SyntheticEvent): any => {
         e.preventDefault();
 
-        dispatch(editCurrentTodosDataItem({id: currentTodoID, inputValue, inputRadioCategoryValue, inputRadioStatusValue }));
+        dispatch(editCurrentTodosDataItem({
+            id: currentTodoID,
+            title: inputValue,
+            category: inputRadioCategoryValue ? `#${(inputRadioCategoryValue.charAt(0).toUpperCase() + inputRadioCategoryValue.slice(1)).replace(/#/gi, '')}` : '', // set upperCase for 1st letter of getted inputRadioValue,
+            status: inputRadioStatusValue
+        }));
 
         setVisibleStatus(false);
     };
