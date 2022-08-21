@@ -10,7 +10,8 @@ import { getRandomArrElement } from '../../app/helpers/getRandomArrElement';
 // /. imports
 
 interface todoSliceState {
-    todosData: any[];
+    todosData: Itodo[];
+    todosDataContainer: Itodo[];
     categoryTemplatesData: Icategory[];
     isTodosDataLoading: boolean;
     isFormVisible: boolean;
@@ -28,6 +29,7 @@ interface todoSliceState {
 
 const initialState: todoSliceState = {
     todosData: [],
+    todosDataContainer: [],
     categoryTemplatesData: [
         {
             id: 1,
@@ -86,9 +88,8 @@ const todoSlice = createSlice({
         },
         findTodosItemByName(state, action: PayloadAction<{value: string}>) { 
             const { value } = action.payload;
-            const validTodos = state.todosData.filter(item => RegExp(value.trim(), 'gi').test(item.title))
+            state.todosData = state.todosDataContainer.filter(item => RegExp(value.trim(), 'gi').test(item.title))
         },
-
         setFilterProp(state, action: PayloadAction<{ filterProp: string }>) {
             const { filterProp } = action.payload;
             state.filterProp = filterProp;
@@ -167,14 +168,14 @@ const todoSlice = createSlice({
         },
         [fetchTodosData.fulfilled.type]: (state, action: PayloadAction<Itodo[]>) => {
             state.todosData = action.payload;
-            state.todosData.map(item => {
+            state.todosData.map(item => {   // extend array by category, status fields
                 item.category = getRandomArrElement(['#Groceries', '#College', '#Payments', '']);
                 item.status = getRandomArrElement(['waiting', 'process', 'done', '']);
                 item.completed = false;
                 item.editable = false;
             });
+            state.todosDataContainer = state.todosData;
 
-            console.log('todosData>', state.todosData)
             state.status = 'success';
         },
         [fetchTodosData.rejected.type]: (state, action: PayloadAction<string>) => {
@@ -189,9 +190,7 @@ export const {
     addNewTodosItem,
     removeTodosItem,
     findTodosItemByName,
-
     setFilterProp,
-
     editCurrentTodosDataItem,
     editCategoryOFCurrentTodosDataItem,
     switchTodosItemEditableStatus,

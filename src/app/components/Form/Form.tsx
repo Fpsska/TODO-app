@@ -4,8 +4,6 @@ import { useAppSelector, useAppDispatch } from '../../../store/hooks';
 
 import { addNewTodosItem, findTodosItemByName } from '../../../store/slices/todoSlice';
 
-import { Itodo } from '../../types/todoTypes';
-
 import './form.scss';
 
 // /. imports
@@ -16,6 +14,7 @@ interface propTypes {
 }
 
 // /. interfaces
+
 
 const Form: React.FC<propTypes> = (props) => {
 
@@ -32,20 +31,12 @@ const Form: React.FC<propTypes> = (props) => {
 
     const dispatch = useAppDispatch();
 
-    // const findTodoItem = (searchInputValue: string): void => {
-    //     dispatch(findTodosDataByName({value: searchInputValue}));
-    // };
-
-    function findTodoItem(array: any, value: string) {
-        return array.filter((item: any) => RegExp(value.trim(), 'gi').test(item.title));
-    };
-
-    const formSubmitHandler = (e: React.SyntheticEvent): void => {
+    const formSubmitHandler = (e: React.FormEvent): void => {
         e.preventDefault();  // disable refresh page after submit form 
 
         switch (role) {
             case 'add':
-                dispatch(addNewTodosItem({
+                createInputValue && dispatch(addNewTodosItem({
                     id: +new Date(),
                     title: createInputValue,
                     category: '',
@@ -68,7 +59,7 @@ const Form: React.FC<propTypes> = (props) => {
                     type="text"
                     data-role={role}
                     placeholder={text}
-                    // onChange={e => findTodoItem(e.target.value)}
+                    onChange={(e) => dispatch(findTodosItemByName({ value: e.target.value }))}
                     disabled={isTodosDataLoading || error} />
                 : <input className="form__input"
                     type="text"
