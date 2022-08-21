@@ -10,6 +10,7 @@ import {
 import {
     switchNavActiveStatus,
     setCurrentNavID,
+    setSelectNavOption
 } from '../../../store/slices/navSlice';
 
 // /. imports
@@ -55,16 +56,18 @@ const NavTemplate: React.FC<propTypes> = (props) => {
             case 'all':
                 dispatch(switchNavActiveStatus({ id, status: true }));
 
-                dispatch(setFilterProp({ filterProp: `#${category}` }));
+                dispatch(setSelectNavOption({option: text})); // two-way communication/sync with SelectMenu.tsx for correct filtering
+                dispatch(setFilterProp({ filterProp: `#${category}` })); // update prop for filter.ts func for real-time filtering
 
-                dispatch(setTitle({ title: text }));
-                dispatch(setCurrentNavID({ id }));
-                dispatch(setCurrentCategoryID({ id })); // for edit categoryTemplatesData[] items
-                setEditableStatus(false);
+                dispatch(setTitle({ title: text })); // update title globally
+                dispatch(setCurrentNavID({ id })); // for edit current item of navTemplatesData[] 
+                dispatch(setCurrentCategoryID({ id })); // for edit category value of current item of todosData[] 
+                setEditableStatus(false); // controle titleForm visible condition
                 break;
             case category:
                 dispatch(switchNavActiveStatus({ id, status: true }));
 
+                dispatch(setSelectNavOption({option: text}));
                 dispatch(setFilterProp({ filterProp: `#${category}` }));
 
                 dispatch(setTitle({ title: text }));
@@ -75,6 +78,7 @@ const NavTemplate: React.FC<propTypes> = (props) => {
             default:
                 dispatch(switchNavActiveStatus({ id, status: true }));
 
+                dispatch(setSelectNavOption({option: 'All'}));
                 dispatch(setFilterProp({ filterProp: '#all' }));
 
                 dispatch(setTitle({ title: 'All' }));

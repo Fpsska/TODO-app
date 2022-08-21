@@ -11,6 +11,7 @@ interface navSliceState {
     selectTemplatesData: Iselect[];
     currentNavID: number;
     currentNavSelectID: number;
+    selectNavOption: string
 }
 
 // /. interfaces
@@ -50,26 +51,27 @@ const initialState: navSliceState = {
         {
             id: 1,
             text: 'All',
-            value: 'all'
+            value: 'All'
         },
         {
             id: 2,
             text: 'Groceries',
-            value: 'groceries'
+            value: 'Groceries'
         },
         {
             id: 3,
             text: 'College',
-            value: 'college'
+            value: 'College'
         },
         {
             id: 4,
             text: 'Payments',
-            value: 'payments'
+            value: 'Payments'
         }
     ],
     currentNavID: 1,
-    currentNavSelectID: 1
+    currentNavSelectID: 1,
+    selectNavOption: 'All'
 };
 
 // /. initialState
@@ -115,6 +117,10 @@ const navSlice = createSlice({
                 currentCategoryItem.value = value;
             }
         },
+        setSelectNavOption(state, action: PayloadAction<{ option: string }>) {
+            const { option } = action.payload;
+            state.selectNavOption = option;
+        }
     }
 });
 
@@ -125,7 +131,8 @@ export const {
     addNavTemplateItem,
     setCurrentNavSelectID,
     addNewSelectItem,
-    editCurrentNavSelectTemplateItem
+    editCurrentNavSelectTemplateItem,
+    setSelectNavOption
 } = navSlice.actions;
 
 export default navSlice.reducer;

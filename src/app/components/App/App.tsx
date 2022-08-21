@@ -51,7 +51,8 @@ const App: React.FC = () => {
     navTemplatesData,
     selectTemplatesData,
     currentNavID,
-    currentNavSelectID
+    currentNavSelectID,
+    selectNavOption
   } = useAppSelector(state => state.navSlice);
 
   const dispatch = useAppDispatch();
@@ -122,6 +123,7 @@ const App: React.FC = () => {
                 selectTemplatesData={selectTemplatesData}
                 currentTodoID={currentTodoID}
                 isDataTLoading={isTodosDataLoading}
+                selectNavOption={selectNavOption}
                 title={title}
                 error={error}
               />
