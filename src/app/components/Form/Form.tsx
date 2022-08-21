@@ -1,5 +1,9 @@
 import React, { useState, useRef } from 'react';
 
+import { useAppSelector, useAppDispatch } from '../../../store/hooks';
+
+import { addNewTodosItem, findTodosItemByName } from '../../../store/slices/todoSlice';
+
 import { Itodo } from '../../types/todoTypes';
 
 import './form.scss';
@@ -9,11 +13,6 @@ import './form.scss';
 interface propTypes {
     role: string
     text: string;
-    todosData: Itodo[];
-    setTodosData: (arg: Itodo[]) => void;
-    setFilteredTodosData: (arg: Itodo[]) => void;
-    isDataTLoading: boolean;
-    error: any
 }
 
 // /. interfaces
@@ -23,19 +22,22 @@ const Form: React.FC<propTypes> = (props) => {
     const {
         role,
         text,
-        todosData,
-        setTodosData,
-        setFilteredTodosData,
-        isDataTLoading,
-        error
     } = props;
+
+    const { isTodosDataLoading, error } = useAppSelector(state => state.todoSlice);
 
     const [createInputValue, setCreateInputValue] = useState<string>('');
 
     const formRef = useRef<HTMLFormElement>(null!);
 
-    const findTodoItem = (searchInputValue: string): void => {
-        setFilteredTodosData([...todosData].filter(item => RegExp(searchInputValue.trim(), 'gi').test(item.title)));
+    const dispatch = useAppDispatch();
+
+    // const findTodoItem = (searchInputValue: string): void => {
+    //     dispatch(findTodosDataByName({value: searchInputValue}));
+    // };
+
+    function findTodoItem(array: any, value: string) {
+        return array.filter((item: any) => RegExp(value.trim(), 'gi').test(item.title));
     };
 
     const formSubmitHandler = (e: React.SyntheticEvent): void => {
@@ -43,14 +45,14 @@ const Form: React.FC<propTypes> = (props) => {
 
         switch (role) {
             case 'add':
-                setTodosData([...todosData, { // create todo item
+                dispatch(addNewTodosItem({
                     id: +new Date(),
                     title: createInputValue,
                     category: '',
                     status: '',
                     completed: false,
                     editable: false
-                }]);
+                }))
 
                 //  clear input value after create todo item
                 formRef.current.reset();
@@ -60,20 +62,20 @@ const Form: React.FC<propTypes> = (props) => {
     };
 
     return (
-        <form ref={formRef} className="form" onSubmit={e => !isDataTLoading && !error && formSubmitHandler(e)}>
+        <form ref={formRef} className="form" onSubmit={e => !isTodosDataLoading && !error && formSubmitHandler(e)}>
             {role === 'search' ?
                 <input className="form__input"
                     type="text"
                     data-role={role}
                     placeholder={text}
-                    onChange={e => findTodoItem(e.target.value)}
-                    disabled={isDataTLoading || error} />
+                    // onChange={e => findTodoItem(e.target.value)}
+                    disabled={isTodosDataLoading || error} />
                 : <input className="form__input"
                     type="text"
                     data-role={role}
                     placeholder={text}
                     onChange={e => setCreateInputValue(e.target.value)}
-                    disabled={isDataTLoading || error} />
+                    disabled={isTodosDataLoading || error} />
             }
         </form>
     );

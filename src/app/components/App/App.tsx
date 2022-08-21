@@ -5,8 +5,6 @@ import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { setInputTitleValue } from '../../../store/slices/todoSlice';
 
 import {
-  setTodosData,
-  setFilteredTodosData,
   switchTodosItemEditableStatus,
   switchTodosDataEmptyStatus
 } from '../../../store/slices/todoSlice';
@@ -80,7 +78,7 @@ const App: React.FC = () => {
   }, [todosData, filterProp]);
 
   useEffect(() => { // check length of filteredTodosData[] for handle display alternative content
-    filteredTodosData.length === 0 
+    filteredTodosData.length === 0
       ? dispatch(switchTodosDataEmptyStatus({ status: true }))
       : dispatch(switchTodosDataEmptyStatus({ status: false }));
     // console.log(filteredTodosData)
@@ -180,12 +178,8 @@ const App: React.FC = () => {
               <Form
                 role={'search'}
                 text={'Find a task'}
-                todosData={todosData}
-                setTodosData={setTodosData}
-                setFilteredTodosData={setFilteredTodosData}
-                isDataTLoading={isTodosDataLoading}
-                error={error}
               />
+
             </div>
 
             <div className="page__list">
@@ -215,11 +209,6 @@ const App: React.FC = () => {
               <Form
                 role={'add'}
                 text={'Add a new task inside'}
-                todosData={todosData}
-                setTodosData={setTodosData}
-                setFilteredTodosData={setFilteredTodosData}
-                isDataTLoading={isTodosDataLoading}
-                error={error}
               />
             </div>
 

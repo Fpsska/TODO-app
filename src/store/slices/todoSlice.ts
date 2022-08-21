@@ -11,7 +11,6 @@ import { getRandomArrElement } from '../../app/helpers/getRandomArrElement';
 
 interface todoSliceState {
     todosData: any[];
-    filteredTodosData: Itodo[];
     categoryTemplatesData: Icategory[];
     isTodosDataLoading: boolean;
     isFormVisible: boolean;
@@ -29,7 +28,6 @@ interface todoSliceState {
 
 const initialState: todoSliceState = {
     todosData: [],
-    filteredTodosData: [],
     categoryTemplatesData: [
         {
             id: 1,
@@ -79,16 +77,18 @@ const todoSlice = createSlice({
             const { status } = action.payload;
             state.isTodosDataLoading = status;
         },
-        setTodosData(state, action: PayloadAction<Itodo[]>) {
-            state.todosData = action.payload;
+        addNewTodosItem(state, action: PayloadAction<any>) {
+            state.todosData.push(action.payload);
         },
-        setFilteredTodosData(state, action: PayloadAction<Itodo[]>) { // FORM.TSX
-            state.filteredTodosData = action.payload;
-        },
-        removeTodosDataItem(state, action: PayloadAction<{ id: number }>) {
+        removeTodosItem(state, action: PayloadAction<{ id: number }>) {
             const { id } = action.payload;
             state.todosData = state.todosData.filter(item => item.id !== id);
         },
+        findTodosItemByName(state, action: PayloadAction<{value: string}>) { 
+            const { value } = action.payload;
+            const validTodos = state.todosData.filter(item => RegExp(value.trim(), 'gi').test(item.title))
+        },
+
         setFilterProp(state, action: PayloadAction<{ filterProp: string }>) {
             const { filterProp } = action.payload;
             state.filterProp = filterProp;
@@ -186,9 +186,9 @@ const todoSlice = createSlice({
 
 export const {
     switchTodosDataLoadingStatus,
-    setTodosData,
-    setFilteredTodosData,
-    removeTodosDataItem,
+    addNewTodosItem,
+    removeTodosItem,
+    findTodosItemByName,
 
     setFilterProp,
 

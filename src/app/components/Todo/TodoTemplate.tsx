@@ -3,7 +3,7 @@ import React from 'react';
 import { useAppDispatch } from '../../../store/hooks';
 
 import {
-    removeTodosDataItem,
+    removeTodosItem,
     setCurrentTodoID,
     switchTodosItemCompleteStatus,
     switchTodosItemEditableStatus
@@ -52,7 +52,7 @@ const TodoTemplate: React.FC<propTypes> = (props) => {
     };
 
     const deleteTodoItem = (): void => {
-        dispatch(removeTodosDataItem({ id }));
+        dispatch(removeTodosItem({ id }));
     };
 
     return (

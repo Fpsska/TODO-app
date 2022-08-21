@@ -35,15 +35,14 @@ const NavTemplate: React.FC<propTypes> = (props) => {
         link,
         isActive,
 
-        setEditableStatus
+        setEditableStatus,
     } = props;
 
-    const { todosData, error, isTodosDataLoading } = useAppSelector(state => state.todoSlice);
-
-    const dispatch = useAppDispatch();
+    const { todosData, error, isTodosDataLoading, filterProp } = useAppSelector(state => state.todoSlice);
 
     const [todoCount, setTodoCount] = useState<number>(0);
 
+    const dispatch = useAppDispatch();
 
     useEffect(() => { // set current todo items count for each category
         const array = [...todosData].filter(item => item.category.toLocaleLowerCase() === `#${category}`);

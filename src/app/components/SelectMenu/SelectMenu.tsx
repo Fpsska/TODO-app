@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { useAppDispatch } from '../../../store/hooks';
 
@@ -38,11 +38,6 @@ const SelectMenu: React.FC<propTypes> = (props) => {
         error
     } = props;
 
-   
-    useEffect(() => {
-        console.log(title)
-    },[title])
-
     const dispatch = useAppDispatch();
 
     const selectMenuHandler = (value: string): void => {
@@ -78,7 +73,7 @@ const SelectMenu: React.FC<propTypes> = (props) => {
     return (
         <select className="nav-select"
             onChange={e => !isDataTLoading && !error && selectMenuHandler(e.target.value)}
-            // defaultValue={title}
+            defaultValue={title}
             disabled={isDataTLoading || error}
         >
             {selectTemplatesData.map((item: Iselect) => {

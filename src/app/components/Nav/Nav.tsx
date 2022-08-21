@@ -10,7 +10,7 @@ import './nav.scss';
 
 interface propTypes {
     navTemplatesData: Inav[];
-    setEditableStatus: (arg: boolean) => void;
+    setEditableStatus: (arg: boolean) => void
 }
 
 // /. interfaces
