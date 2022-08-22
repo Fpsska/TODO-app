@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { useAppDispatch } from '../../../store/hooks';
 
@@ -20,7 +20,9 @@ interface propTypes {
     completed: boolean;
     editable: boolean;
 
-    setVisibleStatus: (arg: boolean) => void;
+    isModalVisible: boolean;
+    setModalVisibleStatus: (arg: boolean) => void;
+    currentTodoID: number
 }
 
 // /. interfaces
@@ -35,8 +37,11 @@ const TodoTemplate: React.FC<propTypes> = (props) => {
         completed,
         editable,
 
-        setVisibleStatus,
+        isModalVisible,
+        setModalVisibleStatus,
+        currentTodoID
     } = props;
+
 
     const dispatch = useAppDispatch();
 
@@ -45,10 +50,12 @@ const TodoTemplate: React.FC<propTypes> = (props) => {
     };
 
     const editTodoItem = (): void => {
-        setVisibleStatus(true);
 
+        setModalVisibleStatus(true);
         dispatch(setCurrentTodoID({ id }));
+
         dispatch(switchTodosItemEditableStatus({ id, status: true }));  // set editable css-class
+
     };
 
     const deleteTodoItem = (): void => {
@@ -59,7 +66,13 @@ const TodoTemplate: React.FC<propTypes> = (props) => {
         <li className="todo__item">
 
             <label className={completed ? 'todo__label completed' : 'todo__label'} onClick={handleCompleteStatus} title={title}>
-                <input className="todo__checkbox" type="checkbox" />
+                <input
+                    className="todo__checkbox"
+                    type="checkbox"
+                    readOnly
+                    checked={completed}
+                    onChange={handleCompleteStatus}
+                />
                 <span className="todo__checkbox--fake"></span>
                 <span className={`todo__label-text ${editable && !category && 'editable large'} ${editable && 'editable'}  ${!category && 'large'}`}>
                     {title}

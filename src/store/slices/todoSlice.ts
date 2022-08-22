@@ -115,7 +115,7 @@ const todoSlice = createSlice({
         },
         switchTodosItemEditableStatus(state, action: PayloadAction<{ id: number, status: boolean }>) {
             const { id, status } = action.payload;
-            state.todosData.map(item => item.id === id ? item.editable = status : item);
+            state.todosData.map(item => item.id === id ? item.editable = status : item.editable = false);
         },
         switchTodosItemCompleteStatus(state, action: PayloadAction<{ id: number, status: boolean }>) {
             const { id, status } = action.payload;

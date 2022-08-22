@@ -201,8 +201,10 @@ const App: React.FC = () => {
                     :
                     <TodoList
                       filteredTodosData={filteredTodosData}
-                      setVisibleStatus={modalHandler.setVisibleStatus}
+                      setModalVisibleStatus={modalHandler.setVisibleStatus}
+                      isModalVisible={modalHandler.isVisible}
                       isFormVisible={isFormVisible}
+                      currentTodoID={currentTodoID}
                     />
               }
             </div>

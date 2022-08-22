@@ -15,7 +15,7 @@ export function useAreaHandler({ initialStatus }: propTypes): any {
 
     useEffect(() => {
         const areaHandler = (e: any): void => {
-            if (isVisible && refEl.current && !refEl.current.contains(e.target) ) {
+            if (isVisible && refEl.current && !refEl.current.contains(e.target)) {
                 setVisibleStatus(false);
             }
             // refEl.current HTML-el !== null/undefined && refEl.current.contains(e.target) === false =>
