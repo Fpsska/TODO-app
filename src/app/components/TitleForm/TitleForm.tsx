@@ -5,7 +5,8 @@ import { useAppDispatch } from '../../../store/hooks';
 import {
     editCurrentCategoryTemplateItem,
     editCategoryOFCurrentTodosDataItem,
-    setInputTitleValue
+    setInputTitleValue,
+    setFilterProp
 } from '../../../store/slices/todoSlice';
 import {
     editCurrentNavTemplateItem,
@@ -45,6 +46,8 @@ const TitleForm: React.FC<propTypes> = (props) => {
     const formSubmitHandler = (e: React.FormEvent): void => {
         e.preventDefault();
 
+        dispatch(setFilterProp({ filterProp: `#${inputTitleValue.toLocaleLowerCase().trim()}` }));
+
         dispatch(editCurrentNavTemplateItem({  // update text, category in navTemplatesData[]
             id: currentNavID,
             text: inputTitleValue,
@@ -64,7 +67,7 @@ const TitleForm: React.FC<propTypes> = (props) => {
         }));
 
         dispatch(editCategoryOFCurrentTodosDataItem({
-            categoryProp: filterProp, // '#alln / #college'
+            categoryProp: filterProp, // '#all  / #college'
             categoryValue: inputTitleValue ? `#${(inputTitleValue.charAt(0).toUpperCase() + inputTitleValue.slice(1)).trim().replace(/#/gi, '')}` : ''
         }));
 

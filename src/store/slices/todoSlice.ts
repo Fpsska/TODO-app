@@ -21,6 +21,7 @@ interface todoSliceState {
     title: string;
     inputTitleValue: string;
     currentCategoryID: number;
+    currentTodosCount: number;
     currentTodoID: number;
     filterProp: string
 }
@@ -65,6 +66,7 @@ const initialState: todoSliceState = {
     inputTitleValue: '',
     currentCategoryID: 1,
     currentTodoID: 1,
+    currentTodosCount: 0,
     filterProp: '#all'
 };
 
@@ -153,6 +155,11 @@ const todoSlice = createSlice({
             const { id } = action.payload;
             state.currentTodoID = id;
         },
+        setCurrentTodosCount(state, action: PayloadAction<{ count: number }>) {
+            const { count } = action.payload;
+            console.log(count)
+            state.currentTodosCount = count;
+        },
         switchFormVisibleStatus(state, action: PayloadAction<{ status: boolean }>) {
             const { status } = action.payload;
             state.isFormVisible = status;
@@ -201,6 +208,7 @@ export const {
     addNewCategoryItem,
     editCurrentCategoryTemplateItem,
     setCurrentTodoID,
+    setCurrentTodosCount,
     switchFormVisibleStatus,
     switchTodosDataEmptyStatus
 } = todoSlice.actions;

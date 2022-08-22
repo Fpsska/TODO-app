@@ -6,7 +6,8 @@ import { setInputTitleValue } from '../../../store/slices/todoSlice';
 
 import {
   switchTodosItemEditableStatus,
-  switchTodosDataEmptyStatus
+  switchTodosDataEmptyStatus,
+  setCurrentTodosCount
 } from '../../../store/slices/todoSlice';
 
 import { useAreaHandler } from '../../hooks/useAreaHandler';
@@ -42,17 +43,15 @@ const App: React.FC = () => {
     isTodosDataLoading,
     isFormVisible,
     isTodosDataEmpty,
-    error,
+    inputTitleValue,
     title,
-    inputTitleValue
+    error
   } = useAppSelector(state => state.todoSlice);
 
   const {
     navTemplatesData,
-    selectTemplatesData,
     currentNavID,
-    currentNavSelectID,
-    selectNavOption
+    currentNavSelectID
   } = useAppSelector(state => state.navSlice);
 
   const dispatch = useAppDispatch();
@@ -61,7 +60,7 @@ const App: React.FC = () => {
   const burgerHandler = useAreaHandler({ initialStatus: false });
   const titleFormHandler = useAreaHandler({ initialStatus: false });
 
-  // /. hooks 
+  // /. hooks usage
 
   const [filteredTodosData, setFilteredTodosData] = useState<Itodo[]>(todosData);
 
@@ -82,7 +81,6 @@ const App: React.FC = () => {
     filteredTodosData.length === 0
       ? dispatch(switchTodosDataEmptyStatus({ status: true }))
       : dispatch(switchTodosDataEmptyStatus({ status: false }));
-    // console.log(filteredTodosData)
   }, [filteredTodosData, filterProp])
 
 
@@ -119,14 +117,7 @@ const App: React.FC = () => {
 
           <div className="page__nav">
             <div className="page__nav-select">
-              <SelectMenu
-                selectTemplatesData={selectTemplatesData}
-                navTemplatesData={navTemplatesData}
-                selectNavOption={selectNavOption}
-                currentTodoID={currentTodoID}
-                isDataTLoading={isTodosDataLoading}
-                error={error}
-              />
+              <SelectMenu />
             </div>
             <Nav
               navTemplatesData={navTemplatesData}
@@ -155,7 +146,6 @@ const App: React.FC = () => {
             }
 
             <div className="page__header">
-
               <TitleForm
                 refEl={titleFormHandler.refEl}
                 isEditable={titleFormHandler.isVisible}
@@ -166,7 +156,6 @@ const App: React.FC = () => {
                 currentCategoryID={currentCategoryID}
                 filterProp={filterProp}
               />
-
               <>
                 {inputTitleValue !== 'All' &&
                   <button className="page__button page__button--edit" onClick={e => editCategoryName(e)}>
@@ -176,12 +165,10 @@ const App: React.FC = () => {
                   </button>
                 }
               </>
-
               <Form
                 role={'search'}
                 text={'Find a task'}
               />
-
             </div>
 
             <div className="page__list">
@@ -193,9 +180,9 @@ const App: React.FC = () => {
                     <>
                       {
                         title === 'All' ?
-                          <h2 className="page__message">Task list is empty</h2>
+                          <h1 className="page__message">Task list is empty</h1>
                           :
-                          <h2 className="page__message">{title} task list is empty</h2>
+                          <h1 className="page__message">{title} task list is empty</h1>
                       }
                     </>
                     :

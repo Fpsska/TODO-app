@@ -4,8 +4,9 @@ import { useAppSelector, useAppDispatch } from '../../../store/hooks';
 
 import {
     setCurrentCategoryID,
+    setCurrentTodosCount,
     setTitle,
-    setFilterProp
+    setFilterProp,
 } from '../../../store/slices/todoSlice';
 import {
     switchNavActiveStatus,
@@ -39,7 +40,7 @@ const NavTemplate: React.FC<propTypes> = (props) => {
         setEditableStatus,
     } = props;
 
-    const { todosData, error, isTodosDataLoading, filterProp } = useAppSelector(state => state.todoSlice);
+    const { todosData, currentTodosCount, error, isTodosDataLoading } = useAppSelector(state => state.todoSlice);
 
     const [todoCount, setTodoCount] = useState<number>(0);
 
@@ -56,7 +57,7 @@ const NavTemplate: React.FC<propTypes> = (props) => {
             case 'all':
                 dispatch(switchNavActiveStatus({ id, status: true }));
 
-                dispatch(setSelectNavOption({option: text})); // two-way communication/sync with SelectMenu.tsx for correct filtering
+                dispatch(setSelectNavOption({ option: text })); // two-way communication/sync with SelectMenu.tsx for correct filtering
                 dispatch(setFilterProp({ filterProp: `#${category}` })); // update prop for filter.ts func for real-time filtering
 
                 dispatch(setTitle({ title: text })); // update title globally
@@ -67,7 +68,7 @@ const NavTemplate: React.FC<propTypes> = (props) => {
             case category:
                 dispatch(switchNavActiveStatus({ id, status: true }));
 
-                dispatch(setSelectNavOption({option: text}));
+                dispatch(setSelectNavOption({ option: text }));
                 dispatch(setFilterProp({ filterProp: `#${category}` }));
 
                 dispatch(setTitle({ title: text }));
@@ -78,7 +79,7 @@ const NavTemplate: React.FC<propTypes> = (props) => {
             default:
                 dispatch(switchNavActiveStatus({ id, status: true }));
 
-                dispatch(setSelectNavOption({option: 'All'}));
+                dispatch(setSelectNavOption({ option: 'All' }));
                 dispatch(setFilterProp({ filterProp: '#all' }));
 
                 dispatch(setTitle({ title: 'All' }));

@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
-import { useAppDispatch } from '../../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 
 import {
     setCurrentCategoryID,
@@ -15,7 +15,6 @@ import {
 } from '../../../store/slices/navSlice';
 
 import { Iselect } from '../../types/selectTypes';
-import { Inav } from '../../types/navTypes';
 
 import SelectTemplate from './SelectTemplate';
 
@@ -23,27 +22,21 @@ import './select.scss';
 
 // /. imports
 
-interface propTypes {
-    selectTemplatesData: Iselect[];
-    navTemplatesData: Inav[];
-    selectNavOption: string;
-    currentTodoID: number;
-    isDataTLoading: boolean;
-    error: any;
-}
-
-// /. interfaces
-
-const SelectMenu: React.FC<propTypes> = (props) => {
+const SelectMenu: React.FC = () => {
 
     const {
-        selectTemplatesData,
-        navTemplatesData,
-        selectNavOption,
+        todosData,
+        filterProp,
         currentTodoID,
-        isDataTLoading,
+        isTodosDataLoading,
+        currentTodosCount,
         error
-    } = props;
+    } = useAppSelector(state => state.todoSlice);
+
+    const { selectTemplatesData, selectNavOption, navTemplatesData } = useAppSelector(state => state.navSlice);
+
+
+    // setCurrentTodosCount({ count: [...filteredTodosData].filter(item => item.category.toLocaleLowerCase() === filterProp).length })
 
     const dispatch = useAppDispatch();
 
@@ -86,8 +79,8 @@ const SelectMenu: React.FC<propTypes> = (props) => {
     return (
         <select className="nav-select"
             value={selectNavOption}
-            disabled={isDataTLoading || error}
-            onChange={e => !isDataTLoading && !error && selectMenuHandler(e.target.value)}
+            disabled={isTodosDataLoading || error}
+            onChange={e => !isTodosDataLoading && !error && selectMenuHandler(e.target.value)}
         >
             {selectTemplatesData.map((item: Iselect) => {
                 return (
@@ -95,6 +88,9 @@ const SelectMenu: React.FC<propTypes> = (props) => {
                         key={item.id}
                         text={item.text}
                         value={item.value}
+
+                        todosData={todosData}
+                        filterProp={filterProp}
                     />
                 );
             })}
