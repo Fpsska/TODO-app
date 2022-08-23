@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction, current} from '@reduxjs/toolkit';
 
 import { Inav } from '../../app/types/navTypes';
 import { Iselect } from '../../app/types/selectTypes';
@@ -91,6 +91,7 @@ const navSlice = createSlice({
         },
         addNavTemplateItem(state, action: PayloadAction<any>) {
             state.navTemplatesData.push(action.payload);
+            console.log('navTemplatesData', current(state.navTemplatesData))
         },
         editCurrentNavTemplateItem(state, action: PayloadAction<{ id: number, text: string, category: string }>) {
             const { id, text, category } = action.payload;
@@ -108,6 +109,7 @@ const navSlice = createSlice({
         },
         addNewSelectItem(state, action: PayloadAction<any>) {
             state.selectTemplatesData.push(action.payload);
+            console.log('selectTemplatesData', current(state.selectTemplatesData))
         },
         editCurrentNavSelectTemplateItem(state, action: PayloadAction<{ id: number, text: string, value: string }>) {
             const { id, text, value } = action.payload;

@@ -35,15 +35,12 @@ const SelectMenu: React.FC = () => {
 
     const { selectTemplatesData, selectNavOption, navTemplatesData } = useAppSelector(state => state.navSlice);
 
-
-    // setCurrentTodosCount({ count: [...filteredTodosData].filter(item => item.category.toLocaleLowerCase() === filterProp).length })
-
     const dispatch = useAppDispatch();
 
-    const selectMenuHandler = (value: string): void => {
+    const selectMenuHandler = (value: string, e: any): void => {
         switch (value) {
             case 'All':
-                dispatch(setFilterProp({ filterProp: '#all' })); // update prop for filter.ts func for real-time filtering
+                dispatch(setFilterProp({ filterProp: 'all' })); // update prop for filter.ts func for real-time filtering
                 dispatch(setSelectNavOption({ option: 'All' })); // switch nav-select value 
                 dispatch(switchNavActiveStatus({ id: [...navTemplatesData].filter(item => item.category === 'all')[0].id, status: true })); // two-way communication/sync with NavTemplate.tsx for correct filtering
 
@@ -53,17 +50,17 @@ const SelectMenu: React.FC = () => {
                 dispatch(switchTodosItemEditableStatus({ id: currentTodoID, status: false })); // disable editable todo when filtering todosData[]
                 break;
             case value:
-                dispatch(setFilterProp({ filterProp: `#${value.toLocaleLowerCase()}` }));
+                dispatch(setFilterProp({ filterProp: value }));
                 dispatch(setSelectNavOption({ option: value }));
                 dispatch(switchNavActiveStatus({ id: [...navTemplatesData].filter(item => item.category === value.toLocaleLowerCase())[0].id, status: true }));
 
-                dispatch(setTitle({ title: value.charAt(0).toUpperCase() + value.slice(1) }));
+                dispatch(setTitle({ title: [...e.target.childNodes].find(item => item.value === value).innerText }));
                 dispatch(setCurrentNavSelectID({ id: [...selectTemplatesData].filter(item => item.value === value)[0].id }));
                 dispatch(setCurrentCategoryID({ id: [...selectTemplatesData].filter(item => item.value === value)[0].id }));
                 dispatch(switchTodosItemEditableStatus({ id: currentTodoID, status: false }));
                 break;
             default:
-                dispatch(setFilterProp({ filterProp: '#all' }));
+                dispatch(setFilterProp({ filterProp: 'all' }));
                 dispatch(setSelectNavOption({ option: 'All' }));
                 dispatch(switchNavActiveStatus({ id: [...navTemplatesData].filter(item => item.category === 'all')[0].id, status: true }));
 
@@ -79,7 +76,7 @@ const SelectMenu: React.FC = () => {
         <select className="nav-select"
             value={selectNavOption}
             disabled={isTodosDataLoading || error}
-            onChange={e => !isTodosDataLoading && !error && selectMenuHandler(e.target.value)}
+            onChange={e => !isTodosDataLoading && !error && selectMenuHandler(e.target.value, e)}
         >
             {selectTemplatesData.map((item: Iselect) => {
                 return (

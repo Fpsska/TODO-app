@@ -30,11 +30,17 @@ const Modal: React.FC<propTypes> = (props) => {
     const dispatch = useAppDispatch();
 
     useEffect(() => { // display, save initial todo item property if changes is not accepted/not did
-        setInputValue([...todosData].filter(item => item.id === currentTodoID)[0].title);
-        setInputRadioCategoryValue([...todosData].filter(item => item.id === currentTodoID)[0].category);
-        setInputRadioStatusValue([...todosData].filter(item => item.id === currentTodoID)[0].status);
+        setInputValue([...todosData].find(item => item.id === currentTodoID)?.title || '');
+        setInputRadioCategoryValue([...todosData].find(item => item.id === currentTodoID)?.category || '');
+        setInputRadioStatusValue([...todosData].find(item => item.id === currentTodoID)?.status || 'none');
     }, [currentTodoID]);
 
+    useEffect(() => {
+        // console.og('inputRadioCategoryValue', inputRadioCategoryValue)
+        // if (inputRadioCategoryValue === inputRadioCategoryValue) {
+        //     console.log('equal')
+        // } 
+    }, [inputRadioCategoryValue])
 
     const formSubmitHandler = (e: React.SyntheticEvent): any => {
         e.preventDefault();
@@ -42,7 +48,8 @@ const Modal: React.FC<propTypes> = (props) => {
         dispatch(editCurrentTodosDataItem({
             id: currentTodoID,
             title: inputValue,
-            category: inputRadioCategoryValue ? `#${(inputRadioCategoryValue.charAt(0).toUpperCase() + inputRadioCategoryValue.slice(1)).replace(/[^A-Za-z]/g, '')}` : '', // remove dyblicate '#' symbol when submitted without changes
+            // DUBLICATE #  `#${inputRadioCategoryValue.charAt(0).toUpperCase() + inputRadioCategoryValue.slice(1)
+            category: !inputRadioCategoryValue ? '' : inputRadioCategoryValue,
             status: inputRadioStatusValue
         }));
 
@@ -88,8 +95,14 @@ const Modal: React.FC<propTypes> = (props) => {
                                 {
                                     categoryTemplatesData.map(item => {
                                         return (
-                                            <label className="modal__label" key={item.id}>
-                                                <input className="modal__radio" type="radio" name={item.name} value={item.value} onChange={e => setInputRadioCategoryValue(e.target.value)} />
+                                            <label className="modal__label" key={item.id} >
+                                                <input
+                                                    className="modal__radio"
+                                                    type="radio"
+                                                    name={item.name}
+                                                    value={item.value}
+                                                    onChange={e => setInputRadioCategoryValue(e.target.value)}
+                                                />
                                                 <span className="modal__radio--fake"></span>
                                                 {item.text}
                                             </label>

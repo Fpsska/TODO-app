@@ -80,7 +80,7 @@ const TodoTemplate: React.FC<propTypes> = (props) => {
             </label>
 
             {category ?
-                <span className={`todo__category ${status}`}>{category}</span>
+                <span className={`todo__category ${status}`}>#{category}</span>
                 :
                 <span className={`todo__indicator ${status}`}>{category}</span>
             }

@@ -67,7 +67,7 @@ const initialState: todoSliceState = {
     currentCategoryID: 1,
     currentTodoID: 1,
     currentTodosCount: 0,
-    filterProp: '#all'
+    filterProp: 'all'
 };
 
 // /. initialState
@@ -88,7 +88,7 @@ const todoSlice = createSlice({
             const { id } = action.payload;
             state.todosData = state.todosData.filter(item => item.id !== id);
         },
-        findTodosItemByName(state, action: PayloadAction<{value: string}>) { 
+        findTodosItemByName(state, action: PayloadAction<{ value: string }>) {
             const { value } = action.payload;
             state.todosData = state.todosDataContainer.filter(item => RegExp(value.trim(), 'gi').test(item.title))
         },
@@ -99,6 +99,8 @@ const todoSlice = createSlice({
         editCurrentTodosDataItem(state, action: PayloadAction<{ id: number, title: string, category: string, status: string }>) {
             const { id, title, category, status } = action.payload;
 
+            console.log(category)
+
             const currentTodoItem = state.todosData.find(item => item.id === id);
             if (currentTodoItem) {
                 currentTodoItem.title = title;
@@ -106,6 +108,7 @@ const todoSlice = createSlice({
                 currentTodoItem.status = status;
                 currentTodoItem.editable = false;
             }
+            console.log('todosData', current(state.todosData))
         },
         editCategoryOFCurrentTodosDataItem(state, action: PayloadAction<{ categoryProp: string, categoryValue: string }>) {
             const { categoryProp, categoryValue } = action.payload; // //  categoryProp - logic / categoryValue - UI
@@ -141,6 +144,7 @@ const todoSlice = createSlice({
         },
         addNewCategoryItem(state, action: PayloadAction<any>) {
             state.categoryTemplatesData.push(action.payload);
+            console.log('categoryTemplatesData', current(state.categoryTemplatesData))
         },
         editCurrentCategoryTemplateItem(state, action: PayloadAction<{ id: number, text: string, value: string }>) {
             const { id, text, value } = action.payload;
@@ -176,14 +180,12 @@ const todoSlice = createSlice({
         [fetchTodosData.fulfilled.type]: (state, action: PayloadAction<Itodo[]>) => {
             state.todosData = action.payload;
             state.todosData.map(item => {   // extend array by category, status fields
-                item.category = getRandomArrElement(['#Groceries', '#College', '#Payments', '']);
+                item.category = getRandomArrElement(['groceries', 'college', 'payments', '']);
                 item.status = getRandomArrElement(['waiting', 'process', 'done', '']);
                 item.completed = false;
                 item.editable = false;
             });
             state.todosDataContainer = state.todosData;
-
-            console.log('todosData', state.todosData)
 
             state.status = 'success';
         },

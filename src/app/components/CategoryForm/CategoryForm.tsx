@@ -27,8 +27,8 @@ const CategoryForm: React.FC = () => {
 
         dispatch(addNavTemplateItem({
             id: +new Date(),
-            text: inputValue.charAt(0).toUpperCase() + inputValue.slice(1).trim(),
-            category: inputValue.trim().toLocaleLowerCase(),
+            text: inputValue.trim(), 
+            category: inputValue.toLocaleLowerCase().trim(),
             link: '#',
             isActive: false
         }))
@@ -36,14 +36,14 @@ const CategoryForm: React.FC = () => {
         dispatch(addNewCategoryItem({
             id: +new Date(),
             text: inputValue.trim(),
-            value: inputValue.trim().toLocaleLowerCase(),
+            value: inputValue.toLocaleLowerCase().trim(), 
             name: 'category'
         }));
 
         dispatch(addNewSelectItem({
             id: +new Date(),
-            text: inputValue.charAt(0).toUpperCase() + inputValue.slice(1).trim(),
-            value: inputValue.trim().toLocaleLowerCase()
+            text: inputValue.trim(),
+            value: inputValue.toLocaleLowerCase().trim()
         }));
 
         dispatch(switchFormVisibleStatus({ status: false }));
