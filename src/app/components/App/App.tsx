@@ -15,14 +15,13 @@ import { filter } from '../../helpers/filter';
 
 import { Itodo } from '../../types/todoTypes';
 
-import Nav from '../Nav/Nav';
-import SelectMenu from '../SelectMenu/SelectMenu';
+
+import NavLayout from '../NavLayout.tsx/NavLayout';
 import Form from '../Form/Form';
 import TodoList from '../Todo/TodoList';
 import Preloader from '../Preloader/Preloader';
 import Burger from '../Burger/Burger';
 import Modal from '../Modal/Modal';
-import CategoryForm from '../CategoryForm/CategoryForm';
 import TitleForm from '../TitleForm/TitleForm';
 
 import '../../assets/styles/_styles.scss';
@@ -50,6 +49,7 @@ const App: React.FC = () => {
 
   const {
     navTemplatesData,
+    selectTemplatesData,
     currentNavID,
     currentNavSelectID
   } = useAppSelector(state => state.navSlice);
@@ -115,18 +115,9 @@ const App: React.FC = () => {
             }
           </div>
 
-          <div className="page__nav">
-            <div className="page__nav-select">
-              <SelectMenu />
-            </div>
-            <Nav
-              navTemplatesData={navTemplatesData}
-              setEditableStatus={titleFormHandler.setVisibleStatus}
-            />
-            <div className="page__category-form">
-              <CategoryForm />
-            </div>
-          </div>
+          <NavLayout
+            setEditableStatus={titleFormHandler.setVisibleStatus}
+          />
 
           <div className="page__content">
 
@@ -155,6 +146,8 @@ const App: React.FC = () => {
                 currentNavSelectID={currentNavSelectID}
                 currentCategoryID={currentCategoryID}
                 filterProp={filterProp}
+                navTemplatesData={navTemplatesData}
+                selectTemplatesData={selectTemplatesData}
               />
               <>
                 {inputTitleValue !== 'All' &&

@@ -45,7 +45,6 @@ const SelectMenu: React.FC = () => {
             case 'All':
                 dispatch(setFilterProp({ filterProp: '#all' })); // update prop for filter.ts func for real-time filtering
                 dispatch(setSelectNavOption({ option: 'All' })); // switch nav-select value 
-
                 dispatch(switchNavActiveStatus({ id: [...navTemplatesData].filter(item => item.category === 'all')[0].id, status: true })); // two-way communication/sync with NavTemplate.tsx for correct filtering
 
                 dispatch(setTitle({ title: 'All' })); // update title globally
@@ -56,7 +55,6 @@ const SelectMenu: React.FC = () => {
             case value:
                 dispatch(setFilterProp({ filterProp: `#${value.toLocaleLowerCase()}` }));
                 dispatch(setSelectNavOption({ option: value }));
-
                 dispatch(switchNavActiveStatus({ id: [...navTemplatesData].filter(item => item.category === value.toLocaleLowerCase())[0].id, status: true }));
 
                 dispatch(setTitle({ title: value.charAt(0).toUpperCase() + value.slice(1) }));
@@ -76,6 +74,7 @@ const SelectMenu: React.FC = () => {
         };
     };
 
+
     return (
         <select className="nav-select"
             value={selectNavOption}
@@ -88,9 +87,6 @@ const SelectMenu: React.FC = () => {
                         key={item.id}
                         text={item.text}
                         value={item.value}
-
-                        todosData={todosData}
-                        filterProp={filterProp}
                     />
                 );
             })}

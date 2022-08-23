@@ -8,12 +8,6 @@
 }
 
 @media screen and (max-width: 768px) {
-    .nav-select {
-        display: block;
-    }
-    .nav {
-        display: none;
-    }
     .page__wrapper {
         flex-direction: column;
         position: relative;
@@ -38,13 +32,13 @@
     .page__category-form {
         margin: 0;
     }
-    .category__form {
+    .category__form.category__form {
         flex-direction: row;
     }
-    .category__input {
+    .category__input.category__input {
         margin: 0 5px 0 0;
     }
-    .category__button.visible {
+    .category__button.visible.category__button.visible {
         text-align: center;
         margin: 0 auto 10px auto;
     }

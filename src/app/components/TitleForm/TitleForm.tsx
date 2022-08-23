@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { useAppDispatch } from '../../../store/hooks';
 
@@ -25,7 +25,9 @@ interface propTypes {
     currentNavID: number;
     currentNavSelectID: number;
     currentCategoryID: number;
-    filterProp: string
+    filterProp: string;
+    navTemplatesData: any[];
+    selectTemplatesData: any[]
 }
 
 const TitleForm: React.FC<propTypes> = (props) => {
@@ -38,37 +40,46 @@ const TitleForm: React.FC<propTypes> = (props) => {
         currentNavID,
         currentNavSelectID,
         currentCategoryID,
-        filterProp
+        filterProp,
+        navTemplatesData,
+        selectTemplatesData
     } = props;
 
     const dispatch = useAppDispatch();
 
+    // useEffect(() => {
+    //     console.log('filterProp', filterProp)
+    // }, [filterProp])
+
+    // console.log(`1221${filterProp}213123`.replace(/[^A-Za-z]/g, '').charAt(0).toUpperCase() + filterProp.slice(2))
+    // console.log(filterProp.replace(/[^A-Za-z]/g, ''))
+
     const formSubmitHandler = (e: React.FormEvent): void => {
         e.preventDefault();
 
-        dispatch(setFilterProp({ filterProp: `#${inputTitleValue.toLocaleLowerCase().trim()}` }));
+        dispatch(setFilterProp({ filterProp: `#${inputTitleValue.toLocaleLowerCase().trim()}` })); // update filterProp
 
         dispatch(editCurrentNavTemplateItem({  // update text, category in navTemplatesData[]
-            id: currentNavID,
+            id: [...navTemplatesData].find(item => item.category === filterProp.replace(/[^A-Za-z]/g, '')).id,
             text: inputTitleValue,
             category: inputTitleValue.toLocaleLowerCase().trim()
         }));
 
         dispatch(editCurrentNavSelectTemplateItem({ // update text, value in selectTemplatesData[]
-            id: currentNavSelectID,
+            id: [...selectTemplatesData].find(item => item.value === filterProp.replace(/[^A-Za-z]/g, '').charAt(0).toUpperCase() + filterProp.slice(2)).id,
             text: inputTitleValue, // displayed in UI
-            value: inputTitleValue.toLocaleLowerCase().trim() // logic
+            value: inputTitleValue.trim() // logic
         }));
 
-        dispatch(editCurrentCategoryTemplateItem({  // update text, value in categoryTemplatesData[]
+        dispatch(editCurrentCategoryTemplateItem({  // update text, value in categoryTemplatesData[] / Modal.tsx
             id: currentCategoryID,
             text: inputTitleValue.toLocaleLowerCase().trim(), // displayed in UI
             value: inputTitleValue.toLocaleLowerCase().trim() // logic
         }));
 
-        dispatch(editCategoryOFCurrentTodosDataItem({
-            categoryProp: filterProp, // '#all  / #college'
-            categoryValue: inputTitleValue ? `#${(inputTitleValue.charAt(0).toUpperCase() + inputTitleValue.slice(1)).trim().replace(/#/gi, '')}` : ''
+        dispatch(editCategoryOFCurrentTodosDataItem({ // update category value of each todosData[] item who prev category is equal prev title value
+            categoryProp: filterProp,
+            categoryValue: inputTitleValue ? `#${(inputTitleValue.charAt(0).toUpperCase() + inputTitleValue.slice(1)).trim().replace(/#/g, '')}` : ''
         }));
 
         // disable editing after submit form

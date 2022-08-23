@@ -42,12 +42,13 @@ const Modal: React.FC<propTypes> = (props) => {
         dispatch(editCurrentTodosDataItem({
             id: currentTodoID,
             title: inputValue,
-            category: inputRadioCategoryValue ? `#${(inputRadioCategoryValue.charAt(0).toUpperCase() + inputRadioCategoryValue.slice(1)).replace(/#/gi, '')}` : '', // set upperCase for 1st letter of getted inputRadioValue,
+            category: inputRadioCategoryValue ? `#${(inputRadioCategoryValue.charAt(0).toUpperCase() + inputRadioCategoryValue.slice(1)).replace(/[^A-Za-z]/g, '')}` : '', // remove dyblicate '#' symbol when submitted without changes
             status: inputRadioStatusValue
         }));
 
         setVisibleStatus(false);
     };
+
 
     const closeModal = (): void => {
         dispatch(switchTodosItemEditableStatus({ id: currentTodoID, status: false })); // remove editable css-class

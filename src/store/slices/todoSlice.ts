@@ -183,6 +183,8 @@ const todoSlice = createSlice({
             });
             state.todosDataContainer = state.todosData;
 
+            console.log('todosData', state.todosData)
+
             state.status = 'success';
         },
         [fetchTodosData.rejected.type]: (state, action: PayloadAction<string>) => {
