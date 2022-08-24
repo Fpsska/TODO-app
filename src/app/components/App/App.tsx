@@ -7,7 +7,8 @@ import { setInputTitleValue } from '../../../store/slices/todoSlice';
 import {
   switchTodosItemEditableStatus,
   switchTodosDataEmptyStatus,
-  setCurrentTodosCount
+  setCurrentTodosCount,
+  setTitle
 } from '../../../store/slices/todoSlice';
 
 import { useAreaHandler } from '../../hooks/useAreaHandler';
@@ -76,7 +77,11 @@ const App: React.FC = () => {
     filteredTodosData.length === 0
       ? dispatch(switchTodosDataEmptyStatus({ status: true }))
       : dispatch(switchTodosDataEmptyStatus({ status: false }));
-  }, [filteredTodosData, filterProp])
+  }, [filteredTodosData, filterProp]);
+
+  useEffect(() => { // update page__message text content
+    dispatch(setTitle({title: inputTitleValue}));
+  },[inputTitleValue]);
 
 
   const openBurger = (e: React.SyntheticEvent): void => {

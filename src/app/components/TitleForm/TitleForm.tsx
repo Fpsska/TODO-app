@@ -6,7 +6,6 @@ import {
     editCurrentCategoryTemplateItem,
     editCategoryOFCurrentTodosDataItem,
     setInputTitleValue,
-    setTitle,
     setFilterProp
 } from '../../../store/slices/todoSlice';
 import {
@@ -53,10 +52,6 @@ const TitleForm: React.FC<propTypes> = (props) => {
     useEffect(() => {  // update inputValue
         setInputValue(inputTitleValue);
     }, [inputTitleValue]);
-
-    useEffect(() => { // update title
-        setTitle({ title: inputValue });
-    }, [inputValue]);
 
     useEffect(() => { 
         !isEditable && setInputValue(inputTitleValue); // exit from edit without save when form is not submitted
