@@ -4,6 +4,8 @@ import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 
 import { editCurrentTodosDataItem, switchTodosItemEditableStatus } from '../../../store/slices/todoSlice';
 
+import { getCurrentArrItem } from '../../helpers/getCurrentArrItem';
+
 import './modal.scss';
 
 // /. imports 
@@ -28,10 +30,10 @@ const Modal: React.FC<propTypes> = (props) => {
 
     const dispatch = useAppDispatch();
 
-    useEffect(() => { // display, save initial todo item property if changes is not accepted/not did
-        setInputValue([...todosData].find(item => item.id === currentTodoID)?.title || '');
-        setInputRadioCategoryValue([...todosData].find(item => item.id === currentTodoID)?.category || '');
-        setInputRadioStatusValue([...todosData].find(item => item.id === currentTodoID)?.status || 'none');
+    useEffect(() => { // display, save initial todo item properties if changes is not accepted/not did
+        setInputValue(getCurrentArrItem(todosData, 'id', currentTodoID)?.title);
+        setInputRadioCategoryValue(getCurrentArrItem(todosData, 'id', currentTodoID)?.category);
+        setInputRadioStatusValue(getCurrentArrItem(todosData, 'id', currentTodoID)?.status);
     }, [currentTodoID]);
 
 

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import { useAppDispatch } from '../../../store/hooks';
 
-import { getArrItemID } from '../../helpers/getArrItemID';
+import { getCurrentArrItem } from '../../helpers/getCurrentArrItem';
 
 import {
     editCurrentCategoryTemplateItem,
@@ -70,20 +70,20 @@ const TitleForm: React.FC<propTypes> = (props) => {
         dispatch(setInputTitleValue({ title: inputValue.trim() })); // update title__form text content value
 
         dispatch(editCurrentNavTemplateItem({  // update text, category in navTemplatesData[]
-            id: getArrItemID(navTemplatesData, 'category', filterProp),
+            id: getCurrentArrItem(navTemplatesData, 'category', filterProp)?.id,
             text: inputValue.trim(),
             category: inputValue.toLocaleLowerCase().trim()
         }));
 
         dispatch(editCurrentNavSelectTemplateItem({ // update text, value in selectTemplatesData[]
-            id: getArrItemID(selectTemplatesData, ('value').toLowerCase(), filterProp),
+            id: getCurrentArrItem(selectTemplatesData, ('value').toLowerCase(), filterProp)?.id,
             text: inputValue.trim(), // displayed in UI
             value: inputValue.trim() // logic
         }));
         dispatch(setSelectNavOption({ option: inputValue.trim() })); // switch to actual option after update
 
         dispatch(editCurrentCategoryTemplateItem({  // update text, value in categoryTemplatesData[] / Modal.tsx
-            id: getArrItemID(categoryTemplatesData, 'value', filterProp),
+            id: getCurrentArrItem(categoryTemplatesData, 'value', filterProp)?.id,
             text: inputValue.trim(), // displayed in UI
             value: inputValue.toLocaleLowerCase().trim() // logic
         }));

@@ -25,19 +25,19 @@ const CategoryForm: React.FC = () => {
     const formSubmitHandler = (e: React.FormEvent): void => {
         e.preventDefault();
 
+        dispatch(addNewCategoryItem({
+            id: +new Date(),
+            text: inputValue.trim(),
+            value: inputValue.toLocaleLowerCase().trim(), 
+            name: 'category'
+        }));
+
         dispatch(addNavTemplateItem({
             id: +new Date(),
             text: inputValue.trim(), 
             category: inputValue.toLocaleLowerCase().trim(),
             link: '#',
             isActive: false
-        }))
-
-        dispatch(addNewCategoryItem({
-            id: +new Date(),
-            text: inputValue.trim(),
-            value: inputValue.toLocaleLowerCase().trim(), 
-            name: 'category'
         }));
 
         dispatch(addNewSelectItem({
