@@ -10,7 +10,8 @@ import {
 } from '../../../store/slices/todoSlice';
 import {
     editCurrentNavTemplateItem,
-    editCurrentNavSelectTemplateItem
+    editCurrentNavSelectTemplateItem,
+    setSelectNavOption
 } from '../../../store/slices/navSlice';
 
 import './titleForm.scss';
@@ -53,7 +54,7 @@ const TitleForm: React.FC<propTypes> = (props) => {
         setInputValue(inputTitleValue);
     }, [inputTitleValue]);
 
-    useEffect(() => { 
+    useEffect(() => {
         !isEditable && setInputValue(inputTitleValue); // exit from edit without save when form is not submitted
         !isEditable && !inputValue && setInputValue(inputTitleValue); // set prev value when save without value
     }, [isEditable, inputTitleValue, inputValue]);
@@ -77,6 +78,7 @@ const TitleForm: React.FC<propTypes> = (props) => {
             text: inputValue.trim(), // displayed in UI
             value: inputValue.trim() // logic
         }));
+        dispatch(setSelectNavOption({ option: inputValue.trim() })); // switch to actual option after update
 
         dispatch(editCurrentCategoryTemplateItem({  // update text, value in categoryTemplatesData[] / Modal.tsx
             id: currentCategoryID,

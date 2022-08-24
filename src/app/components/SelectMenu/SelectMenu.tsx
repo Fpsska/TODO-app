@@ -38,6 +38,7 @@ const SelectMenu: React.FC = () => {
     const dispatch = useAppDispatch();
 
     const selectMenuHandler = (value: string, e: any): void => {
+        console.log('SELECT')
         switch (value) {
             case 'All':
                 dispatch(setFilterProp({ filterProp: 'all' })); // update prop for filter.ts func for real-time filtering
