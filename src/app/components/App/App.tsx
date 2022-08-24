@@ -68,11 +68,6 @@ const App: React.FC = () => {
     !modalHandler.isVisible && dispatch(switchTodosItemEditableStatus({ id: currentTodoID, status: false }));
   }, [modalHandler.isVisible]);
 
-  useEffect(() => { // update setInputTitleValue 
-    dispatch(setInputTitleValue({ title: title }));
-  }, [title]);
-
-
   useEffect(() => { // update todosData when filering by filterProp (category)
     setFilteredTodosData(filter(todosData, filterProp));
   }, [todosData, filterProp]);
@@ -89,8 +84,7 @@ const App: React.FC = () => {
     burgerHandler.setVisibleStatus(true);
   };
 
-  const editCategoryName = (e: React.SyntheticEvent): void => {
-    e.stopPropagation();
+  const editCategoryName = (): void => {
     titleFormHandler.setVisibleStatus(!titleFormHandler.isVisible);
   };
 
@@ -151,9 +145,9 @@ const App: React.FC = () => {
               />
               <>
                 {inputTitleValue !== 'All' &&
-                  <button className="page__button page__button--edit" onClick={e => editCategoryName(e)}>
+                  <button className="page__button page__button--edit" onClick={editCategoryName}>
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M13.23 1H11.77L3.52002 9.25L3.35999 9.46997L1 13.59L2.41003 15L6.53003 12.64L6.75 12.48L15 4.22998V2.77002L13.23 1ZM2.41003 13.59L3.92004 10.59L5.37 12.04L2.41003 13.59ZM6.23999 11.53L4.46997 9.76001L12.47 1.76001L14.24 3.53003L6.23999 11.53Z" fill="#C5C5C5" />
+                      <path d="M13.23 1H11.77L3.52002 9.25L3.35999 9.46997L1 13.59L2.41003 15L6.53003 12.64L6.75 12.48L15 4.22998V2.77002L13.23 1ZM2.41003 13.59L3.92004 10.59L5.37 12.04L2.41003 13.59ZM6.23999 11.53L4.46997 9.76001L12.47 1.76001L14.24 3.53003L6.23999 11.53Z" fill="" />
                     </svg>
                   </button>
                 }

@@ -6,6 +6,7 @@ import {
     setCurrentCategoryID,
     setCurrentTodosCount,
     setTitle,
+    setInputTitleValue,
     setFilterProp,
 } from '../../../store/slices/todoSlice';
 import {
@@ -49,8 +50,6 @@ const NavTemplate: React.FC<propTypes> = (props) => {
     useEffect(() => { // set current todo items count for each category
         const array = [...todosData].filter(item => item.category === category);
         setTodoCount(array.length);
-
-        
     }, [todosData]);
 
 
@@ -63,6 +62,8 @@ const NavTemplate: React.FC<propTypes> = (props) => {
                 dispatch(setFilterProp({ filterProp: category })); // update prop for filter.ts func for real-time filtering
 
                 dispatch(setTitle({ title: text })); // update title globally
+                dispatch(setInputTitleValue({title: text}));
+
                 dispatch(setCurrentNavID({ id })); // for edit current item of navTemplatesData[] 
                 dispatch(setCurrentCategoryID({ id })); // for edit category value of current item of todosData[] 
                 setEditableStatus(false); // controle titleForm visible condition
@@ -74,6 +75,8 @@ const NavTemplate: React.FC<propTypes> = (props) => {
                 dispatch(setFilterProp({ filterProp: category })); // `#${category}`
 
                 dispatch(setTitle({ title: text }));
+                dispatch(setInputTitleValue({title: text}));
+
                 dispatch(setCurrentNavID({ id }));
                 dispatch(setCurrentCategoryID({ id }));
                 setEditableStatus(false);
@@ -85,6 +88,8 @@ const NavTemplate: React.FC<propTypes> = (props) => {
                 dispatch(setFilterProp({ filterProp: category }));
 
                 dispatch(setTitle({ title: 'All' }));
+                dispatch(setInputTitleValue({title: text}));
+
                 dispatch(setCurrentNavID({ id }));
                 dispatch(setCurrentCategoryID({ id }));
                 setEditableStatus(false);

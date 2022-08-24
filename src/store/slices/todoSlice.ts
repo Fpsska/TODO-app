@@ -63,7 +63,7 @@ const initialState: todoSliceState = {
     status: '',
     error: null,
     title: 'All',
-    inputTitleValue: '',
+    inputTitleValue: 'All',
     currentCategoryID: 1,
     currentTodoID: 1,
     currentTodosCount: 0,
@@ -90,10 +90,11 @@ const todoSlice = createSlice({
         },
         findTodosItemByName(state, action: PayloadAction<{ value: string }>) {
             const { value } = action.payload;
-            state.todosData = state.todosDataContainer.filter(item => RegExp(value.trim(), 'gi').test(item.title))
+            state.todosData = state.todosDataContainer.filter(item => RegExp(value.trim(), 'gi').test(item.title));
         },
         setFilterProp(state, action: PayloadAction<{ filterProp: string }>) {
             const { filterProp } = action.payload;
+            console.log('FILTER PROP', filterProp)
             state.filterProp = filterProp;
         },
         editCurrentTodosDataItem(state, action: PayloadAction<{ id: number, title: string, category: string, status: string }>) {
@@ -112,8 +113,9 @@ const todoSlice = createSlice({
         },
         editCategoryOFCurrentTodosDataItem(state, action: PayloadAction<{ categoryProp: string, categoryValue: string }>) {
             const { categoryProp, categoryValue } = action.payload; // //  categoryProp - logic / categoryValue - UI
-
-            const validTodosArray = state.todosData.filter(item => item.category.toLowerCase() === categoryProp)
+            console.log('categoryProp', categoryProp)
+            console.log('categoryValue', categoryValue)
+            const validTodosArray = state.todosData.filter(item => item.category.toLowerCase() === categoryProp);
             if (validTodosArray) {
                 validTodosArray.map(item => item.category = categoryValue);
             }
