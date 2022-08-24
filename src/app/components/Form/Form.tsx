@@ -43,7 +43,7 @@ const Form: React.FC<propTypes> = (props) => {
                     status: '',
                     completed: false,
                     editable: false
-                }))
+                }));
 
                 //  clear input value after create todo item
                 formRef.current.reset();

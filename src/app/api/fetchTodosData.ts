@@ -7,7 +7,7 @@ export const fetchTodosData = createAsyncThunk(
     'mainSlice/fetchAlbumData',
     async (limit: number, { rejectWithValue }) => {
         try {
-            const response = await fetch(`https://jsonplaceholder.typicode.com/todos?&_limit=${limit}`);
+            const response = await fetch(`https://jnplaceholder.typicode.com/todos?&_limit=${limit}`);
 
             if (!response.ok) {
                 throw new Error('response error');
@@ -17,7 +17,7 @@ export const fetchTodosData = createAsyncThunk(
             return data;
 
         } catch (err: any) {
-
+            console.error(`Error: ${err}`);
             return rejectWithValue(err.message); // send to case rejected.type of extreReducers 
         }
     }

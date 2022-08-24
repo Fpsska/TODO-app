@@ -171,6 +171,10 @@ const todoSlice = createSlice({
         switchTodosDataEmptyStatus(state, action: PayloadAction<{ status: boolean }>) {
             const { status } = action.payload;
             state.isTodosDataEmpty = status;
+        },
+        switchErrorStatus(state, action: PayloadAction<{ status: boolean | null }>) {
+            const { status } = action.payload;
+            state.error = status;
         }
     },
     extraReducers: {
@@ -188,6 +192,7 @@ const todoSlice = createSlice({
             state.todosDataContainer = state.todosData;
 
             state.status = 'success';
+            state.error = null;
         },
         [fetchTodosData.rejected.type]: (state, action: PayloadAction<string>) => {
             state.status = 'failed';
@@ -214,7 +219,8 @@ export const {
     setCurrentTodoID,
     setCurrentTodosCount,
     switchFormVisibleStatus,
-    switchTodosDataEmptyStatus
+    switchTodosDataEmptyStatus,
+    switchErrorStatus
 } = todoSlice.actions;
 
 export default todoSlice.reducer;
