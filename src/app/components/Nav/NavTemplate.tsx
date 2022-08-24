@@ -57,7 +57,7 @@ const NavTemplate: React.FC<propTypes> = (props) => {
             case 'all':
                 dispatch(switchNavActiveStatus({ id, status: true }));
 
-                dispatch(setSelectNavOption({ option: text })); // two-way communication/sync with SelectMenu.tsx for correct filtering
+                dispatch(setSelectNavOption({ option: text })); // two-way sync with SelectMenu.tsx for correct filtering
                 dispatch(setFilterProp({ filterProp: category })); // update prop for filter.ts func for real-time filtering
 
                 dispatch(setInputTitleValue({title: text})); // update text content of title__input

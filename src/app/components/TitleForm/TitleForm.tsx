@@ -76,7 +76,7 @@ const TitleForm: React.FC<propTypes> = (props) => {
         }));
 
         dispatch(editCurrentNavSelectTemplateItem({ // update text, value in selectTemplatesData[]
-            id: getCurrentArrItem(selectTemplatesData, ('value').toLowerCase(), filterProp)?.id,
+            id: getCurrentArrItem(selectTemplatesData, 'value', filterProp)?.id,
             text: inputValue.trim(), // displayed in UI
             value: inputValue.trim() // logic
         }));

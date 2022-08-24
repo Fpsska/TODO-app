@@ -95,12 +95,12 @@ const navSlice = createSlice({
         },
         editCurrentNavTemplateItem(state, action: PayloadAction<{ id: number, text: string, category: string }>) {
             const { id, text, category } = action.payload;
-
             const currentNavItem = state.navTemplatesData.find(item => item.id === id);
             if (currentNavItem) {
                 currentNavItem.text = text;
                 currentNavItem.category = category;
             }
+            console.log('navTemplatesData', current(state.navTemplatesData))
         },
         setCurrentNavSelectID(state, action: PayloadAction<{ id: number }>) {
             const { id } = action.payload;
@@ -118,6 +118,7 @@ const navSlice = createSlice({
                 currentCategoryItem.text = text;
                 currentCategoryItem.value = value;
             }
+            console.log('selectTemplatesData', current(state.selectTemplatesData))
         },
         setSelectNavOption(state, action: PayloadAction<{ option: string }>) {
             const { option } = action.payload;

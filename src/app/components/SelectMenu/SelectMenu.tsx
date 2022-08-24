@@ -14,6 +14,8 @@ import {
     switchNavActiveStatus
 } from '../../../store/slices/navSlice';
 
+import { getCurrentArrItem } from '../../helpers/getCurrentArrItem';
+
 import { Iselect } from '../../types/selectTypes';
 
 import SelectTemplate from './SelectTemplate';
@@ -43,34 +45,25 @@ const SelectMenu: React.FC = () => {
             case 'All':
                 dispatch(setFilterProp({ filterProp: 'all' })); // update prop for filter.ts func for real-time filtering
                 dispatch(setSelectNavOption({ option: 'All' })); // switch nav-select value 
-                dispatch(switchNavActiveStatus({ id: [...navTemplatesData].filter(item => item.category === 'all')[0].id, status: true })); // two-way communication/sync with NavTemplate.tsx for correct filtering
+                dispatch(switchNavActiveStatus({ id: getCurrentArrItem(navTemplatesData, 'category', 'all')?.id, status: true }));
 
                 dispatch(setInputTitleValue({ title: 'All' })); // update text comtent of title__input 
-
-                dispatch(setCurrentNavSelectID({ id: [...selectTemplatesData].filter(item => item.value === value)[0].id })); // for edit current item of selectTemplatesData[]
-                dispatch(setCurrentCategoryID({ id: [...selectTemplatesData].filter(item => item.value === value)[0].id })); // for edit category value of current item of todosData[] 
                 dispatch(switchTodosItemEditableStatus({ id: currentTodoID, status: false })); // disable editable todo when filtering todosData[]
                 break;
             case value:
                 dispatch(setFilterProp({ filterProp: value.toLowerCase().trim() }));
                 dispatch(setSelectNavOption({ option: value }));
-                dispatch(switchNavActiveStatus({ id: [...navTemplatesData].filter(item => item.category === value.toLocaleLowerCase())[0].id, status: true }));
+                dispatch(switchNavActiveStatus({ id: getCurrentArrItem(navTemplatesData, 'category', value.toLocaleLowerCase())?.id, status: true }));
 
                 dispatch(setInputTitleValue({ title: [...e.target.childNodes].find(item => item.value === value).innerText }));
-
-                dispatch(setCurrentNavSelectID({ id: [...selectTemplatesData].filter(item => item.value === value)[0].id }));
-                dispatch(setCurrentCategoryID({ id: [...selectTemplatesData].filter(item => item.value === value)[0].id }));
                 dispatch(switchTodosItemEditableStatus({ id: currentTodoID, status: false }));
                 break;
             default:
                 dispatch(setFilterProp({ filterProp: 'all' }));
                 dispatch(setSelectNavOption({ option: 'All' }));
-                dispatch(switchNavActiveStatus({ id: [...navTemplatesData].filter(item => item.category === 'all')[0].id, status: true }));
+                dispatch(switchNavActiveStatus({ id: getCurrentArrItem(navTemplatesData, 'category', 'all')?.id, status: true }));
 
                 dispatch(setInputTitleValue({ title: [...e.target.childNodes].find(item => item.value === value).innerText }));
-
-                dispatch(setCurrentNavSelectID({ id: [...selectTemplatesData].filter(item => item.value === value)[0].id }));
-                dispatch(setCurrentCategoryID({ id: [...selectTemplatesData].filter(item => item.value === value)[0].id }));
                 dispatch(switchTodosItemEditableStatus({ id: currentTodoID, status: false }));
         };
     };

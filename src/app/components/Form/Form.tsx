@@ -20,7 +20,7 @@ const Form: React.FC<propTypes> = (props) => {
 
     const {
         role,
-        text,
+        text
     } = props;
 
     const { isTodosDataLoading, error } = useAppSelector(state => state.todoSlice);
@@ -60,13 +60,15 @@ const Form: React.FC<propTypes> = (props) => {
                     data-role={role}
                     placeholder={text}
                     onChange={(e) => dispatch(findTodosItemByName({ value: e.target.value }))}
-                    disabled={isTodosDataLoading || error} />
+                    disabled={isTodosDataLoading || error}
+                />
                 : <input className="form__input"
                     type="text"
                     data-role={role}
                     placeholder={text}
                     onChange={e => setCreateInputValue(e.target.value)}
-                    disabled={isTodosDataLoading || error} />
+                    disabled={isTodosDataLoading || error}
+                />
             }
         </form>
     );

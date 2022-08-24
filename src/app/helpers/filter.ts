@@ -1,5 +1,4 @@
 export function filter(array: any[], filterProp: string): any[] {
-    // console.log(filterProp)
     switch (filterProp) {
         case 'all':
             return array;

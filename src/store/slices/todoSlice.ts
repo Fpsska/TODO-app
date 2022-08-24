@@ -150,8 +150,8 @@ const todoSlice = createSlice({
         },
         editCurrentCategoryTemplateItem(state, action: PayloadAction<{ id: number, text: string, value: string }>) {
             const { id, text, value } = action.payload;
-            console.log('TEXT', text)
-            console.log('VALUE', value)
+            // console.log('TEXT', text)
+            // console.log('VALUE', value)
             const currentCategoryItem = state.categoryTemplatesData.find(item => item.id === id);
             if (currentCategoryItem) {
                 currentCategoryItem.text = text;
