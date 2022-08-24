@@ -4,7 +4,6 @@ import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 
 import { editCurrentTodosDataItem, switchTodosItemEditableStatus } from '../../../store/slices/todoSlice';
 
-
 import './modal.scss';
 
 // /. imports 
@@ -18,7 +17,7 @@ interface propTypes {
 const Modal: React.FC<propTypes> = (props) => {
 
     const {
-        setVisibleStatus,
+        setVisibleStatus
     } = props;
 
     const { categoryTemplatesData, todosData, currentTodoID } = useAppSelector(state => state.todoSlice);
@@ -35,12 +34,6 @@ const Modal: React.FC<propTypes> = (props) => {
         setInputRadioStatusValue([...todosData].find(item => item.id === currentTodoID)?.status || 'none');
     }, [currentTodoID]);
 
-    useEffect(() => {
-        // console.og('inputRadioCategoryValue', inputRadioCategoryValue)
-        // if (inputRadioCategoryValue === inputRadioCategoryValue) {
-        //     console.log('equal')
-        // } 
-    }, [inputRadioCategoryValue])
 
     const formSubmitHandler = (e: React.SyntheticEvent): any => {
         e.preventDefault();
@@ -48,7 +41,6 @@ const Modal: React.FC<propTypes> = (props) => {
         dispatch(editCurrentTodosDataItem({
             id: currentTodoID,
             title: inputValue,
-            // DUBLICATE #  `#${inputRadioCategoryValue.charAt(0).toUpperCase() + inputRadioCategoryValue.slice(1)
             category: !inputRadioCategoryValue ? '' : inputRadioCategoryValue,
             status: inputRadioStatusValue
         }));

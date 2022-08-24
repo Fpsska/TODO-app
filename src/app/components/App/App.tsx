@@ -37,6 +37,7 @@ const App: React.FC = () => {
 
   const {
     todosData,
+    categoryTemplatesData,
     filterProp,
     currentTodoID,
     currentCategoryID,
@@ -141,12 +142,10 @@ const App: React.FC = () => {
                 isEditable={titleFormHandler.isVisible}
                 setEditableStatus={titleFormHandler.setVisibleStatus}
                 inputTitleValue={inputTitleValue}
-                currentNavID={currentNavID}
-                currentNavSelectID={currentNavSelectID}
-                currentCategoryID={currentCategoryID}
                 filterProp={filterProp}
                 navTemplatesData={navTemplatesData}
                 selectTemplatesData={selectTemplatesData}
+                categoryTemplatesData={categoryTemplatesData}
               />
               <>
                 {inputTitleValue !== 'All' &&

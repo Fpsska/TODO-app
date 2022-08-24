@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 
 import { useAppDispatch } from '../../../store/hooks';
 
+import { getArrItemID } from '../../helpers/getArrItemID';
+
 import {
     editCurrentCategoryTemplateItem,
     editCategoryOFCurrentTodosDataItem,
@@ -14,6 +16,10 @@ import {
     setSelectNavOption
 } from '../../../store/slices/navSlice';
 
+import { Inav } from '../../types/navTypes';
+import { Icategory } from '../../types/categoryTypes';
+import { Iselect } from '../../types/selectTypes';
+
 import './titleForm.scss';
 
 // /. imports
@@ -23,12 +29,10 @@ interface propTypes {
     isEditable: boolean;
     inputTitleValue: string;
     setEditableStatus: (arg: boolean) => void;
-    currentNavID: number;
-    currentNavSelectID: number;
-    currentCategoryID: number;
     filterProp: string;
-    navTemplatesData: any[];
-    selectTemplatesData: any[]
+    navTemplatesData: Inav[];
+    selectTemplatesData: Iselect[];
+    categoryTemplatesData: Icategory[]
 }
 
 const TitleForm: React.FC<propTypes> = (props) => {
@@ -38,12 +42,10 @@ const TitleForm: React.FC<propTypes> = (props) => {
         isEditable,
         inputTitleValue,
         setEditableStatus,
-        currentNavID,
-        currentNavSelectID,
-        currentCategoryID,
         filterProp,
         navTemplatesData,
-        selectTemplatesData
+        selectTemplatesData,
+        categoryTemplatesData
     } = props;
 
     const [inputValue, setInputValue] = useState<string>(inputTitleValue);
@@ -68,21 +70,21 @@ const TitleForm: React.FC<propTypes> = (props) => {
         dispatch(setInputTitleValue({ title: inputValue.trim() })); // update title__form text content value
 
         dispatch(editCurrentNavTemplateItem({  // update text, category in navTemplatesData[]
-            id: [...navTemplatesData].find(item => item.category === filterProp).id,
+            id: getArrItemID(navTemplatesData, 'category', filterProp),
             text: inputValue.trim(),
             category: inputValue.toLocaleLowerCase().trim()
         }));
 
         dispatch(editCurrentNavSelectTemplateItem({ // update text, value in selectTemplatesData[]
-            id: [...selectTemplatesData].find(item => item.value.toLowerCase() === filterProp).id,
+            id: getArrItemID(selectTemplatesData, ('value').toLowerCase(), filterProp),
             text: inputValue.trim(), // displayed in UI
             value: inputValue.trim() // logic
         }));
         dispatch(setSelectNavOption({ option: inputValue.trim() })); // switch to actual option after update
 
         dispatch(editCurrentCategoryTemplateItem({  // update text, value in categoryTemplatesData[] / Modal.tsx
-            id: currentCategoryID,
-            text: inputValue.toLocaleLowerCase().trim(), // displayed in UI
+            id: getArrItemID(categoryTemplatesData, 'value', filterProp),
+            text: inputValue.trim(), // displayed in UI
             value: inputValue.toLocaleLowerCase().trim() // logic
         }));
 

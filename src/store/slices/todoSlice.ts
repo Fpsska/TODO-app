@@ -113,8 +113,8 @@ const todoSlice = createSlice({
         },
         editCategoryOFCurrentTodosDataItem(state, action: PayloadAction<{ categoryProp: string, categoryValue: string }>) {
             const { categoryProp, categoryValue } = action.payload; // //  categoryProp - logic / categoryValue - UI
-            console.log('categoryProp', categoryProp)
-            console.log('categoryValue', categoryValue)
+            // console.log('categoryProp', categoryProp)
+            // console.log('categoryValue', categoryValue)
             const validTodosArray = state.todosData.filter(item => item.category.toLowerCase() === categoryProp);
             if (validTodosArray) {
                 validTodosArray.map(item => item.category = categoryValue);
@@ -150,7 +150,8 @@ const todoSlice = createSlice({
         },
         editCurrentCategoryTemplateItem(state, action: PayloadAction<{ id: number, text: string, value: string }>) {
             const { id, text, value } = action.payload;
-
+            console.log('TEXT', text)
+            console.log('VALUE', value)
             const currentCategoryItem = state.categoryTemplatesData.find(item => item.id === id);
             if (currentCategoryItem) {
                 currentCategoryItem.text = text;
