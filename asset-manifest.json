@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/Infotecs-Task/static/css/main.5bb376ee.css",
-    "main.js": "/Infotecs-Task/static/js/main.94ec6244.js",
+    "main.css": "/Infotecs-Task/static/css/main.32eb5d39.css",
+    "main.js": "/Infotecs-Task/static/js/main.d81b5033.js",
     "static/js/787.e8a87bbe.chunk.js": "/Infotecs-Task/static/js/787.e8a87bbe.chunk.js",
     "index.html": "/Infotecs-Task/index.html",
     "static/media/check-icon.svg": "/Infotecs-Task/static/media/check-icon.e5f2f8c60bff53426875.svg",
-    "main.5bb376ee.css.map": "/Infotecs-Task/static/css/main.5bb376ee.css.map",
-    "main.94ec6244.js.map": "/Infotecs-Task/static/js/main.94ec6244.js.map",
+    "main.32eb5d39.css.map": "/Infotecs-Task/static/css/main.32eb5d39.css.map",
+    "main.d81b5033.js.map": "/Infotecs-Task/static/js/main.d81b5033.js.map",
     "787.e8a87bbe.chunk.js.map": "/Infotecs-Task/static/js/787.e8a87bbe.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.5bb376ee.css",
-    "static/js/main.94ec6244.js"
+    "static/css/main.32eb5d39.css",
+    "static/js/main.d81b5033.js"
   ]
 }
