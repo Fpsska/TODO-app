@@ -57,7 +57,7 @@ body {
     height: 100vh;
     margin: 0;
     padding: 0;
-    // overflow: hidden;
+    overflow: hidden;
 }
 
 // /.NULLSTYLES
@@ -90,27 +90,17 @@ body {
         max-width: 300px;
         width: 100%;
     }
-    &__nav {
-        border-radius: 10px 0 0 10px;
-        padding: 20px 35px 20px 30px;
-        border-right: 1px solid #d8d8d8;
-        flex: 0 1 15%;
-        @include sliceText;
-    }
-    &__nav-select {
-        display: none;
-        padding: 20px 35px 20px 30px;
-    }
     &__category-form {
         margin: 20px 0 0 0;
     }
     &__content {
-        flex: 1;
+        flex: 0 1 85%;
         border-radius: 0 10px 10px 0;
         padding: 15px 45px 15px 50px;
         display: flex;
         flex-direction: column;
         position: relative;
+        overflow: hidden;
     }
     &__title {
         margin: 0;

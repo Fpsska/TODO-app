@@ -6,6 +6,8 @@ import Nav from '../Nav/Nav';
 import SelectMenu from '../SelectMenu/SelectMenu';
 import CategoryForm from '../CategoryForm/CategoryForm';
 
+import './navLayout.scss';
+
 // /. imports
 
 interface propTypes {

@@ -65,7 +65,7 @@ const TodoTemplate: React.FC<propTypes> = (props) => {
     return (
         <li className="todo__item">
 
-            <label className={completed ? 'todo__label completed' : 'todo__label'} onClick={handleCompleteStatus} title={title}>
+            <label className={`todo__label ${completed ? 'todo__label completed' : ''} ${!category ? 'large' : ''}`} onClick={handleCompleteStatus} title={title}>
                 <input
                     className="todo__checkbox"
                     type="checkbox"
@@ -74,15 +74,15 @@ const TodoTemplate: React.FC<propTypes> = (props) => {
                     onChange={handleCompleteStatus}
                 />
                 <span className="todo__checkbox--fake"></span>
-                <span className={`todo__label-text ${editable && !category && 'editable large'} ${editable && 'editable'}  ${!category && 'large'}`}>
+                <span className={editable ? 'todo__label-text editable' : 'todo__label-text'}>
                     {title}
                 </span>
             </label>
 
             {category ?
-                <span className={`todo__category ${status}`}>#{category}</span>
+                <span className={`todo__category ${status}`} title={`#${category}`}>#{category}</span>
                 :
-                <span className={`todo__indicator ${status}`}>{category}</span>
+                <span className={`todo__indicator ${status}`} title="uncategorized">{category}</span>
             }
 
             <div className="todo__controllers">

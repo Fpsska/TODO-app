@@ -8,6 +8,7 @@
         height: 0;
     }
     &__item {
+        overflow: hidden;
         display: flex;
         align-items: center;
         justify-content: flex-start;
@@ -21,6 +22,7 @@
     }
     &__controllers {
         margin: 0 0 0 auto;
+        flex-shrink: 0;
         :not(:last-child) {
             margin: 0 15px 0 0;
         }
@@ -42,18 +44,14 @@
         }
     }
     &__label-text {
+        width: 100%;
         border-bottom: 2px solid transparent;
         border-radius: 4px;
         // hide text
         @include sliceText;
-        max-width: calc(100vw - 600px);
-        width: 100%;
     }
     &__label-text.editable {
         border-bottom: 2px solid lavender;
-    }
-    &__label-text.large {
-        max-width: calc(100vw - 510px);
     }
     &__label {
         font-size: 18px;
@@ -65,9 +63,13 @@
         margin: 0 14px 0 0;
         // disable copy
         @include disableCopy;
+        max-width: calc(100% - 190px);
     }
     &__label.completed {
         text-decoration: line-through;
+    }
+    &__label.large {
+        max-width: calc(100% - 100px);
     }
     &__category {
         background-color: #888;
@@ -79,6 +81,9 @@
         margin: 0 10px 0 0;
         // disable copy
         @include disableCopy;
+        // hide text
+        @include sliceText;
+        max-width: 100px;
     }
     &__category.process {
         background-color: #407aed;

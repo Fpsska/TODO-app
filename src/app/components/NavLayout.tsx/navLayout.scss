@@ -1,0 +1,17 @@
+@import "../../assets/styles/mixins";
+
+// /. imports
+
+.page {
+    &__nav {
+        border-radius: 10px 0 0 10px;
+        padding: 20px 35px 20px 30px;
+        border-right: 1px solid #d8d8d8;
+        flex: 0 0 15%;
+        @include sliceText;
+    }
+    &__nav-select {
+        display: none;
+        padding: 20px 35px 20px 30px;
+    }
+}
