@@ -72,25 +72,25 @@ const TitleForm: React.FC<propTypes> = (props) => {
         dispatch(editCurrentNavTemplateItem({  // update text, category in navTemplatesData[]
             id: getCurrentArrItem(navTemplatesData, 'category', filterProp)?.id,
             text: inputValue.trim(),
-            category: inputValue.toLocaleLowerCase().trim()
+            category: inputValue.trim()
         }));
 
         dispatch(editCurrentNavSelectTemplateItem({ // update text, value in selectTemplatesData[]
             id: getCurrentArrItem(selectTemplatesData, 'value', filterProp)?.id,
             text: inputValue.trim(), // displayed in UI
-            value: inputValue.trim() // logic
+            value: inputValue.trim() // logic .toLowerCase() ?
         }));
         dispatch(setSelectNavOption({ option: inputValue.trim() })); // switch to actual option after update
 
         dispatch(editCurrentCategoryTemplateItem({  // update text, value in categoryTemplatesData[] / Modal.tsx
             id: getCurrentArrItem(categoryTemplatesData, 'value', filterProp)?.id,
             text: inputValue.trim(), // displayed in UI
-            value: inputValue.toLocaleLowerCase().trim() // logic
+            value: inputValue.toLowerCase().trim() // logic
         }));
 
         dispatch(editCategoryOFCurrentTodosDataItem({ // update category value of each todosData[] item who prev category is equal prev title value
             categoryProp: filterProp,
-            categoryValue: inputValue ? inputValue.toLocaleLowerCase().trim() : ''
+            categoryValue: inputValue ? inputValue.toLowerCase().trim() : ''
         }));
 
         // disable editing after submit form

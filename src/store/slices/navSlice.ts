@@ -35,14 +35,14 @@ const initialState: navSliceState = {
         {
             id: 3,
             text: 'College',
-            category: 'college',
+            category: 'COLLEGE',
             link: '#',
             isActive: false
         },
         {
             id: 4,
             text: 'Payments',
-            category: 'payments',
+            category: 'PaYmEnTs',
             link: '#',
             isActive: false
         }
@@ -56,17 +56,17 @@ const initialState: navSliceState = {
         {
             id: 2,
             text: 'Groceries',
-            value: 'Groceries'
+            value: 'groceries'
         },
         {
             id: 3,
             text: 'College',
-            value: 'College'
+            value: 'COLLEGE'
         },
         {
             id: 4,
             text: 'Payments',
-            value: 'payments'
+            value: 'PaYmEnTs'
         }
     ],
     currentNavID: 1,
@@ -91,16 +91,15 @@ const navSlice = createSlice({
         },
         addNavTemplateItem(state, action: PayloadAction<any>) {
             state.navTemplatesData.push(action.payload);
-            console.log('navTemplatesData', current(state.navTemplatesData))
         },
         editCurrentNavTemplateItem(state, action: PayloadAction<{ id: number, text: string, category: string }>) {
             const { id, text, category } = action.payload;
+
             const currentNavItem = state.navTemplatesData.find(item => item.id === id);
             if (currentNavItem) {
                 currentNavItem.text = text;
                 currentNavItem.category = category;
             }
-            console.log('navTemplatesData', current(state.navTemplatesData))
         },
         setCurrentNavSelectID(state, action: PayloadAction<{ id: number }>) {
             const { id } = action.payload;
@@ -108,7 +107,6 @@ const navSlice = createSlice({
         },
         addNewSelectItem(state, action: PayloadAction<any>) {
             state.selectTemplatesData.push(action.payload);
-            console.log('selectTemplatesData', current(state.selectTemplatesData))
         },
         editCurrentNavSelectTemplateItem(state, action: PayloadAction<{ id: number, text: string, value: string }>) {
             const { id, text, value } = action.payload;
@@ -118,7 +116,6 @@ const navSlice = createSlice({
                 currentCategoryItem.text = text;
                 currentCategoryItem.value = value;
             }
-            console.log('selectTemplatesData', current(state.selectTemplatesData))
         },
         setSelectNavOption(state, action: PayloadAction<{ option: string }>) {
             const { option } = action.payload;

@@ -43,7 +43,7 @@ const Modal: React.FC<propTypes> = (props) => {
         dispatch(editCurrentTodosDataItem({
             id: currentTodoID,
             title: inputValue,
-            category: !inputRadioCategoryValue ? '' : inputRadioCategoryValue,
+            category: !inputRadioCategoryValue ? '' : inputRadioCategoryValue.toLowerCase(),
             status: inputRadioStatusValue
         }));
 
