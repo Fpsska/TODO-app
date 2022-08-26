@@ -70,7 +70,7 @@ const NavTemplate: React.FC<propTypes> = (props) => {
 
                 dispatch(setCurrentCategoryID({ id }));
 
-                dispatch(setInputTitleValue({ title: text }));
+                dispatch(setInputTitleValue({ title: text.trim() }));
                 setEditableStatus(false);
                 break;
             default:
@@ -80,7 +80,7 @@ const NavTemplate: React.FC<propTypes> = (props) => {
 
                 dispatch(setCurrentCategoryID({ id }));
 
-                dispatch(setInputTitleValue({ title: text }));
+                dispatch(setInputTitleValue({ title: 'All' }));
                 setEditableStatus(false);
         }
     };

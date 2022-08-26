@@ -2,6 +2,6 @@ export function getCurrentArrItem(array: any[], filterProperty: string, filterVa
     if (typeof filterValue === 'number') {
         return array.find(item => item[filterProperty] === filterValue);
     } else {
-        return array.find(item => item[filterProperty].toLowerCase() === filterValue);
+        return array.find(item => item[filterProperty].toLowerCase().trim() === filterValue);
     }
 };

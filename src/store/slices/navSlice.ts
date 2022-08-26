@@ -25,7 +25,7 @@ const initialState: navSliceState = {
         },
         {
             id: 2,
-            text: 'Groceries',
+            text: '    Groceries  ',
             category: '   groceries  ',
             link: '#',
             isActive: false
