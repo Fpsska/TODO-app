@@ -27,11 +27,7 @@ const Nav: React.FC<propTypes> = (props) => {
                     return (
                         <NavTemplate
                             key={item.id}
-                            id={item.id}
-                            link={item.link}
-                            text={item.text}
-                            category={item.category}
-                            isActive={item.isActive}
+                            {...item}
 
                             setEditableStatus={setEditableStatus}
                         />

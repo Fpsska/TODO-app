@@ -11,7 +11,7 @@ interface propTypes {
 
 const SelectTemplate: React.FC<propTypes> = ({ text, value }) => {
     return (
-        <option className="nav-select__item" value={value}>{text}</option>
+        <option className="nav-select__item" value={value.toLowerCase().trim()}>{text}</option>
     );
 };
 

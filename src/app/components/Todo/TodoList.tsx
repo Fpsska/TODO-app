@@ -28,12 +28,7 @@ const TodoList: React.FC<propTypes> = (props) => {
                 return (
                     <TodoTemplate
                         key={item.id}
-                        id={item.id}
-                        title={item.title}
-                        category={item.category}
-                        status={item.status}
-                        completed={item.completed}
-                        editable={item.editable}
+                        {...item}
 
                         setModalVisibleStatus={setModalVisibleStatus}
                     />

@@ -69,8 +69,7 @@ const SelectMenu: React.FC = () => {
                 return (
                     <SelectTemplate
                         key={item.id}
-                        text={item.text}
-                        value={item.value.toLowerCase().trim()} // item.value.toLowerCase()
+                        {...item}
                     />
                 );
             })}

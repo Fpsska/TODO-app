@@ -76,8 +76,8 @@ const App: React.FC = () => {
   }, [filteredTodosData, filterProp]);
 
   useEffect(() => { // update page__message text content
-    dispatch(setTitle({title: inputTitleValue}));
-  },[inputTitleValue]);
+    dispatch(setTitle({ title: inputTitleValue }));
+  }, [inputTitleValue]);
 
 
   const openBurger = (e: React.SyntheticEvent): void => {
