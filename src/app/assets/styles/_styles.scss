@@ -90,7 +90,9 @@ body {
         max-width: 300px;
     }
     &__category-form {
-        margin: 20px 0 0 0;
+        flex: 1;
+        padding: 20px 35px 15px 30px;
+        border-right: 2px solid #d8d8d8;
     }
     &__content {
         flex: 0 1 85%;

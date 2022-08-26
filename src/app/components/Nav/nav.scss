@@ -5,20 +5,47 @@
 .nav {
     width: 100%;
     position: relative;
-    // height: 100%;
+
     &:hover .resizer {
         opacity: 1;
     }
+
     &__menu {
+        padding: 20px 35px 15px 30px;
+        max-height: calc(100vh - 210px);
+        overflow-y: scroll;
+
+        // scrollbar
+        &::-webkit-scrollbar {
+            width: 2px;
+            height: 2px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background: #b6b6b6;
+            border-radius: 10px;
+        }
+
+        &::-webkit-scrollbar-track {
+            background: #d8d8d8;
+        }
+
+        &::-webkit-scrollbar-corner {
+            background: transparent;
+        }
+        // /.
+
         :not(:last-child) {
             margin: 0 0 24px;
         }
     }
+
     &__item {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
     }
+
     &__link {
         color: #525252;
         font-size: 22px;
@@ -26,21 +53,25 @@
         transition: all 0.25s linear;
         // disable copy
         @include disableCopy;
+
         &:hover {
             color: rgba($color: #ea5959, $alpha: 0.8);
         }
+
         span {
             font-size: 20px;
         }
     }
+
     &__link.active {
         color: #ea5959;
     }
+
     &__link.disabled {
         color: rgba($color: #525252, $alpha: 0.35);
+
         &:hover {
             cursor: not-allowed;
         }
     }
 }
-
