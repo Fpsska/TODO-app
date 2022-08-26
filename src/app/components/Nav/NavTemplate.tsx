@@ -53,25 +53,15 @@ const NavTemplate: React.FC<propTypes> = (props) => {
 
     const filterTodoItems = (): void => {
         switch (category) {
-            case 'all':
-                dispatch(setFilterProp({ filterProp: 'all' })); // update prop for filter.ts func for real-time filtering
+            case category:
+                dispatch(setFilterProp({ filterProp: category.toLowerCase().trim() })); // update prop for filter.ts func for real-time filtering
                 dispatch(switchNavActiveStatus({ id, status: true }));
-                dispatch(setSelectNavOption({ option: 'All' })); // two-way sync with SelectMenu.tsx for correct filtering
+                dispatch(setSelectNavOption({ option: category.toLowerCase().trim() })); // two-way sync with SelectMenu.tsx for correct filtering
 
                 dispatch(setCurrentCategoryID({ id })); // for edit category value of current item of todosData[] 
 
-                dispatch(setInputTitleValue({ title: 'All' })); // update text content of title__input
-                setEditableStatus(false); // controle titleForm visible condition
-                break;
-            case category:
-                dispatch(setFilterProp({ filterProp: category.toLowerCase().trim() }));
-                dispatch(switchNavActiveStatus({ id, status: true }));
-                dispatch(setSelectNavOption({ option: category.trim()  }));
-
-                dispatch(setCurrentCategoryID({ id }));
-
-                dispatch(setInputTitleValue({ title: text.trim() }));
-                setEditableStatus(false);
+                dispatch(setInputTitleValue({ title: text.trim() }));   // update text content of title__input
+                setEditableStatus(false);   // controle titleForm visible condition
                 break;
             default:
                 dispatch(setFilterProp({ filterProp: 'all' }));

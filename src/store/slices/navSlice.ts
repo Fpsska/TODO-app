@@ -19,7 +19,7 @@ const initialState: navSliceState = {
         {
             id: 1,
             text: 'All',
-            category: 'all',
+            category: '    aLL',
             link: '#',
             isActive: true
         },
@@ -49,17 +49,17 @@ const initialState: navSliceState = {
         {
             id: 1,
             text: 'All',
-            value: 'All'
+            value: '   aLL '
         },
         {
             id: 2,
-            text: 'Groceries',
-            value: 'groceries'
+            text: '     Groceries  ',
+            value: '   groceries'
         },
         {
             id: 3,
             text: 'College',
-            value: '  COLLEGE  '
+            value: 'COLLEGE   '
         },
         {
             id: 4,
@@ -106,7 +106,7 @@ const navSlice = createSlice({
             }
         },
         setSelectNavOption(state, action: PayloadAction<{ option: string }>) {
-            const { option } = action.payload;
+            const { option } = action.payload;  
             state.selectNavOption = option;
         }
     }

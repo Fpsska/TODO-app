@@ -40,21 +40,13 @@ const SelectMenu: React.FC = () => {
 
     const selectMenuHandler = (value: string, e: any): void => {
         switch (value) {
-            case 'All':
-                dispatch(setFilterProp({ filterProp: 'all' })); // update prop for filter.ts func for real-time filtering
-                dispatch(setSelectNavOption({ option: 'All' })); // switch nav-select value 
-                dispatch(switchNavActiveStatus({ id: getCurrentArrItem(navTemplatesData, 'category', 'all')?.id, status: true }));  // two-way sync with NavTemplate.tsx for correct filtering
-
-                dispatch(setInputTitleValue({ title: 'All' })); // update text comtent of title__input 
-                dispatch(switchTodosItemEditableStatus({ id: currentTodoID, status: false })); // disable editable todo when filtering todosData[]
-                break;
             case value:
-                dispatch(setFilterProp({ filterProp: value.toLowerCase().trim() }));
-                dispatch(setSelectNavOption({ option: value.trim() })); 
-                dispatch(switchNavActiveStatus({ id: getCurrentArrItem(navTemplatesData, 'category', value.toLowerCase())?.id, status: true }));
+                dispatch(setFilterProp({ filterProp: value.toLowerCase().trim() }));    // update prop for filter.ts func for real-time filtering
+                dispatch(setSelectNavOption({ option: value })); // switch nav-select value 
+                dispatch(switchNavActiveStatus({ id: getCurrentArrItem(navTemplatesData, 'category', value.toLowerCase().trim())?.id, status: true })); // two-way sync with NavTemplate.tsx for correct filtering
 
-                dispatch(setInputTitleValue({ title: [...e.target.childNodes].find(item => item.value === value).innerText }));
-                dispatch(switchTodosItemEditableStatus({ id: currentTodoID, status: false }));
+                dispatch(setInputTitleValue({ title: [...e.target.childNodes].find(item => item.value === value).innerText.trim() }));  // update text comtent of title__input 
+                dispatch(switchTodosItemEditableStatus({ id: currentTodoID, status: false }));  // disable editable todo when filtering todosData[]
                 break;
             default:
                 dispatch(setFilterProp({ filterProp: 'all' }));
@@ -78,7 +70,7 @@ const SelectMenu: React.FC = () => {
                     <SelectTemplate
                         key={item.id}
                         text={item.text}
-                        value={item.value}
+                        value={item.value.toLowerCase().trim()} // item.value.toLowerCase()
                     />
                 );
             })}

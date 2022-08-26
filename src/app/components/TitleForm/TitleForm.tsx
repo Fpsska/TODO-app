@@ -64,7 +64,6 @@ const TitleForm: React.FC<propTypes> = (props) => {
 
     const formSubmitHandler = (e: React.FormEvent): void => {
         e.preventDefault();
-        console.log('SUBMITTED')
 
         dispatch(setFilterProp({ filterProp: inputValue.toLowerCase().trim() })); // update filterProp
         dispatch(setInputTitleValue({ title: inputValue.trim() })); // update title__form text content value
@@ -80,7 +79,7 @@ const TitleForm: React.FC<propTypes> = (props) => {
             text: inputValue.trim(), // displayed in UI
             value: inputValue.trim() // logic
         }));
-        dispatch(setSelectNavOption({ option: inputValue.trim() })); // switch to actual option after update
+        dispatch(setSelectNavOption({ option: inputValue.toLowerCase().trim() })); // switch to actual option after update
 
         dispatch(editCurrentCategoryTemplateItem({  // update text, value in categoryTemplatesData[] / Modal.tsx
             id: getCurrentArrItem(categoryTemplatesData, 'value', filterProp)?.id,
