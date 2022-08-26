@@ -9,8 +9,6 @@ import { Iselect } from '../../app/types/selectTypes';
 interface navSliceState {
     navTemplatesData: Inav[];
     selectTemplatesData: Iselect[];
-    currentNavID: number;
-    currentNavSelectID: number;
     selectNavOption: string
 }
 
@@ -28,7 +26,7 @@ const initialState: navSliceState = {
         {
             id: 2,
             text: 'Groceries',
-            category: 'groceries',
+            category: '   groceries  ',
             link: '#',
             isActive: false
         },
@@ -61,7 +59,7 @@ const initialState: navSliceState = {
         {
             id: 3,
             text: 'College',
-            value: 'COLLEGE'
+            value: '  COLLEGE  '
         },
         {
             id: 4,
@@ -69,8 +67,6 @@ const initialState: navSliceState = {
             value: 'PaYmEnTs'
         }
     ],
-    currentNavID: 1,
-    currentNavSelectID: 1,
     selectNavOption: 'All'
 };
 
@@ -85,10 +81,6 @@ const navSlice = createSlice({
             const { id, status } = action.payload;
             state.navTemplatesData.map(item => item.id === id ? item.isActive = status : item.isActive = false);
         },
-        setCurrentNavID(state, action: PayloadAction<{ id: number }>) {
-            const { id } = action.payload;
-            state.currentNavID = id;
-        },
         addNavTemplateItem(state, action: PayloadAction<any>) {
             state.navTemplatesData.push(action.payload);
         },
@@ -100,10 +92,6 @@ const navSlice = createSlice({
                 currentNavItem.text = text;
                 currentNavItem.category = category;
             }
-        },
-        setCurrentNavSelectID(state, action: PayloadAction<{ id: number }>) {
-            const { id } = action.payload;
-            state.currentNavSelectID = id;
         },
         addNewSelectItem(state, action: PayloadAction<any>) {
             state.selectTemplatesData.push(action.payload);
@@ -125,11 +113,9 @@ const navSlice = createSlice({
 });
 
 export const {
-    setCurrentNavID,
     editCurrentNavTemplateItem,
     switchNavActiveStatus,
     addNavTemplateItem,
-    setCurrentNavSelectID,
     addNewSelectItem,
     editCurrentNavSelectTemplateItem,
     setSelectNavOption

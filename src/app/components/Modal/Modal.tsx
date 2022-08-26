@@ -98,7 +98,7 @@ const Modal: React.FC<propTypes> = (props) => {
                                                     onChange={e => setInputRadioCategoryValue(e.target.value)}
                                                 />
                                                 <span className="modal__radio--fake"></span>
-                                                {item.text}
+                                                <span className="modal__radio--text" title={item.text}>{item.text}</span>
                                             </label>
                                         );
                                     })

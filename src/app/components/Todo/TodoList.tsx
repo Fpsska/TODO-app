@@ -11,9 +11,7 @@ import './todo.scss';
 interface propTypes {
     filteredTodosData: Itodo[];
     setModalVisibleStatus: (arg: boolean) => void;
-    isFormVisible: boolean;
-    isModalVisible: boolean;
-    currentTodoID: number
+    isFormVisible: boolean
 }
 
 const TodoList: React.FC<propTypes> = (props) => {
@@ -21,9 +19,7 @@ const TodoList: React.FC<propTypes> = (props) => {
     const {
         filteredTodosData,
         setModalVisibleStatus,
-        isFormVisible,
-        isModalVisible,
-        currentTodoID
+        isFormVisible
     } = props;
 
     return (
@@ -39,9 +35,7 @@ const TodoList: React.FC<propTypes> = (props) => {
                         completed={item.completed}
                         editable={item.editable}
 
-                        isModalVisible={isModalVisible}
                         setModalVisibleStatus={setModalVisibleStatus}
-                        currentTodoID={currentTodoID}
                     />
                 );
             })}

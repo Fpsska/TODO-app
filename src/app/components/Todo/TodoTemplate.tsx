@@ -20,9 +20,7 @@ interface propTypes {
     completed: boolean;
     editable: boolean;
 
-    isModalVisible: boolean;
     setModalVisibleStatus: (arg: boolean) => void;
-    currentTodoID: number
 }
 
 // /. interfaces
@@ -37,9 +35,7 @@ const TodoTemplate: React.FC<propTypes> = (props) => {
         completed,
         editable,
 
-        isModalVisible,
-        setModalVisibleStatus,
-        currentTodoID
+        setModalVisibleStatus
     } = props;
 
 

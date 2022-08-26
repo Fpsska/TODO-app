@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 
-import { setInputTitleValue } from '../../../store/slices/todoSlice';
-
 import {
   switchTodosItemEditableStatus,
   switchTodosDataEmptyStatus,
@@ -40,7 +38,6 @@ const App: React.FC = () => {
     categoryTemplatesData,
     filterProp,
     currentTodoID,
-    currentCategoryID,
     isTodosDataLoading,
     isFormVisible,
     isTodosDataEmpty,
@@ -51,9 +48,7 @@ const App: React.FC = () => {
 
   const {
     navTemplatesData,
-    selectTemplatesData,
-    currentNavID,
-    currentNavSelectID
+    selectTemplatesData
   } = useAppSelector(state => state.navSlice);
 
   const dispatch = useAppDispatch();
@@ -184,9 +179,7 @@ const App: React.FC = () => {
                     <TodoList
                       filteredTodosData={filteredTodosData}
                       setModalVisibleStatus={modalHandler.setVisibleStatus}
-                      isModalVisible={modalHandler.isVisible}
                       isFormVisible={isFormVisible}
-                      currentTodoID={currentTodoID}
                     />
               }
             </div>

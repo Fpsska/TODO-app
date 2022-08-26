@@ -10,7 +10,6 @@ import {
 } from '../../../store/slices/todoSlice';
 import {
     switchNavActiveStatus,
-    setCurrentNavID,
     setSelectNavOption
 } from '../../../store/slices/navSlice';
 
@@ -57,20 +56,18 @@ const NavTemplate: React.FC<propTypes> = (props) => {
             case 'all':
                 dispatch(setFilterProp({ filterProp: 'all' })); // update prop for filter.ts func for real-time filtering
                 dispatch(switchNavActiveStatus({ id, status: true }));
-                dispatch(setSelectNavOption({ option: text })); // two-way sync with SelectMenu.tsx for correct filtering
+                dispatch(setSelectNavOption({ option: 'All' })); // two-way sync with SelectMenu.tsx for correct filtering
 
-                dispatch(setCurrentNavID({ id })); // for edit current item of navTemplatesData[] 
                 dispatch(setCurrentCategoryID({ id })); // for edit category value of current item of todosData[] 
 
-                dispatch(setInputTitleValue({ title: text })); // update text content of title__input
+                dispatch(setInputTitleValue({ title: 'All' })); // update text content of title__input
                 setEditableStatus(false); // controle titleForm visible condition
                 break;
             case category:
                 dispatch(setFilterProp({ filterProp: category.toLowerCase().trim() }));
                 dispatch(switchNavActiveStatus({ id, status: true }));
-                dispatch(setSelectNavOption({ option: text }));
+                dispatch(setSelectNavOption({ option: category.trim()  }));
 
-                dispatch(setCurrentNavID({ id }));
                 dispatch(setCurrentCategoryID({ id }));
 
                 dispatch(setInputTitleValue({ title: text }));
@@ -81,7 +78,6 @@ const NavTemplate: React.FC<propTypes> = (props) => {
                 dispatch(switchNavActiveStatus({ id, status: true }));
                 dispatch(setSelectNavOption({ option: 'All' }));
 
-                dispatch(setCurrentNavID({ id }));
                 dispatch(setCurrentCategoryID({ id }));
 
                 dispatch(setInputTitleValue({ title: text }));

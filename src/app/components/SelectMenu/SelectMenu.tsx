@@ -3,13 +3,12 @@ import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 
 import {
-    setCurrentCategoryID,
+    // setCurrentCategoryID,
     switchTodosItemEditableStatus,
     setFilterProp,
     setInputTitleValue
 } from '../../../store/slices/todoSlice';
 import {
-    setCurrentNavSelectID,
     setSelectNavOption,
     switchNavActiveStatus
 } from '../../../store/slices/navSlice';
@@ -40,20 +39,19 @@ const SelectMenu: React.FC = () => {
     const dispatch = useAppDispatch();
 
     const selectMenuHandler = (value: string, e: any): void => {
-        console.log('SELECT')
         switch (value) {
             case 'All':
                 dispatch(setFilterProp({ filterProp: 'all' })); // update prop for filter.ts func for real-time filtering
                 dispatch(setSelectNavOption({ option: 'All' })); // switch nav-select value 
-                dispatch(switchNavActiveStatus({ id: getCurrentArrItem(navTemplatesData, 'category', 'all')?.id, status: true }));
+                dispatch(switchNavActiveStatus({ id: getCurrentArrItem(navTemplatesData, 'category', 'all')?.id, status: true }));  // two-way sync with NavTemplate.tsx for correct filtering
 
                 dispatch(setInputTitleValue({ title: 'All' })); // update text comtent of title__input 
                 dispatch(switchTodosItemEditableStatus({ id: currentTodoID, status: false })); // disable editable todo when filtering todosData[]
                 break;
             case value:
                 dispatch(setFilterProp({ filterProp: value.toLowerCase().trim() }));
-                dispatch(setSelectNavOption({ option: value }));
-                dispatch(switchNavActiveStatus({ id: getCurrentArrItem(navTemplatesData, 'category', value.toLocaleLowerCase())?.id, status: true }));
+                dispatch(setSelectNavOption({ option: value.trim() })); 
+                dispatch(switchNavActiveStatus({ id: getCurrentArrItem(navTemplatesData, 'category', value.toLowerCase())?.id, status: true }));
 
                 dispatch(setInputTitleValue({ title: [...e.target.childNodes].find(item => item.value === value).innerText }));
                 dispatch(switchTodosItemEditableStatus({ id: currentTodoID, status: false }));
@@ -63,7 +61,7 @@ const SelectMenu: React.FC = () => {
                 dispatch(setSelectNavOption({ option: 'All' }));
                 dispatch(switchNavActiveStatus({ id: getCurrentArrItem(navTemplatesData, 'category', 'all')?.id, status: true }));
 
-                dispatch(setInputTitleValue({ title: [...e.target.childNodes].find(item => item.value === value).innerText }));
+                dispatch(setInputTitleValue({ title: 'All' }));
                 dispatch(switchTodosItemEditableStatus({ id: currentTodoID, status: false }));
         };
     };
