@@ -81,9 +81,9 @@ const NavTemplate: React.FC<propTypes> = (props) => {
                 href={link}
                 onClick={() => !isTodosDataLoading && !error && filterTodoItems()}
             >
-                <span title={`${text} (${category === 'all' ? todosData.length : todoCount})`}
+                <span title={`${text} (${category.toLowerCase().trim() === 'all' ? todosData.length : todoCount})`}
                 >
-                    {`${text} (${category === 'all' ? todosData.length : todoCount})`}
+                    {`${text} (${category.toLowerCase().trim() === 'all' ? todosData.length : todoCount})`}
                 </span>
             </a>
         </li>
