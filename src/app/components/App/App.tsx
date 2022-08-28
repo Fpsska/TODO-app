@@ -14,7 +14,6 @@ import { filter } from '../../helpers/filter';
 
 import { Itodo } from '../../types/todoTypes';
 
-
 import NavLayout from '../NavLayout.tsx/NavLayout';
 import Form from '../Form/Form';
 import TodoList from '../Todo/TodoList';
@@ -110,6 +109,7 @@ const App: React.FC = () => {
             }
           </div>
 
+
           <NavLayout
             setEditableStatus={titleFormHandler.setVisibleStatus}
           />
@@ -182,6 +182,7 @@ const App: React.FC = () => {
                       isFormVisible={isFormVisible}
                     />
               }
+
             </div>
 
             <div className="page__footer">
