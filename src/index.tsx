@@ -7,8 +7,8 @@ import { store } from './store/store';
 
 import Layout from './app/components/Layout/Layout';
 import reportWebVitals from './reportWebVitals';
-import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 
+import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 
 // /. imports
 
