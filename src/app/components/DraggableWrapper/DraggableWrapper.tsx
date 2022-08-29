@@ -10,7 +10,6 @@ interface propTypes {
     children: JSX.Element;
 }
 
-
 // /. interfaces
 
 const DraggableWrapper: React.FC<propTypes> = (props) => {

@@ -2,7 +2,6 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 // /. imports
 
-
 export const fetchTodosData = createAsyncThunk(
     'mainSlice/fetchAlbumData',
     async (limit: number, { rejectWithValue }) => {
