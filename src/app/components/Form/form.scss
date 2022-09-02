@@ -8,6 +8,18 @@
         border: 1px solid transparent;
         border-radius: 8px;
         padding: 10px 25px 10px 25px;
+        &::-webkit-input-placeholder {
+            color: #b5b5b5;
+        }
+        &::-moz-placeholder {
+            color: #b5b5b5;
+        }
+        &:-ms-input-placeholder {
+            color: #b5b5b5;
+        }
+        &::-ms-input-placeholder {
+            color: #b5b5b5;
+        }
         &::placeholder {
             color: #b5b5b5;
         }

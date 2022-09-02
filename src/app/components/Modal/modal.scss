@@ -105,6 +105,18 @@
         background-color: #f3f3f3;
         border: none;
         border-radius: 8px;
+        &::-webkit-input-placeholder {
+            color: #000;
+        }
+        &::-moz-placeholder {
+            color: #000;
+        }
+        &:-ms-input-placeholder {
+            color: #000;
+        }
+        &::-ms-input-placeholder {
+            color: #000;
+        }
         &::placeholder {
             color: #000;
         }
