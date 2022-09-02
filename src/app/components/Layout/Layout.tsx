@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 
 import { switchTodosDataLoadingStatus, switchErrorStatus } from '../../../store/slices/todoSlice';
 
-import { fetchTodosData } from '../../api/fetchTodosData';
+import { fetchTodosData } from '../../../store/api/fetchTodosData';
 
 import App from '../App/App';
 

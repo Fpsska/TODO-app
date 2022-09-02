@@ -14,7 +14,7 @@ import { filter } from '../../helpers/filter';
 
 import { Itodo } from '../../types/todoTypes';
 
-import NavLayout from '../NavLayout.tsx/NavLayout';
+import NavLayout from '../Nav/NavLayout';
 import Form from '../Form/Form';
 import TodoList from '../Todo/TodoList';
 import Preloader from '../Preloader/Preloader';

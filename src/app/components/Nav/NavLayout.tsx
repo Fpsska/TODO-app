@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 
 import { useAppSelector } from '../../../store/hooks';
 
-import Nav from '../Nav/Nav';
+
 import SelectMenu from '../SelectMenu/SelectMenu';
 import CategoryForm from '../CategoryForm/CategoryForm';
+
+import Nav from './Nav';
 
 import './navLayout.scss';
 

@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction, current } from '@reduxjs/toolkit';
 
-import { fetchTodosData } from '../../app/api/fetchTodosData';
+import { fetchTodosData } from '../api/fetchTodosData';
 
 import { Itodo } from '../../app/types/todoTypes';
 import { Icategory } from '../../app/types/categoryTypes';
