@@ -40,12 +40,12 @@ const NavLayout: React.FC<propTypes> = (props) => {
 
 
     return (
-        <div className="page__nav">
+        <aside className="page__nav">
             {width <= breakpoint
                 ?
-                <div className="page__nav-select">
+                <nav className="page__nav-select">
                     <SelectMenu />
-                </div>
+                </nav>
                 :
                 <Nav
                     navTemplatesData={navTemplatesData}
@@ -55,7 +55,7 @@ const NavLayout: React.FC<propTypes> = (props) => {
             <div className="page__category-form">
                 <CategoryForm />
             </div>
-        </div>
+        </aside>
     );
 }
 

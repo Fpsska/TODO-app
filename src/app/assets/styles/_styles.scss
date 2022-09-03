@@ -72,6 +72,11 @@ body {
     padding: 20px;
 }
 
+.main {
+    flex: 0 1 85%;
+    overflow: hidden;
+}
+
 .page {
     background-color: #fff;
     box-shadow: 2px 17px 26px -12px rgba(34, 60, 80, 0.43);
@@ -95,13 +100,13 @@ body {
         border-right: 2px solid #d8d8d8;
     }
     &__content {
-        flex: 0 1 85%;
         border-radius: 0 10px 10px 0;
         padding: 15px 45px 15px 50px;
         display: flex;
         flex-direction: column;
         position: relative;
         overflow: hidden;
+        height: 100%;
     }
     &__title {
         margin: 0;
