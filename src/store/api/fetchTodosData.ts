@@ -2,8 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 // /. imports
 
-export const fetchTodosData = createAsyncThunk(
-    'mainSlice/fetchAlbumData',
+export const fetchTodosData = createAsyncThunk('mainSlice/fetchAlbumData',
     async (limit: number, { rejectWithValue }) => {
         try {
             const response = await fetch(`https://jsonplaceholder.typicode.com/todos?&_limit=${limit}`);

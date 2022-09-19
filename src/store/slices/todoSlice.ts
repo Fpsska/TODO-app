@@ -28,9 +28,11 @@ interface todoSliceState {
 
 // /. interfaces
 
+const todosStorageData = JSON.parse(localStorage.getItem('todosDataFromStorage') || '[]');
+
 const initialState: todoSliceState = {
-    todosData: [],
-    todosDataContainer: [],
+    todosData: todosStorageData,
+    todosDataContainer: todosStorageData,
     categoryTemplatesData: [
         {
             id: 1,
@@ -71,7 +73,6 @@ const initialState: todoSliceState = {
 };
 
 // /. initialState
-
 
 const todoSlice = createSlice({
     name: 'todoSlice',
@@ -178,14 +179,22 @@ const todoSlice = createSlice({
             state.status = 'loading';
         },
         [fetchTodosData.fulfilled.type]: (state, action: PayloadAction<Itodo[]>) => {
-            state.todosData = action.payload;
-            state.todosData.map(item => {   // extend array by category, status fields
-                item.category = getRandomArrElement(['groceries', 'college', 'payments', '']);
-                item.status = getRandomArrElement(['waiting', 'process', 'done', '']);
-                item.completed = false;
-                item.editable = false;
-            });
-            state.todosDataContainer = state.todosData;
+
+            const fetchedData =
+                action.payload.map((item: Itodo) => {
+                    if (item) {
+                        return {
+                            ...item,
+                            category: getRandomArrElement(['groceries', 'college', 'payments', '']),
+                            status: getRandomArrElement(['waiting', 'process', 'done', '']),
+                            completed: false,
+                            editable: false
+                        };
+                    }
+                });
+
+            localStorage.setItem('todosDataFromStorage', JSON.stringify(fetchedData));
+            // state.todosDataContainer = fetchedData;
 
             state.status = 'success';
             state.error = null;

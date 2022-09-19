@@ -10,7 +10,7 @@ import {
 } from '../../../store/slices/todoSlice';
 
 import { useAreaHandler } from '../../hooks/useAreaHandler';
-import { filter } from '../../helpers/filter';
+import { filterDataByCategory } from '../../helpers/filterDataByCategory';
 
 import { Itodo } from '../../types/todoTypes';
 
@@ -28,7 +28,6 @@ import './App.css';
 
 
 // /. imports
-
 
 const App: React.FC = () => {
 
@@ -58,14 +57,19 @@ const App: React.FC = () => {
 
   // /. hooks usage
 
-  const [filteredTodosData, setFilteredTodosData] = useState<Itodo[]>(todosData);
+
+  const [filteredTodosData, setFilteredTodosData] = useState<Itodo[]>(todosData); 
 
   useEffect(() => { // remove editable css-class when modal is hidden
     !modalHandler.isVisible && dispatch(switchTodosItemEditableStatus({ id: currentTodoID, status: false }));
   }, [modalHandler.isVisible]);
 
-  useEffect(() => { // update todosData when filering by filterProp (category)
-    setFilteredTodosData(filter(todosData, filterProp));
+  useEffect(() => {
+    // update todosData when filering by filterProp (category)
+    setFilteredTodosData(filterDataByCategory(todosData, filterProp));
+
+    // update todosDataFromStorage value
+    localStorage.setItem('todosDataFromStorage', JSON.stringify(todosData));
   }, [todosData, filterProp]);
 
   useEffect(() => { // check length of filteredTodosData[] for handle display alternative content

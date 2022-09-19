@@ -1,4 +1,4 @@
-export function filter(array: any[], filterProp: string): any[] {
+export function filterDataByCategory(array: any[], filterProp: string): any[] {
     switch (filterProp) {
         case 'all':
             return array;
