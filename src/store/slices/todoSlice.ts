@@ -193,8 +193,7 @@ const todoSlice = createSlice({
                     }
                 });
 
-            localStorage.setItem('todosDataFromStorage', JSON.stringify(fetchedData));
-            // state.todosDataContainer = fetchedData;
+            // localStorage.setItem('todosDataFromStorage', JSON.stringify(fetchedData));
 
             state.status = 'success';
             state.error = null;
