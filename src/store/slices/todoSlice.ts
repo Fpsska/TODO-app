@@ -158,7 +158,7 @@ const todoSlice = createSlice({
         },
         setCurrentTodosCount(state, action: PayloadAction<{ count: number }>) {
             const { count } = action.payload;
-            console.log(count)
+            console.log(count);
             state.currentTodosCount = count;
         },
         switchFormVisibleStatus(state, action: PayloadAction<{ status: boolean }>) {
@@ -180,18 +180,18 @@ const todoSlice = createSlice({
         },
         [fetchTodosData.fulfilled.type]: (state, action: PayloadAction<Itodo[]>) => {
 
-            const fetchedData =
-                action.payload.map((item: Itodo) => {
-                    if (item) {
-                        return {
-                            ...item,
-                            category: getRandomArrElement(['groceries', 'college', 'payments', '']),
-                            status: getRandomArrElement(['waiting', 'process', 'done', '']),
-                            completed: false,
-                            editable: false
-                        };
-                    }
-                });
+            // const fetchedData =
+            //     action.payload.map((item: Itodo) => {
+            //         if (item) {
+            //             return {
+            //                 ...item,
+            //                 category: getRandomArrElement(['groceries', 'college', 'payments', '']),
+            //                 status: getRandomArrElement(['waiting', 'process', 'done', '']),
+            //                 completed: false,
+            //                 editable: false
+            //             };
+            //         }
+            //     });
 
             // localStorage.setItem('todosDataFromStorage', JSON.stringify(fetchedData));
 

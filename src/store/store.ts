@@ -6,10 +6,10 @@ import navSlice from './slices/navSlice';
 // /. imports
 
 export const store = configureStore({
-  reducer: {
-    todoSlice: todoSlice,
-    navSlice: navSlice
-  }
+    reducer: {
+        todoSlice: todoSlice,
+        navSlice: navSlice
+    }
 });
 
 export type RootState = ReturnType<typeof store.getState>;

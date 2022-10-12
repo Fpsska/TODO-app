@@ -4,7 +4,7 @@ import { Idraggable } from '../../types/draggableSettingsTypes';
 
 import './draggable.scss';
 
-// /. imports 
+// /. imports
 
 interface propTypes {
     children: JSX.Element;
@@ -12,8 +12,7 @@ interface propTypes {
 
 // /. interfaces
 
-const DraggableWrapper: React.FC<propTypes> = (props) => {
-
+const DraggableWrapper: React.FC<propTypes> = props => {
     const { children } = props;
 
     const [draggableSettings, setDraggableSettings] = useState<Idraggable>({
@@ -29,16 +28,15 @@ const DraggableWrapper: React.FC<propTypes> = (props) => {
     });
 
     useEffect(() => {
-        console.log(draggableSettings)
-    }, [draggableSettings])
+        console.log(draggableSettings);
+    }, [draggableSettings]);
 
     useEffect(() => {
         return () => {
             window.removeEventListener('mousemove', handleMouseMove);
             window.removeEventListener('mouseup', handleMouseUp);
-        }
+        };
     }, []);
-
 
     const handleMouseDown = (e: any): void => {
         e.preventDefault();
@@ -51,29 +49,31 @@ const DraggableWrapper: React.FC<propTypes> = (props) => {
                 originalX: e.clientX,
                 originalY: e.clientY,
                 isDragging: true
-            }
-        })
+            };
+        });
     };
 
     const handleMouseMove = (e: any): void => {
-
         if (!draggableSettings.isDragging) {
             return;
         }
 
-        setDraggableSettings((prevState: Idraggable) => { // work with previous state 
+        setDraggableSettings((prevState: Idraggable) => {
+            // work with previous state
             return {
                 ...prevState,
-                translateX: e.clientX - prevState.originalX + prevState.lastTranslateX,
-                translateY: e.clientY - prevState.originalY + prevState.lastTranslateY,
-            }
+                translateX:
+                    e.clientX - prevState.originalX + prevState.lastTranslateX,
+                translateY:
+                    e.clientY - prevState.originalY + prevState.lastTranslateY
+            };
         });
     };
 
     const handleMouseUp = (): void => {
         window.removeEventListener('mousemove', handleMouseMove);
         window.removeEventListener('mouseup', handleMouseUp);
-        console.log(draggableSettings)
+        console.log(draggableSettings);
 
         setDraggableSettings((prevState: Idraggable) => {
             return {
@@ -83,23 +83,26 @@ const DraggableWrapper: React.FC<propTypes> = (props) => {
                 lastTranslateX: draggableSettings.translateX, // draggableSettings / prevState
                 lastTranslateY: draggableSettings.translateY, // draggableSettings / prevState
                 isDragging: false
-            }
+            };
         });
     };
 
     return (
-        <div className="draggable"
+        <div
+            className="draggable"
             onMouseDown={e => handleMouseDown(e)}
             data-x={String(draggableSettings.originalX)}
             data-y={String(draggableSettings.originalY)}
             data-tx={String(draggableSettings.translateX)}
             data-ty={String(draggableSettings.translateY)}
             data-status={String(draggableSettings.isDragging)}
-            style={{ transform: `translate(${draggableSettings.translateX}px, ${draggableSettings.translateY}px)` }}
+            style={{
+                transform: `translate(${draggableSettings.translateX}px, ${draggableSettings.translateY}px)`
+            }}
         >
             {children}
         </div>
-    )
+    );
 };
 
 export default DraggableWrapper;

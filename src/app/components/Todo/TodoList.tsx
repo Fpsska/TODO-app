@@ -11,16 +11,11 @@ import './todo.scss';
 interface propTypes {
     filteredTodosData: Itodo[];
     setModalVisibleStatus: (arg: boolean) => void;
-    isFormVisible: boolean
+    isFormVisible: boolean;
 }
 
-const TodoList: React.FC<propTypes> = (props) => {
-
-    const {
-        filteredTodosData,
-        setModalVisibleStatus,
-        isFormVisible
-    } = props;
+const TodoList: React.FC<propTypes> = props => {
+    const { filteredTodosData, setModalVisibleStatus, isFormVisible } = props;
 
     return (
         <ul className={isFormVisible ? 'todo minimized' : 'todo'}>
@@ -29,7 +24,6 @@ const TodoList: React.FC<propTypes> = (props) => {
                     <TodoTemplate
                         key={item.id}
                         {...item}
-
                         setModalVisibleStatus={setModalVisibleStatus}
                     />
                 );

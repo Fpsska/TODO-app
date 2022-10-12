@@ -37,4 +37,4 @@ export function useAreaHandler({ initialStatus }: propTypes): any {
     }, [isVisible]);
 
     return { refEl, isVisible, setVisibleStatus };
-};
+}

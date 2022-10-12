@@ -4,4 +4,4 @@ export function getCurrentArrItem(array: any[], filterProperty: string, filterVa
     } else {
         return array.find(item => item[filterProperty].toLowerCase().trim() === filterValue.toLowerCase().trim());
     }
-};
+}

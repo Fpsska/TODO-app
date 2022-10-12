@@ -10,14 +10,12 @@ import './nav.scss';
 
 interface propTypes {
     navTemplatesData: Inav[];
-    setEditableStatus: (arg: boolean) => void
+    setEditableStatus: (arg: boolean) => void;
 }
 
 // /. interfaces
 
-
-const Nav: React.FC<propTypes> = (props) => {
-
+const Nav: React.FC<propTypes> = props => {
     const { setEditableStatus, navTemplatesData } = props;
 
     return (
@@ -28,7 +26,6 @@ const Nav: React.FC<propTypes> = (props) => {
                         <NavTemplate
                             key={item.id}
                             {...item}
-
                             setEditableStatus={setEditableStatus}
                         />
                     );

@@ -106,7 +106,7 @@ const navSlice = createSlice({
             }
         },
         setSelectNavOption(state, action: PayloadAction<{ option: string }>) {
-            const { option } = action.payload;  
+            const { option } = action.payload;
             state.selectNavOption = option;
         }
     }

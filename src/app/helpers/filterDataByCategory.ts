@@ -7,4 +7,4 @@ export function filterDataByCategory(array: any[], filterProp: string): any[] {
         default:
             return array;
     }
-};
+}

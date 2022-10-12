@@ -32,11 +32,10 @@ interface propTypes {
     filterProp: string;
     navTemplatesData: Inav[];
     selectTemplatesData: Iselect[];
-    categoryTemplatesData: Icategory[]
+    categoryTemplatesData: Icategory[];
 }
 
-const TitleForm: React.FC<propTypes> = (props) => {
-
+const TitleForm: React.FC<propTypes> = props => {
     const {
         refEl,
         isEditable,
@@ -52,7 +51,8 @@ const TitleForm: React.FC<propTypes> = (props) => {
 
     const dispatch = useAppDispatch();
 
-    useEffect(() => {  // update inputValue
+    useEffect(() => {
+        // update inputValue
         setInputValue(inputTitleValue);
     }, [inputTitleValue]);
 
@@ -61,36 +61,57 @@ const TitleForm: React.FC<propTypes> = (props) => {
         !isEditable && !inputValue && setInputValue(inputTitleValue); // set prev value when save without value
     }, [isEditable, inputTitleValue, inputValue]);
 
-
     const formSubmitHandler = (e: React.FormEvent): void => {
         e.preventDefault();
 
-        dispatch(setFilterProp({ filterProp: inputValue.toLowerCase().trim() })); // update filterProp
+        dispatch(
+            setFilterProp({ filterProp: inputValue.toLowerCase().trim() })
+        ); // update filterProp
         dispatch(setInputTitleValue({ title: inputValue.trim() })); // update title__form text content value
 
-        dispatch(editCurrentNavTemplateItem({  // update text, category in navTemplatesData[]
-            id: getCurrentArrItem(navTemplatesData, 'category', filterProp)?.id,
-            text: inputValue.trim(),
-            category: inputValue.trim()
-        }));
+        dispatch(
+            editCurrentNavTemplateItem({
+                // update text, category in navTemplatesData[]
+                id: getCurrentArrItem(navTemplatesData, 'category', filterProp)
+                    ?.id,
+                text: inputValue.trim(),
+                category: inputValue.trim()
+            })
+        );
 
-        dispatch(editCurrentNavSelectTemplateItem({ // update text, value in selectTemplatesData[]
-            id: getCurrentArrItem(selectTemplatesData, 'value', filterProp)?.id,
-            text: inputValue.trim(), // displayed in UI
-            value: inputValue.trim() // logic
-        }));
-        dispatch(setSelectNavOption({ option: inputValue.toLowerCase().trim() })); // switch to actual option after update
+        dispatch(
+            editCurrentNavSelectTemplateItem({
+                // update text, value in selectTemplatesData[]
+                id: getCurrentArrItem(selectTemplatesData, 'value', filterProp)
+                    ?.id,
+                text: inputValue.trim(), // displayed in UI
+                value: inputValue.trim() // logic
+            })
+        );
+        dispatch(
+            setSelectNavOption({ option: inputValue.toLowerCase().trim() })
+        ); // switch to actual option after update
 
-        dispatch(editCurrentCategoryTemplateItem({  // update text, value in categoryTemplatesData[] / Modal.tsx
-            id: getCurrentArrItem(categoryTemplatesData, 'value', filterProp)?.id,
-            text: inputValue.trim(), // displayed in UI
-            value: inputValue.toLowerCase().trim() // logic
-        }));
+        dispatch(
+            editCurrentCategoryTemplateItem({
+                // update text, value in categoryTemplatesData[] / Modal.tsx
+                id: getCurrentArrItem(
+                    categoryTemplatesData,
+                    'value',
+                    filterProp
+                )?.id,
+                text: inputValue.trim(), // displayed in UI
+                value: inputValue.toLowerCase().trim() // logic
+            })
+        );
 
-        dispatch(editCategoryOFCurrentTodosDataItem({ // update category value of each todosData[] item who prev category is equal prev title value
-            categoryProp: filterProp,
-            categoryValue: inputValue ? inputValue.toLowerCase().trim() : ''
-        }));
+        dispatch(
+            editCategoryOFCurrentTodosDataItem({
+                // update category value of each todosData[] item who prev category is equal prev title value
+                categoryProp: filterProp,
+                categoryValue: inputValue ? inputValue.toLowerCase().trim() : ''
+            })
+        );
 
         // disable editing after submit form
         setEditableStatus(false);
@@ -98,19 +119,26 @@ const TitleForm: React.FC<propTypes> = (props) => {
 
     return (
         <div className="title">
-            <form className="title__form" onSubmit={e => inputValue && formSubmitHandler(e)}>
-                {inputValue === 'All' ?
+            <form
+                className="title__form"
+                onSubmit={e => inputValue && formSubmitHandler(e)}
+            >
+                {inputValue === 'All' ? (
                     <h1 className="title__input general">All</h1>
-                    :
+                ) : (
                     <input
                         ref={refEl}
-                        className={isEditable ? 'title__input editable' : 'title__input'}
+                        className={
+                            isEditable
+                                ? 'title__input editable'
+                                : 'title__input'
+                        }
                         type="text"
                         title={`${inputValue} Tasks`}
                         value={inputValue}
                         onChange={e => setInputValue(e.target.value)}
                     />
-                }
+                )}
             </form>
         </div>
     );

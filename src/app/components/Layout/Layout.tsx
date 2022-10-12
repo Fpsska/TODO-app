@@ -2,7 +2,10 @@ import React, { useEffect } from 'react';
 
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 
-import { switchTodosDataLoadingStatus, switchErrorStatus } from '../../../store/slices/todoSlice';
+import {
+    switchTodosDataLoadingStatus,
+    switchErrorStatus
+} from '../../../store/slices/todoSlice';
 
 import { fetchTodosData } from '../../../store/api/fetchTodosData';
 
@@ -10,9 +13,7 @@ import App from '../App/App';
 
 // /. imports
 
-
 const Layout: React.FC = () => {
-
     const { isTodosDataLoading } = useAppSelector(state => state.todoSlice);
 
     const dispatch = useAppDispatch();
@@ -23,14 +24,13 @@ const Layout: React.FC = () => {
         setTimeout(() => {
             dispatch(switchTodosDataLoadingStatus({ status: false }));
         }, 1600);
-        !isTodosDataLoading && setTimeout(() => {
-            dispatch(switchErrorStatus({ status: null }));
-        }, 3500);
+        !isTodosDataLoading &&
+            setTimeout(() => {
+                dispatch(switchErrorStatus({ status: null }));
+            }, 3500);
     }, [isTodosDataLoading]);
 
-    return (
-        <App />
-    );
+    return <App />;
 };
 
 export default Layout;
