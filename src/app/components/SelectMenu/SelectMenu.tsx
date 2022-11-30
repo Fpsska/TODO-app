@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 
@@ -37,6 +37,14 @@ const SelectMenu: React.FC = () => {
         useAppSelector(state => state.navSlice);
 
     const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        // update selectNavDataFromStorage value
+        localStorage.setItem(
+            'selectNavDataFromStorage',
+            JSON.stringify(selectTemplatesData)
+        );
+    }, [selectTemplatesData, navTemplatesData]);
 
     const selectMenuHandler = (value: string, e: any): void => {
         switch (value) {

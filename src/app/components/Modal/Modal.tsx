@@ -25,6 +25,9 @@ const Modal: React.FC<propTypes> = props => {
     const { categoryTemplatesData, todosData, currentTodoID } = useAppSelector(
         state => state.todoSlice
     );
+    const { navTemplatesData, selectTemplatesData } = useAppSelector(
+        state => state.navSlice
+    );
 
     const [inputValue, setInputValue] = useState<string>('');
     const [inputRadioCategoryValue, setInputRadioCategoryValue] =
@@ -44,6 +47,14 @@ const Modal: React.FC<propTypes> = props => {
             getCurrentArrItem(todosData, 'id', currentTodoID)?.status
         );
     }, [currentTodoID]);
+
+    useEffect(() => {
+        // update categoryDataFromStorage value
+        localStorage.setItem(
+            'categoryDataFromStorage',
+            JSON.stringify(categoryTemplatesData)
+        );
+    }, [categoryTemplatesData, navTemplatesData, selectTemplatesData]);
 
     const formSubmitHandler = (e: React.SyntheticEvent): any => {
         e.preventDefault();

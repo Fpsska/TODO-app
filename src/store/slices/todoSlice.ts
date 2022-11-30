@@ -28,37 +28,40 @@ interface todoSliceState {
 
 // /. interfaces
 
+const categoryTemplates = [
+    {
+        id: 1,
+        name: 'category',
+        text: 'groceries',
+        value: 'groceries'
+    },
+    {
+        id: 2,
+        name: 'category',
+        text: 'college',
+        value: 'COLLEGE'
+    },
+    {
+        id: 3,
+        name: 'category',
+        text: 'payments',
+        value: 'payments'
+    },
+    {
+        id: 4,
+        name: 'category',
+        text: 'none',
+        value: ''
+    }
+];
 const todosStorageData = JSON.parse(localStorage.getItem('todosDataFromStorage') || '[]');
+const categoryStorageData = JSON.parse(localStorage.getItem('categoryDataFromStorage') || JSON.stringify(categoryTemplates));
+
 
 const initialState: todoSliceState = {
     todosData: todosStorageData,
     todosDataContainer: todosStorageData,
-    categoryTemplatesData: [
-        {
-            id: 1,
-            name: 'category',
-            text: 'groceries',
-            value: 'groceries'
-        },
-        {
-            id: 2,
-            name: 'category',
-            text: 'college',
-            value: 'COLLEGE'
-        },
-        {
-            id: 3,
-            name: 'category',
-            text: 'payments',
-            value: 'payments'
-        },
-        {
-            id: 4,
-            name: 'category',
-            text: 'none',
-            value: ''
-        }
-    ],
+    categoryTemplatesData: categoryStorageData,
     isTodosDataLoading: true,
     isFormVisible: false,
     isTodosDataEmpty: true,
@@ -144,6 +147,7 @@ const todoSlice = createSlice({
             state.categoryTemplatesData.push(action.payload);
         },
         editCurrentCategoryTemplateItem(state, action: PayloadAction<{ id: number, text: string, value: string }>) {
+            console.log('editCurrentCategoryTemplateItem');
             const { id, text, value } = action.payload;
 
             const currentCategoryItem = state.categoryTemplatesData.find(item => item.id === id);

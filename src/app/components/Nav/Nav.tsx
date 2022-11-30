@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { Inav } from '../../types/navTypes';
 
@@ -17,6 +17,14 @@ interface propTypes {
 
 const Nav: React.FC<propTypes> = props => {
     const { setEditableStatus, navTemplatesData } = props;
+
+    useEffect(() => {
+        // update navDataFromStorage value
+        localStorage.setItem(
+            'navDataFromStorage',
+            JSON.stringify(navTemplatesData)
+        );
+    }, [navTemplatesData]);
 
     return (
         <nav className="nav">

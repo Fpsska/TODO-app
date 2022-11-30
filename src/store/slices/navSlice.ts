@@ -14,59 +14,66 @@ interface navSliceState {
 
 // /. interfaces
 
+
+const navTemplates = [
+    {
+        id: 1,
+        text: 'All',
+        category: '    aLL',
+        link: '#',
+        isActive: true
+    },
+    {
+        id: 2,
+        text: '    Groceries  ',
+        category: '   groceries  ',
+        link: '#',
+        isActive: false
+    },
+    {
+        id: 3,
+        text: 'College',
+        category: 'COLLEGE',
+        link: '#',
+        isActive: false
+    },
+    {
+        id: 4,
+        text: 'Payments',
+        category: 'PaYmEnTs',
+        link: '#',
+        isActive: false
+    }
+];
+const selectNavTemplates = [
+    {
+        id: 1,
+        text: 'All',
+        value: '   aLL '
+    },
+    {
+        id: 2,
+        text: '     Groceries  ',
+        value: '   groceries'
+    },
+    {
+        id: 3,
+        text: 'College',
+        value: 'COLLEGE   '
+    },
+    {
+        id: 4,
+        text: 'Payments',
+        value: 'PaYmEnTs'
+    }
+];
+const navStorageData = JSON.parse(localStorage.getItem('navDataFromStorage') || JSON.stringify(navTemplates));
+const selectNavStorageData = JSON.parse(localStorage.getItem('selectNavDataFromStorage') || JSON.stringify(selectNavTemplates));
+
+
 const initialState: navSliceState = {
-    navTemplatesData: [
-        {
-            id: 1,
-            text: 'All',
-            category: '    aLL',
-            link: '#',
-            isActive: true
-        },
-        {
-            id: 2,
-            text: '    Groceries  ',
-            category: '   groceries  ',
-            link: '#',
-            isActive: false
-        },
-        {
-            id: 3,
-            text: 'College',
-            category: 'COLLEGE',
-            link: '#',
-            isActive: false
-        },
-        {
-            id: 4,
-            text: 'Payments',
-            category: 'PaYmEnTs',
-            link: '#',
-            isActive: false
-        }
-    ],
-    selectTemplatesData: [
-        {
-            id: 1,
-            text: 'All',
-            value: '   aLL '
-        },
-        {
-            id: 2,
-            text: '     Groceries  ',
-            value: '   groceries'
-        },
-        {
-            id: 3,
-            text: 'College',
-            value: 'COLLEGE   '
-        },
-        {
-            id: 4,
-            text: 'Payments',
-            value: 'PaYmEnTs'
-        }
-    ],
+    navTemplatesData: navStorageData,
+    selectTemplatesData: selectNavStorageData,
     selectNavOption: 'All'
 };
 
