@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "/Infotecs-Task/static/css/main.92d75224.css",
-    "main.js": "/Infotecs-Task/static/js/main.722ccf0f.js",
+    "main.js": "/Infotecs-Task/static/js/main.fe0d2729.js",
     "static/js/787.e8a87bbe.chunk.js": "/Infotecs-Task/static/js/787.e8a87bbe.chunk.js",
     "service-worker.js": "/Infotecs-Task/service-worker.js",
     "index.html": "/Infotecs-Task/index.html",
     "static/media/check-icon.svg": "/Infotecs-Task/static/media/check-icon.c45ccbae9fc618444a13.svg",
     "main.92d75224.css.map": "/Infotecs-Task/static/css/main.92d75224.css.map",
-    "main.722ccf0f.js.map": "/Infotecs-Task/static/js/main.722ccf0f.js.map",
+    "main.fe0d2729.js.map": "/Infotecs-Task/static/js/main.fe0d2729.js.map",
     "787.e8a87bbe.chunk.js.map": "/Infotecs-Task/static/js/787.e8a87bbe.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.92d75224.css",
-    "static/js/main.722ccf0f.js"
+    "static/js/main.fe0d2729.js"
   ]
 }
