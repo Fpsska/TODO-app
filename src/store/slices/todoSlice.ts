@@ -137,6 +137,7 @@ const todoSlice = createSlice({
         },
         setInputTitleValue(state, action: PayloadAction<{ title: string }>) {
             const { title } = action.payload;
+            console.log(title);
             state.inputTitleValue = title;
         },
         setCurrentCategoryID(state, action: PayloadAction<{ id: number }>) {
@@ -147,7 +148,6 @@ const todoSlice = createSlice({
             state.categoryTemplatesData.push(action.payload);
         },
         editCurrentCategoryTemplateItem(state, action: PayloadAction<{ id: number, text: string, value: string }>) {
-            console.log('editCurrentCategoryTemplateItem');
             const { id, text, value } = action.payload;
 
             const currentCategoryItem = state.categoryTemplatesData.find(item => item.id === id);
@@ -162,7 +162,6 @@ const todoSlice = createSlice({
         },
         setCurrentTodosCount(state, action: PayloadAction<{ count: number }>) {
             const { count } = action.payload;
-            console.log(count);
             state.currentTodosCount = count;
         },
         switchFormVisibleStatus(state, action: PayloadAction<{ status: boolean }>) {

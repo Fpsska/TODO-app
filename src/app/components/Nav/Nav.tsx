@@ -1,5 +1,9 @@
 import React, { useEffect } from 'react';
 
+import { useAppDispatch } from '../../../store/hooks';
+
+import { setInputTitleValue } from '../../../store/slices/todoSlice';
+
 import { Inav } from '../../types/navTypes';
 
 import NavTemplate from './NavTemplate';
@@ -18,12 +22,19 @@ interface propTypes {
 const Nav: React.FC<propTypes> = props => {
     const { setEditableStatus, navTemplatesData } = props;
 
+    const dispatch = useAppDispatch();
+
     useEffect(() => {
         // update navDataFromStorage value
         localStorage.setItem(
             'navDataFromStorage',
             JSON.stringify(navTemplatesData)
         );
+        // update inputTitleValue
+        const cuttentCategory = navTemplatesData.find(item => item.isActive);
+        if (cuttentCategory) {
+            dispatch(setInputTitleValue({ title: cuttentCategory.text }));
+        }
     }, [navTemplatesData]);
 
     return (
