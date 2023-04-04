@@ -7,7 +7,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - [JSON-Placeholder API](https://jsonplaceholder.typicode.com/)
 - [css-spinner](https://loading.io/css/)
 
-### `Watch demo` _[Infotecs-Task](https://Fpsska.github.io/Infotecs-Task)_
+### `Watch demo` _[TODO-app](https://Fpsska.github.io/TODO-app)_
 
 ## Available Scripts
 
