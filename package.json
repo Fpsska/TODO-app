@@ -1,9 +1,9 @@
 {
-  "name": "infotecs-task",
+  "name": "todo-app",
   "version": "0.1.0",
   "author": "Fpsska",
   "private": true,
-  "homepage": "https://Fpsska.github.io/Infotecs-Task",
+  "homepage": "https://Fpsska.github.io/TODO-app",
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.5",
     "@testing-library/jest-dom": "^5.16.5",
