@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/Infotecs-Task/static/css/main.92d75224.css",
-    "main.js": "/Infotecs-Task/static/js/main.fe0d2729.js",
-    "static/js/787.e8a87bbe.chunk.js": "/Infotecs-Task/static/js/787.e8a87bbe.chunk.js",
-    "service-worker.js": "/Infotecs-Task/service-worker.js",
-    "index.html": "/Infotecs-Task/index.html",
-    "static/media/check-icon.svg": "/Infotecs-Task/static/media/check-icon.c45ccbae9fc618444a13.svg",
-    "main.92d75224.css.map": "/Infotecs-Task/static/css/main.92d75224.css.map",
-    "main.fe0d2729.js.map": "/Infotecs-Task/static/js/main.fe0d2729.js.map",
-    "787.e8a87bbe.chunk.js.map": "/Infotecs-Task/static/js/787.e8a87bbe.chunk.js.map"
+    "main.css": "/TODO-app/static/css/main.844aa00d.css",
+    "main.js": "/TODO-app/static/js/main.e576172a.js",
+    "static/js/787.2843ca88.chunk.js": "/TODO-app/static/js/787.2843ca88.chunk.js",
+    "service-worker.js": "/TODO-app/service-worker.js",
+    "index.html": "/TODO-app/index.html",
+    "static/media/check-icon.svg": "/TODO-app/static/media/check-icon.e5f2f8c60bff53426875.svg",
+    "main.844aa00d.css.map": "/TODO-app/static/css/main.844aa00d.css.map",
+    "main.e576172a.js.map": "/TODO-app/static/js/main.e576172a.js.map",
+    "787.2843ca88.chunk.js.map": "/TODO-app/static/js/787.2843ca88.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.92d75224.css",
-    "static/js/main.fe0d2729.js"
+    "static/css/main.844aa00d.css",
+    "static/js/main.e576172a.js"
   ]
 }
