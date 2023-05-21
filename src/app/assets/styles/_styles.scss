@@ -58,6 +58,7 @@ body {
     margin: 0;
     padding: 0;
     overflow: hidden;
+    position: relative;
 }
 
 // /.NULLSTYLES
@@ -72,6 +73,13 @@ body {
     padding: 20px;
 }
 
+#modal-portal {
+    z-index: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+}
+
 .main {
     flex: 0 1 85%;
     overflow: hidden;
@@ -81,11 +89,13 @@ body {
     background-color: #fff;
     box-shadow: 2px 17px 26px -12px rgba(34, 60, 80, 0.43);
     border-radius: 10px;
+
     &__wrapper {
         display: flex;
         height: 100%;
         position: relative;
     }
+
     &__modal {
         z-index: 2;
         position: absolute;
@@ -94,11 +104,13 @@ body {
         transform: translate(-50%, -50%);
         max-width: 300px;
     }
+
     &__category-form {
         flex: 1;
         padding: 20px 35px 15px 30px;
         border-right: 2px solid #d8d8d8;
     }
+
     &__content {
         border-radius: 0 10px 10px 0;
         padding: 15px 45px 15px 50px;
@@ -108,6 +120,7 @@ body {
         overflow: hidden;
         height: 100%;
     }
+
     &__title {
         margin: 0;
         font-size: 31px;
@@ -120,6 +133,7 @@ body {
         max-width: calc(100vw - 680px);
         width: 100%;
     }
+
     &__message {
         font-size: 20px;
         font-weight: 400;
@@ -129,72 +143,88 @@ body {
         justify-content: center;
         align-items: center;
         height: 100%;
+
         :not(:last-child) {
             margin: 0 0 2px 0;
         }
+
         svg {
             width: 4rem;
             height: 4rem;
             -webkit-animation: spin infinite 3s linear;
-                    animation: spin infinite 3s linear;
+            animation: spin infinite 3s linear;
+
             @-webkit-keyframes spin {
                 from {
                     transform: rotate(0deg);
                 }
+
                 to {
                     transform: rotate(360deg);
                 }
             }
+
             @keyframes spin {
                 from {
                     transform: rotate(0deg);
                 }
+
                 to {
                     transform: rotate(360deg);
                 }
             }
         }
     }
+
     &__list {
-        flex: 1;
+        flex: 1 1 auto;
     }
+
     &__header {
         position: relative;
         display: flex;
         align-items: center;
         justify-content: space-between;
         margin: 0 0 25px 0;
+
         :not(:last-child) {
             margin: 0 10px 0 0;
         }
     }
+
     &__preloader {
         display: flex;
         justify-content: center;
         align-items: center;
         height: 100%;
     }
+
     &__button {
         background-color: transparent;
         border: none;
         position: absolute;
         right: 1rem;
         top: 0.75rem;
+
         &:hover svg {
             fill: #000;
         }
+
         svg {
             fill: #777;
             transition: all 0.25s linear;
         }
     }
+
     &__button--edit {
         max-width: 16px;
         left: -2rem;
         bottom: 0;
+
         &:hover svg {
             fill: #C5C5C5;
         }
+
         svg {
             fill: #C5C5C5;
         }
