@@ -14,16 +14,17 @@ export function useAreaHandler({ initialStatus }: propTypes): any {
     const refEl = useRef<HTMLDivElement>(null!); // valid HTML-el (clickable) 
 
     useEffect(() => {
+
+        if (!isVisible) return;
+
         const areaHandler = (e: any): void => {
-            if (isVisible && refEl.current && !refEl.current.contains(e.target)) {
+            if (refEl.current && !refEl.current.contains(e.target)) {
                 setVisibleStatus(false);
             }
-            // refEl.current HTML-el !== null/undefined && refEl.current.contains(e.target) === false =>
-            // => valid HTML-el is exist
         };
 
         const keyHandler = (e: KeyboardEvent): void => {
-            if (isVisible && e.code === 'Escape') {
+            if (e.code === 'Escape') {
                 setVisibleStatus(false);
             }
         };

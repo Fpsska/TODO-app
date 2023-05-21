@@ -73,11 +73,12 @@ body {
     padding: 20px;
 }
 
-#modal-portal {
-    z-index: 0;
+#portal {
+    z-index: 1000;
     position: absolute;
     top: 50%;
     left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .main {
@@ -94,15 +95,6 @@ body {
         display: flex;
         height: 100%;
         position: relative;
-    }
-
-    &__modal {
-        z-index: 2;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        max-width: 300px;
     }
 
     &__category-form {

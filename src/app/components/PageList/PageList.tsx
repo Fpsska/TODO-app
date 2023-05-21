@@ -2,17 +2,15 @@ import React, { useState, useEffect } from 'react';
 
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 
-import {
-    switchTodosItemEditableStatus,
-    switchTodosDataEmptyStatus,
-    setTitle
-} from '../../../store/slices/todoSlice';
+import { switchTodosItemEditableStatus } from '../../../store/slices/todoSlice';
 
 import { useAreaHandler } from '../../hooks/useAreaHandler';
 
 import TodoList from '../Todo/TodoList';
 import Preloader from '../Preloader/Preloader';
 import { Itodo } from '../../types/todoTypes';
+import Modal from '../Modal/Modal';
+import EditForm from '../EditForm/EditForm';
 
 // /. imports
 
@@ -31,18 +29,18 @@ const PageList: React.FC = () => {
         useState<Itodo[]>(todosData);
 
     const dispatch = useAppDispatch();
-    const modalHandler = useAreaHandler({ initialStatus: false });
+    const modalAreaHandler = useAreaHandler({ initialStatus: false });
 
     useEffect(() => {
         // remove editable css-class when modal is hidden
-        !modalHandler.isVisible &&
+        !modalAreaHandler.isVisible &&
             dispatch(
                 switchTodosItemEditableStatus({
                     id: currentTodoID,
                     status: false
                 })
             );
-    }, [modalHandler.isVisible]);
+    }, [modalAreaHandler.isVisible]);
 
     return (
         <div className="page__list">
@@ -81,10 +79,20 @@ const PageList: React.FC = () => {
             ) : (
                 <TodoList
                     filteredTodosData={filteredTodosData}
-                    setModalVisibleStatus={modalHandler.setVisibleStatus}
+                    setModalVisibleStatus={modalAreaHandler.setVisibleStatus}
                     isFormVisible={isFormVisible}
                 />
             )}
+
+            <Modal
+                isModalVisible={modalAreaHandler.isVisible}
+                setModalVisibleStatus={modalAreaHandler.setVisibleStatus}
+                modalRef={modalAreaHandler.refEl}
+            >
+                <EditForm
+                    setModalVisibleStatus={modalAreaHandler.setVisibleStatus}
+                />
+            </Modal>
         </div>
     );
 };

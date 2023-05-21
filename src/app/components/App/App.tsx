@@ -18,10 +18,6 @@ import Burger from '../Burger/Burger';
 import TitleForm from '../TitleForm/TitleForm';
 import PageList from '../PageList/PageList';
 
-import Modal from '../Modal/Modal';
-
-import PortalWrapper from '../../hoc/PortalWrapper';
-
 import '../../assets/styles/_styles.scss';
 import '../../assets/styles/_media.scss';
 import './App.css';
@@ -128,10 +124,6 @@ const App: React.FC = () => {
                                     </svg>
                                 </button>
                             )}
-
-                            <PortalWrapper>
-                                <Modal />
-                            </PortalWrapper>
 
                             <div className="page__header">
                                 <TitleForm
