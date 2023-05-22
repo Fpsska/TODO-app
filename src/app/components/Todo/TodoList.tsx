@@ -18,7 +18,7 @@ const TodoList: React.FC<propTypes> = props => {
     const { filteredTodosData, setModalVisibleStatus, isFormVisible } = props;
 
     return (
-        <ul className={isFormVisible ? 'todo minimized' : 'todo'}>
+        <ul className="todo">
             {filteredTodosData.map((item: Itodo) => {
                 return (
                     <TodoTemplate

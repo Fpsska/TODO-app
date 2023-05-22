@@ -4,7 +4,9 @@ import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 
 import {
     switchTodosDataEmptyStatus,
-    setTitle
+    setTitle,
+    findTodosItemByName,
+    addNewTodosItem
 } from '../../../store/slices/todoSlice';
 
 import { useAreaHandler } from '../../hooks/useAreaHandler';
@@ -13,7 +15,7 @@ import { filterDataByCategory } from '../../helpers/filterDataByCategory';
 import { Itodo } from '../../types/todoTypes';
 
 import NavLayout from '../Nav/NavLayout';
-import Form from '../Form/Form';
+import TodoForm from '../TodoForm/TodoForm';
 import Burger from '../Burger/Burger';
 import TitleForm from '../TitleForm/TitleForm';
 import PageList from '../PageList/PageList';
@@ -34,8 +36,8 @@ const App: React.FC = () => {
 
     const dispatch = useAppDispatch();
 
-    const burgerHandler = useAreaHandler({ initialStatus: false });
-    const titleFormHandler = useAreaHandler({ initialStatus: false });
+    const burgerAreaHandler = useAreaHandler({ initialStatus: false });
+    const titleFormAreaHandler = useAreaHandler({ initialStatus: false });
 
     // /. hooks usage
 
@@ -64,11 +66,28 @@ const App: React.FC = () => {
 
     const openBurger = (e: React.SyntheticEvent): void => {
         e.stopPropagation(); // for correct work of burger hide/show logic
-        burgerHandler.setVisibleStatus(true);
+        burgerAreaHandler.setVisibleStatus(true);
     };
 
     const editCategoryName = (): void => {
-        titleFormHandler.setVisibleStatus(!titleFormHandler.isVisible);
+        titleFormAreaHandler.setVisibleStatus(!titleFormAreaHandler.isVisible);
+    };
+
+    const onSearchInputChange = (value: string): void => {
+        dispatch(findTodosItemByName({ value }));
+    };
+
+    const onCreateInputChange = (value: string): void => {
+        dispatch(
+            addNewTodosItem({
+                id: +new Date(),
+                title: value,
+                category: '',
+                status: '',
+                completed: false,
+                editable: false
+            })
+        );
     };
 
     return (
@@ -76,26 +95,29 @@ const App: React.FC = () => {
             <div className="page">
                 <div className="page__wrapper">
                     <NavLayout
-                        setEditableStatus={titleFormHandler.setVisibleStatus}
+                        setEditableStatus={
+                            titleFormAreaHandler.setVisibleStatus
+                        }
                     />
 
                     <main className="main">
                         <div
                             className="page__burger"
-                            ref={burgerHandler.refEl}
+                            ref={burgerAreaHandler.refEl}
                         >
                             <Burger
-                                isVisible={burgerHandler.isVisible}
+                                isVisible={burgerAreaHandler.isVisible}
                                 setVisibleStatus={
-                                    burgerHandler.setVisibleStatus
+                                    burgerAreaHandler.setVisibleStatus
                                 }
                             />
                         </div>
 
                         <section className="page__content">
-                            {!burgerHandler.isVisible && (
+                            {!burgerAreaHandler.isVisible && (
                                 <button
                                     className="page__button page__button--burger"
+                                    aria-label="open burger menu"
                                     onClick={e => openBurger(e)}
                                 >
                                     <svg
@@ -127,10 +149,10 @@ const App: React.FC = () => {
 
                             <div className="page__header">
                                 <TitleForm
-                                    refEl={titleFormHandler.refEl}
-                                    isEditable={titleFormHandler.isVisible}
+                                    refEl={titleFormAreaHandler.refEl}
+                                    isEditable={titleFormAreaHandler.isVisible}
                                     setEditableStatus={
-                                        titleFormHandler.setVisibleStatus
+                                        titleFormAreaHandler.setVisibleStatus
                                     }
                                     inputTitleValue={inputTitleValue}
                                     filterProp={filterProp}
@@ -144,6 +166,7 @@ const App: React.FC = () => {
                                     {inputTitleValue !== 'All' && (
                                         <button
                                             className="page__button page__button--edit"
+                                            aria-label="edit todo title group"
                                             onClick={editCategoryName}
                                         >
                                             <svg
@@ -161,18 +184,20 @@ const App: React.FC = () => {
                                         </button>
                                     )}
                                 </>
-                                <Form
-                                    role={'search'}
-                                    text={'Find a task'}
+                                <TodoForm
+                                    role="search"
+                                    inputPlaceholder="Find a task"
+                                    onInputChangeEvent={onSearchInputChange}
                                 />
                             </div>
 
                             <PageList />
 
                             <div className="page__footer">
-                                <Form
+                                <TodoForm
                                     role="add"
-                                    text="Add a new task inside"
+                                    inputPlaceholder="Add a new task inside"
+                                    onInputChangeEvent={onCreateInputChange}
                                 />
                             </div>
                         </section>

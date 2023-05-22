@@ -1,32 +1,42 @@
 @import "../../assets/styles/_mixins.scss";
 
 .todo {
-    height: calc(100vh - 190px);
     overflow-y: scroll;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+
     &::-webkit-scrollbar {
         width: 0;
         height: 0;
     }
+
     &__item {
         overflow: hidden;
         display: flex;
         align-items: center;
         justify-content: flex-start;
         position: relative;
-        &:hover > .todo__controllers .todo__button {
+
+        &:hover>.todo__controllers .todo__button {
             opacity: 1;
         }
+
         &:not(:last-child) {
             margin: 0 0 20px 0;
         }
     }
+
     &__controllers {
         margin: 0 0 0 auto;
         flex-shrink: 0;
+
         :not(:last-child) {
             margin: 0 15px 0 0;
         }
     }
+
     &__button {
         opacity: 1;
         font-size: 14px;
@@ -34,15 +44,17 @@
         font-weight: 900;
         background-color: transparent;
         transition: all 0.2s linear;
-        border: none;
+        border: transparent;
         transform: scale(1);
         width: 18px;
         height: 18px;
+
         svg {
             width: 100%;
             height: 100%;
         }
     }
+
     &__label-text {
         width: 100%;
         border-bottom: 2px solid transparent;
@@ -50,9 +62,11 @@
         // hide text
         @include sliceText;
     }
+
     &__label-text.editable {
         border-bottom: 2px solid lavender;
     }
+
     &__label {
         font-size: 18px;
         line-height: 23px;
@@ -65,12 +79,15 @@
         @include disableCopy;
         max-width: calc(100% - 190px);
     }
+
     &__label.completed {
         text-decoration: line-through;
     }
+
     &__label.large {
         max-width: calc(100% - 100px);
     }
+
     &__category {
         background-color: #888;
         border-radius: 4px;
@@ -85,15 +102,19 @@
         @include sliceText;
         max-width: 100px;
     }
+
     &__category.process {
         background-color: #407aed;
     }
+
     &__category.waiting {
         background-color: #fca205;
     }
+
     &__category.done {
         background-color: #1ec40c;
     }
+
     &__indicator {
         flex-shrink: 0;
         width: 0.55rem;
@@ -102,32 +123,39 @@
         background-color: #888;
         margin: 0 10px 0 0;
     }
+
     &__indicator.process {
         background-color: #407aed;
     }
+
     &__indicator.waiting {
         background-color: #fca205;
     }
+
     &__indicator.done {
         background-color: #1ec40c;
     }
+
     &__checkbox {
         position: absolute;
         appearance: none;
         -webkit-appearance: none;
         -moz-appearance: none;
         -ms-appearance: none;
-        border: none;
+        border: transparent;
         padding: 0;
         margin: 0;
+
         &:focus,
         &:hover {
-            border: none;
+            border: transparent;
         }
-        &:hover + .todo__checkbox--fake {
+
+        &:hover+.todo__checkbox--fake {
             border: 1px solid #5a5a5a;
         }
-        &:checked + .todo__checkbox--fake {
+
+        &:checked+.todo__checkbox--fake {
             background-image: url(../../assets//images/check-icon.svg);
             background-position: center;
             background-size: cover;
@@ -135,6 +163,7 @@
             border: 1px solid #5a5a5a;
         }
     }
+
     &__checkbox--fake {
         flex-shrink: 0;
         width: 1rem;

@@ -143,18 +143,7 @@ body {
         svg {
             width: 4rem;
             height: 4rem;
-            -webkit-animation: spin infinite 3s linear;
             animation: spin infinite 3s linear;
-
-            @-webkit-keyframes spin {
-                from {
-                    transform: rotate(0deg);
-                }
-
-                to {
-                    transform: rotate(360deg);
-                }
-            }
 
             @keyframes spin {
                 from {
@@ -170,6 +159,7 @@ body {
 
     &__list {
         flex: 1 1 auto;
+        position: relative;
     }
 
     &__header {
