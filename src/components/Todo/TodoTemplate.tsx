@@ -1,13 +1,13 @@
 import React from 'react';
 
-import { useAppDispatch } from '../../../store/hooks';
+import { useAppDispatch } from 'app/hooks';
 
 import {
     removeTodosItem,
     setCurrentTodoID,
     switchTodosItemCompleteStatus,
     switchTodosItemEditableStatus
-} from '../../../store/slices/todoSlice';
+} from 'app/slices/todoSlice';
 
 // /. imports
 

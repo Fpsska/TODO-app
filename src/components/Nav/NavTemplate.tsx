@@ -1,17 +1,15 @@
 import React, { useState, useEffect } from 'react';
 
-import { useAppSelector, useAppDispatch } from '../../../store/hooks';
+import { switchNavActiveStatus, setSelectNavOption } from 'app/slices/navSlice';
+
+import { useAppSelector, useAppDispatch } from 'app/hooks';
 
 import {
     setCurrentCategoryID,
     setCurrentTodosCount,
     setInputTitleValue,
     setFilterProp
-} from '../../../store/slices/todoSlice';
-import {
-    switchNavActiveStatus,
-    setSelectNavOption
-} from '../../../store/slices/navSlice';
+} from 'app/slices/todoSlice';
 
 // /. imports
 

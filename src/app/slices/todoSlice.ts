@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction, current } from '@reduxjs/toolkit';
 
-import { fetchTodosData } from '../api/fetchTodosData';
+import { getRandomArrElement } from 'utils/helpers/getRandomArrElement';
 
-import { Itodo } from '../../app/types/todoTypes';
-import { Icategory } from '../../app/types/categoryTypes';
+import { Itodo } from 'types/todoTypes';
+import { Icategory } from 'types/categoryTypes';
 
-import { getRandomArrElement } from '../../app/helpers/getRandomArrElement';
+import { fetchTodosData } from 'app/api/fetchTodosData';
 
 // /. imports
 
@@ -23,7 +23,7 @@ interface todoSliceState {
     currentCategoryID: number;
     currentTodosCount: number;
     currentTodoID: number;
-    filterProp: string
+    filterProp: string;
 }
 
 // /. interfaces
@@ -54,9 +54,13 @@ const categoryTemplates = [
         value: ''
     }
 ];
-const todosStorageData = JSON.parse(localStorage.getItem('todosDataFromStorage') || '[]');
-const categoryStorageData = JSON.parse(localStorage.getItem('categoryDataFromStorage') || JSON.stringify(categoryTemplates));
-
+const todosStorageData = JSON.parse(
+    localStorage.getItem('todosDataFromStorage') || '[]'
+);
+const categoryStorageData = JSON.parse(
+    localStorage.getItem('categoryDataFromStorage') ||
+    JSON.stringify(categoryTemplates)
+);
 
 const initialState: todoSliceState = {
     todosData: todosStorageData,
@@ -81,7 +85,10 @@ const todoSlice = createSlice({
     name: 'todoSlice',
     initialState,
     reducers: {
-        switchTodosDataLoadingStatus(state, action: PayloadAction<{ status: boolean }>) {
+        switchTodosDataLoadingStatus(
+            state,
+            action: PayloadAction<{ status: boolean }>
+        ) {
             const { status } = action.payload;
             state.isTodosDataLoading = status;
         },
@@ -94,16 +101,28 @@ const todoSlice = createSlice({
         },
         findTodosItemByName(state, action: PayloadAction<{ value: string }>) {
             const { value } = action.payload;
-            state.todosData = state.todosDataContainer.filter(item => RegExp(value.trim(), 'gi').test(item.title));
+            state.todosData = state.todosDataContainer.filter(item =>
+                RegExp(value.trim(), 'gi').test(item.title)
+            );
         },
         setFilterProp(state, action: PayloadAction<{ filterProp: string }>) {
             const { filterProp } = action.payload;
             state.filterProp = filterProp;
         },
-        editCurrentTodosDataItem(state, action: PayloadAction<{ id: number, title: string, category: string, status: string }>) {
+        editCurrentTodosDataItem(
+            state,
+            action: PayloadAction<{
+                id: number;
+                title: string;
+                category: string;
+                status: string;
+            }>
+        ) {
             const { id, title, category, status } = action.payload;
 
-            const currentTodoItem = state.todosData.find(item => item.id === id);
+            const currentTodoItem = state.todosData.find(
+                item => item.id === id
+            );
             if (currentTodoItem) {
                 currentTodoItem.title = title;
                 currentTodoItem.category = category;
@@ -111,22 +130,42 @@ const todoSlice = createSlice({
                 currentTodoItem.editable = false;
             }
         },
-        editCategoryOFCurrentTodosDataItem(state, action: PayloadAction<{ categoryProp: string, categoryValue: string }>) {
+        editCategoryOFCurrentTodosDataItem(
+            state,
+            action: PayloadAction<{
+                categoryProp: string;
+                categoryValue: string;
+            }>
+        ) {
             const { categoryProp, categoryValue } = action.payload; // //  categoryProp - logic / categoryValue - UI
 
-            const validTodosArray = state.todosData.filter(item => item.category.toLowerCase() === categoryProp);
+            const validTodosArray = state.todosData.filter(
+                item => item.category.toLowerCase() === categoryProp
+            );
             if (validTodosArray) {
-                validTodosArray.map(item => item.category = categoryValue);
+                validTodosArray.map(item => (item.category = categoryValue));
             }
         },
-        switchTodosItemEditableStatus(state, action: PayloadAction<{ id: number, status: boolean }>) {
+        switchTodosItemEditableStatus(
+            state,
+            action: PayloadAction<{ id: number; status: boolean }>
+        ) {
             const { id, status } = action.payload;
-            state.todosData.map(item => item.id === id ? item.editable = status : item.editable = false);
+            state.todosData.map(item =>
+                item.id === id
+                    ? (item.editable = status)
+                    : (item.editable = false)
+            );
         },
-        switchTodosItemCompleteStatus(state, action: PayloadAction<{ id: number, status: boolean }>) {
+        switchTodosItemCompleteStatus(
+            state,
+            action: PayloadAction<{ id: number; status: boolean }>
+        ) {
             const { id, status } = action.payload;
 
-            const currentTodoItem = state.todosData.find(item => item.id === id);
+            const currentTodoItem = state.todosData.find(
+                item => item.id === id
+            );
             if (currentTodoItem) {
                 currentTodoItem.completed = !status;
             }
@@ -147,10 +186,15 @@ const todoSlice = createSlice({
         addNewCategoryItem(state, action: PayloadAction<any>) {
             state.categoryTemplatesData.push(action.payload);
         },
-        editCurrentCategoryTemplateItem(state, action: PayloadAction<{ id: number, text: string, value: string }>) {
+        editCurrentCategoryTemplateItem(
+            state,
+            action: PayloadAction<{ id: number; text: string; value: string }>
+        ) {
             const { id, text, value } = action.payload;
 
-            const currentCategoryItem = state.categoryTemplatesData.find(item => item.id === id);
+            const currentCategoryItem = state.categoryTemplatesData.find(
+                item => item.id === id
+            );
             if (currentCategoryItem) {
                 currentCategoryItem.text = text;
                 currentCategoryItem.value = value;
@@ -164,25 +208,36 @@ const todoSlice = createSlice({
             const { count } = action.payload;
             state.currentTodosCount = count;
         },
-        switchFormVisibleStatus(state, action: PayloadAction<{ status: boolean }>) {
+        switchFormVisibleStatus(
+            state,
+            action: PayloadAction<{ status: boolean }>
+        ) {
             const { status } = action.payload;
             state.isFormVisible = status;
         },
-        switchTodosDataEmptyStatus(state, action: PayloadAction<{ status: boolean }>) {
+        switchTodosDataEmptyStatus(
+            state,
+            action: PayloadAction<{ status: boolean }>
+        ) {
             const { status } = action.payload;
             state.isTodosDataEmpty = status;
         },
-        switchErrorStatus(state, action: PayloadAction<{ status: boolean | null }>) {
+        switchErrorStatus(
+            state,
+            action: PayloadAction<{ status: boolean | null }>
+        ) {
             const { status } = action.payload;
             state.error = status;
         }
     },
     extraReducers: {
-        [fetchTodosData.pending.type]: (state) => {
+        [fetchTodosData.pending.type]: state => {
             state.status = 'loading';
         },
-        [fetchTodosData.fulfilled.type]: (state, action: PayloadAction<Itodo[]>) => {
-
+        [fetchTodosData.fulfilled.type]: (
+            state,
+            action: PayloadAction<Itodo[]>
+        ) => {
             // const fetchedData =
             //     action.payload.map((item: Itodo) => {
             //         if (item) {
@@ -201,7 +256,10 @@ const todoSlice = createSlice({
             state.status = 'success';
             state.error = null;
         },
-        [fetchTodosData.rejected.type]: (state, action: PayloadAction<string>) => {
+        [fetchTodosData.rejected.type]: (
+            state,
+            action: PayloadAction<string>
+        ) => {
             state.status = 'failed';
             state.error = action.payload;
         }

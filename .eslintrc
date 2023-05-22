@@ -1,21 +1,32 @@
 {
+    "settings": {
+        "import/resolver": {
+            "node": {
+                "paths": [
+                    "src"
+                ]
+            }
+        }
+    },
     "env": {
         "browser": true,
         "es2021": true
     },
     "extends": [
         "eslint:recommended",
-        "prettier",
         "plugin:react/recommended",
         "plugin:@typescript-eslint/recommended",
         "plugin:import/errors",
         "plugin:import/warnings",
-        "plugin:import/typescript"
+        "plugin:import/typescript",
+        "prettier"
     ],
     "plugins": [
-        "react",
         "@typescript-eslint",
-        "import"
+        "import",
+        "react",
+        "react-hooks",
+        "prettier"
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
@@ -23,6 +34,12 @@
         "sourceType": "module"
     },
     "rules": {
+        "prettier/prettier": [
+            "warn",
+            {
+                "endOfLine": "auto"
+            }
+        ],
         "no-console": "warn",
         "quotes": [
             "error",
@@ -58,6 +75,7 @@
                 ],
                 "newlines-between": "always-and-inside-groups"
             }
-        ]
+        ],
+        "react-hooks/exhaustive-deps": "warn"
     }
 }

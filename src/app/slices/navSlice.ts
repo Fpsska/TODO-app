@@ -1,19 +1,17 @@
 import { createSlice, PayloadAction, current } from '@reduxjs/toolkit';
 
-import { Inav } from '../../app/types/navTypes';
-import { Iselect } from '../../app/types/selectTypes';
-
+import { Inav } from 'types/navTypes';
+import { Iselect } from 'types/selectTypes';
 
 // /. imports
 
 interface navSliceState {
     navTemplatesData: Inav[];
     selectTemplatesData: Iselect[];
-    selectNavOption: string
+    selectNavOption: string;
 }
 
 // /. interfaces
-
 
 const navTemplates = [
     {
@@ -67,9 +65,13 @@ const selectNavTemplates = [
         value: 'PaYmEnTs'
     }
 ];
-const navStorageData = JSON.parse(localStorage.getItem('navDataFromStorage') || JSON.stringify(navTemplates));
-const selectNavStorageData = JSON.parse(localStorage.getItem('selectNavDataFromStorage') || JSON.stringify(selectNavTemplates));
-
+const navStorageData = JSON.parse(
+    localStorage.getItem('navDataFromStorage') || JSON.stringify(navTemplates)
+);
+const selectNavStorageData = JSON.parse(
+    localStorage.getItem('selectNavDataFromStorage') ||
+    JSON.stringify(selectNavTemplates)
+);
 
 const initialState: navSliceState = {
     navTemplatesData: navStorageData,
@@ -79,22 +81,37 @@ const initialState: navSliceState = {
 
 // /. initialState
 
-
 const navSlice = createSlice({
     name: 'navSlice',
     initialState,
     reducers: {
-        switchNavActiveStatus(state, action: PayloadAction<{ id: number, status: boolean }>) {
+        switchNavActiveStatus(
+            state,
+            action: PayloadAction<{ id: number; status: boolean }>
+        ) {
             const { id, status } = action.payload;
-            state.navTemplatesData.map(item => item.id === id ? item.isActive = status : item.isActive = false);
+            state.navTemplatesData.map(item =>
+                item.id === id
+                    ? (item.isActive = status)
+                    : (item.isActive = false)
+            );
         },
         addNavTemplateItem(state, action: PayloadAction<any>) {
             state.navTemplatesData.push(action.payload);
         },
-        editCurrentNavTemplateItem(state, action: PayloadAction<{ id: number, text: string, category: string }>) {
+        editCurrentNavTemplateItem(
+            state,
+            action: PayloadAction<{
+                id: number;
+                text: string;
+                category: string;
+            }>
+        ) {
             const { id, text, category } = action.payload;
 
-            const currentNavItem = state.navTemplatesData.find(item => item.id === id);
+            const currentNavItem = state.navTemplatesData.find(
+                item => item.id === id
+            );
             if (currentNavItem) {
                 currentNavItem.text = text;
                 currentNavItem.category = category;
@@ -103,10 +120,15 @@ const navSlice = createSlice({
         addNewSelectItem(state, action: PayloadAction<any>) {
             state.selectTemplatesData.push(action.payload);
         },
-        editCurrentNavSelectTemplateItem(state, action: PayloadAction<{ id: number, text: string, value: string }>) {
+        editCurrentNavSelectTemplateItem(
+            state,
+            action: PayloadAction<{ id: number; text: string; value: string }>
+        ) {
             const { id, text, value } = action.payload;
 
-            const currentCategoryItem = state.selectTemplatesData.find(item => item.id === id);
+            const currentCategoryItem = state.selectTemplatesData.find(
+                item => item.id === id
+            );
             if (currentCategoryItem) {
                 currentCategoryItem.text = text;
                 currentCategoryItem.value = value;

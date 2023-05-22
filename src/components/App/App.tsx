@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
 
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { useAreaHandler } from 'utils/hooks/useAreaHandler';
+import { filterDataByCategory } from 'utils/helpers/filterDataByCategory';
 
 import {
     switchTodosDataEmptyStatus,
     setTitle,
     findTodosItemByName,
     addNewTodosItem
-} from '../../../store/slices/todoSlice';
+} from 'app/slices/todoSlice';
 
-import { useAreaHandler } from '../../hooks/useAreaHandler';
-import { filterDataByCategory } from '../../helpers/filterDataByCategory';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
 
-import { Itodo } from '../../types/todoTypes';
+import { Itodo } from 'types/todoTypes';
 
 import NavLayout from '../Nav/NavLayout';
 import TodoForm from '../TodoForm/TodoForm';
@@ -20,8 +20,8 @@ import Burger from '../Burger/Burger';
 import TitleForm from '../TitleForm/TitleForm';
 import PageList from '../PageList/PageList';
 
-import '../../assets/styles/_styles.scss';
-import '../../assets/styles/_media.scss';
+import 'assets/styles/_styles.scss';
+import 'assets/styles/_media.scss';
 import './App.css';
 
 // /. imports

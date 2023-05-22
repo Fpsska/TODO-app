@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { getCurrentArrItem } from 'utils/helpers/getCurrentArrItem';
+
+import { useAppDispatch, useAppSelector } from 'app/hooks';
 
 import {
     editCurrentTodosDataItem,
     switchTodosItemEditableStatus
-} from '../../../store/slices/todoSlice';
-
-import { getCurrentArrItem } from '../../helpers/getCurrentArrItem';
+} from 'app/slices/todoSlice';
 
 import './edit-form.scss';
 

@@ -1,24 +1,26 @@
 import React, { useState, useEffect } from 'react';
 
-import { useAppDispatch } from '../../../store/hooks';
+import { Inav } from 'types/navTypes';
 
-import { getCurrentArrItem } from '../../helpers/getCurrentArrItem';
+import { Icategory } from 'types/categoryTypes';
+
+import { Iselect } from 'types/selectTypes';
+
+import { useAppDispatch } from 'app/hooks';
+
+import { getCurrentArrItem } from 'utils/helpers/getCurrentArrItem';
 
 import {
     editCurrentCategoryTemplateItem,
     editCategoryOFCurrentTodosDataItem,
     setInputTitleValue,
     setFilterProp
-} from '../../../store/slices/todoSlice';
+} from 'app/slices/todoSlice';
 import {
     editCurrentNavTemplateItem,
     editCurrentNavSelectTemplateItem,
     setSelectNavOption
-} from '../../../store/slices/navSlice';
-
-import { Inav } from '../../types/navTypes';
-import { Icategory } from '../../types/categoryTypes';
-import { Iselect } from '../../types/selectTypes';
+} from 'app/slices/navSlice';
 
 import './titleForm.scss';
 

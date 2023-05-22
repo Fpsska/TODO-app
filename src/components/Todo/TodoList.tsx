@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Itodo } from '../../types/todoTypes';
+import { Itodo } from 'types/todoTypes';
 
 import TodoTemplate from './TodoTemplate';
 

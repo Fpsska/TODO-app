@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react';
 
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import Preloader from 'components/ui/Preloader/Preloader';
 
-import { switchTodosItemEditableStatus } from '../../../store/slices/todoSlice';
+import { useAreaHandler } from 'utils/hooks/useAreaHandler';
 
-import { useAreaHandler } from '../../hooks/useAreaHandler';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
+
+import { switchTodosItemEditableStatus } from 'app/slices/todoSlice';
+
+import { Itodo } from 'types/todoTypes';
 
 import TodoList from '../Todo/TodoList';
-import Preloader from '../Preloader/Preloader';
-import { Itodo } from '../../types/todoTypes';
+
 import Modal from '../Modal/Modal';
 import EditForm from '../EditForm/EditForm';
 

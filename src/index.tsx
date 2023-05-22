@@ -2,9 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 
-import { store } from './store/store';
+import { store } from 'app/store';
 
-import Layout from './app/components/Layout/Layout';
+import Layout from 'components/Layout/Layout';
+
 import reportWebVitals from './reportWebVitals';
 
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';

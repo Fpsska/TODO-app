@@ -1,16 +1,13 @@
 import React, { useState, useRef } from 'react';
 
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-
 import {
     switchFormVisibleStatus,
     addNewCategoryItem
-} from '../../../store/slices/todoSlice';
+} from 'app/slices/todoSlice';
 
-import {
-    addNavTemplateItem,
-    addNewSelectItem
-} from '../../../store/slices/navSlice';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
+
+import { addNavTemplateItem, addNewSelectItem } from 'app/slices/navSlice';
 
 import './categoryForm.scss';
 

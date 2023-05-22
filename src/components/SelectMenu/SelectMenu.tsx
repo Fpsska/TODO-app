@@ -1,21 +1,19 @@
 import React, { useEffect } from 'react';
 
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { getCurrentArrItem } from 'utils/helpers/getCurrentArrItem';
+
+import { setSelectNavOption, switchNavActiveStatus } from 'app/slices/navSlice';
+
+import { Iselect } from 'types/selectTypes';
+
+import { useAppDispatch, useAppSelector } from 'app/hooks';
 
 import {
     // setCurrentCategoryID,
     switchTodosItemEditableStatus,
     setFilterProp,
     setInputTitleValue
-} from '../../../store/slices/todoSlice';
-import {
-    setSelectNavOption,
-    switchNavActiveStatus
-} from '../../../store/slices/navSlice';
-
-import { getCurrentArrItem } from '../../helpers/getCurrentArrItem';
-
-import { Iselect } from '../../types/selectTypes';
+} from 'app/slices/todoSlice';
 
 import SelectTemplate from './SelectTemplate';
 

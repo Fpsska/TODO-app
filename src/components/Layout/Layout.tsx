@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
 
 import {
     switchTodosDataLoadingStatus,
     switchErrorStatus
-} from '../../../store/slices/todoSlice';
+} from 'app/slices/todoSlice';
 
-import { fetchTodosData } from '../../../store/api/fetchTodosData';
+import { fetchTodosData } from 'app/api/fetchTodosData';
 
 import App from '../App/App';
 

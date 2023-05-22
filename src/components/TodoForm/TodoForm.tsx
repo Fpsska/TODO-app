@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 
-import { useAppSelector } from '../../../store/hooks';
+import { useAppSelector } from 'app/hooks';
 
 import './todo-form.scss';
 

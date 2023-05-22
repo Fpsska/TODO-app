@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 
-import { useAppDispatch } from '../../../store/hooks';
+import { useAppDispatch } from 'app/hooks';
 
-import { setInputTitleValue } from '../../../store/slices/todoSlice';
+import { setInputTitleValue } from 'app/slices/todoSlice';
 
-import { Inav } from '../../types/navTypes';
+import { Inav } from 'types/navTypes';
 
 import NavTemplate from './NavTemplate';
 

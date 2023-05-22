@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { useAppSelector } from '../../../store/hooks';
+import { useAppSelector } from 'app/hooks';
 
 import SelectMenu from '../SelectMenu/SelectMenu';
 import CategoryForm from '../CategoryForm/CategoryForm';
