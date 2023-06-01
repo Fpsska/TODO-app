@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, RefObject } from 'react';
 
 import { Inav } from 'types/navTypes';
 
@@ -14,7 +14,7 @@ import {
     editCurrentCategoryTemplateItem,
     editCategoryOFCurrentTodosDataItem,
     setInputTitleValue,
-    setFilterProp
+    setFilterCompareValue
 } from 'app/slices/todoSlice';
 import {
     editCurrentNavTemplateItem,
@@ -27,11 +27,11 @@ import './titleForm.scss';
 // /. imports
 
 interface propTypes {
-    refEl: any;
+    refEl: RefObject<HTMLInputElement>;
     isEditable: boolean;
     inputTitleValue: string;
     setEditableStatus: (arg: boolean) => void;
-    filterProp: string;
+    filterCompareValue: string;
     navTemplatesData: Inav[];
     selectTemplatesData: Iselect[];
     categoryTemplatesData: Icategory[];
@@ -43,7 +43,7 @@ const TitleForm: React.FC<propTypes> = props => {
         isEditable,
         inputTitleValue,
         setEditableStatus,
-        filterProp,
+        filterCompareValue,
         navTemplatesData,
         selectTemplatesData,
         categoryTemplatesData
@@ -67,15 +67,20 @@ const TitleForm: React.FC<propTypes> = props => {
         e.preventDefault();
 
         dispatch(
-            setFilterProp({ filterProp: inputValue.toLowerCase().trim() })
-        ); // update filterProp
+            setFilterCompareValue({
+                filterCompareValue: inputValue.toLowerCase().trim()
+            })
+        ); // update filterCompareValue
         dispatch(setInputTitleValue({ title: inputValue.trim() })); // update title__form text content value
 
         dispatch(
             editCurrentNavTemplateItem({
                 // update text, category in navTemplatesData[]
-                id: getCurrentArrItem(navTemplatesData, 'category', filterProp)
-                    ?.id,
+                id: getCurrentArrItem(
+                    navTemplatesData,
+                    'category',
+                    filterCompareValue
+                )?.id,
                 text: inputValue.trim(),
                 category: inputValue.trim()
             })
@@ -84,8 +89,11 @@ const TitleForm: React.FC<propTypes> = props => {
         dispatch(
             editCurrentNavSelectTemplateItem({
                 // update text, value in selectTemplatesData[]
-                id: getCurrentArrItem(selectTemplatesData, 'value', filterProp)
-                    ?.id,
+                id: getCurrentArrItem(
+                    selectTemplatesData,
+                    'value',
+                    filterCompareValue
+                )?.id,
                 text: inputValue.trim(), // displayed in UI
                 value: inputValue.trim() // logic
             })
@@ -100,7 +108,7 @@ const TitleForm: React.FC<propTypes> = props => {
                 id: getCurrentArrItem(
                     categoryTemplatesData,
                     'value',
-                    filterProp
+                    filterCompareValue
                 )?.id,
                 text: inputValue.trim(), // displayed in UI
                 value: inputValue.toLowerCase().trim() // logic
@@ -110,7 +118,7 @@ const TitleForm: React.FC<propTypes> = props => {
         dispatch(
             editCategoryOFCurrentTodosDataItem({
                 // update category value of each todosData[] item who prev category is equal prev title value
-                categoryProp: filterProp,
+                categoryProp: filterCompareValue,
                 categoryValue: inputValue ? inputValue.toLowerCase().trim() : ''
             })
         );

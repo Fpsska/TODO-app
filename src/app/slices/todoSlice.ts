@@ -23,7 +23,7 @@ interface todoSliceState {
     currentCategoryID: number;
     currentTodosCount: number;
     currentTodoID: number;
-    filterProp: string;
+    filterCompareValue: string;
 }
 
 // /. interfaces
@@ -76,7 +76,7 @@ const initialState: todoSliceState = {
     currentCategoryID: 1,
     currentTodoID: 1,
     currentTodosCount: 0,
-    filterProp: 'all'
+    filterCompareValue: 'all'
 };
 
 // /. initialState
@@ -105,9 +105,12 @@ const todoSlice = createSlice({
                 RegExp(value.trim(), 'gi').test(item.title)
             );
         },
-        setFilterProp(state, action: PayloadAction<{ filterProp: string }>) {
-            const { filterProp } = action.payload;
-            state.filterProp = filterProp;
+        setFilterCompareValue(
+            state,
+            action: PayloadAction<{ filterCompareValue: string }>
+        ) {
+            const { filterCompareValue } = action.payload;
+            state.filterCompareValue = filterCompareValue;
         },
         editCurrentTodosDataItem(
             state,
@@ -176,7 +179,7 @@ const todoSlice = createSlice({
         },
         setInputTitleValue(state, action: PayloadAction<{ title: string }>) {
             const { title } = action.payload;
-            console.log(title);
+            // console.log(title);
             state.inputTitleValue = title;
         },
         setCurrentCategoryID(state, action: PayloadAction<{ id: number }>) {
@@ -271,7 +274,7 @@ export const {
     addNewTodosItem,
     removeTodosItem,
     findTodosItemByName,
-    setFilterProp,
+    setFilterCompareValue,
     editCurrentTodosDataItem,
     editCategoryOFCurrentTodosDataItem,
     switchTodosItemEditableStatus,

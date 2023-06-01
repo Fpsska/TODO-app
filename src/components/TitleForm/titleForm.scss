@@ -1,9 +1,10 @@
-@import "../../assets/styles/mixins";
+@import "assets/styles/mixins";
 
 // /. imports
 
 .title {
     width: 100%;
+
     &__input {
         background-color: transparent;
         border: none;
@@ -18,11 +19,13 @@
         max-width: calc(100vw - 685px);
         width: 100%;
     }
+
     &__input.editable {
         color: #888;
         text-decoration: underline;
         pointer-events: all;
     }
+
     &__input.general {
         margin: 0;
         // disable copy

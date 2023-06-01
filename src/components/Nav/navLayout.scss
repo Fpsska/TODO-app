@@ -1,4 +1,4 @@
-@import "../../assets/styles/mixins";
+@import "assets/styles/mixins";
 
 // /. imports
 
@@ -9,6 +9,7 @@
         flex-direction: column;
         @include sliceText;
     }
+
     &__nav-select {
         display: none;
         padding: 20px 35px 20px 30px;

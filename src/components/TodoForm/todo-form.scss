@@ -8,26 +8,33 @@
         border: 1px solid transparent;
         border-radius: 8px;
         padding: 10px 25px 10px 25px;
+
         &::-webkit-input-placeholder {
             color: #b5b5b5;
         }
+
         &::-moz-placeholder {
             color: #b5b5b5;
         }
+
         &:-ms-input-placeholder {
             color: #b5b5b5;
         }
+
         &::-ms-input-placeholder {
             color: #b5b5b5;
         }
+
         &::placeholder {
             color: #b5b5b5;
         }
+
         &:disabled {
             border: 1px solid red;
             cursor: not-allowed;
         }
     }
+
     &__input--edit {
         padding: 2px 10px;
         font-size: 14px;

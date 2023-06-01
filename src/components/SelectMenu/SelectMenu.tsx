@@ -11,7 +11,7 @@ import { useAppDispatch, useAppSelector } from 'app/hooks';
 import {
     // setCurrentCategoryID,
     switchTodosItemEditableStatus,
-    setFilterProp,
+    setFilterCompareValue,
     setInputTitleValue
 } from 'app/slices/todoSlice';
 
@@ -24,7 +24,7 @@ import './select.scss';
 const SelectMenu: React.FC = () => {
     const {
         todosData,
-        filterProp,
+        filterCompareValue,
         currentTodoID,
         isTodosDataLoading,
         currentTodosCount,
@@ -48,7 +48,9 @@ const SelectMenu: React.FC = () => {
         switch (value) {
             case value:
                 dispatch(
-                    setFilterProp({ filterProp: value.toLowerCase().trim() })
+                    setFilterCompareValue({
+                        filterCompareValue: value.toLowerCase().trim()
+                    })
                 ); // update prop for filter.ts func for real-time filtering
                 dispatch(setSelectNavOption({ option: value })); // switch nav-select value
                 dispatch(
@@ -77,7 +79,7 @@ const SelectMenu: React.FC = () => {
                 ); // disable editable todo when filtering todosData[]
                 break;
             default:
-                dispatch(setFilterProp({ filterProp: 'all' }));
+                dispatch(setFilterCompareValue({ filterCompareValue: 'all' }));
                 dispatch(setSelectNavOption({ option: 'All' }));
                 dispatch(
                     switchNavActiveStatus({

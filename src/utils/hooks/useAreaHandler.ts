@@ -1,20 +1,18 @@
 import { useState, useEffect, useRef } from 'react';
 
-// /. imports 
+// /. imports
 
 interface propTypes {
-    initialStatus: boolean
+    initialStatus: boolean;
 }
 
 // /. interfaces
 
 export function useAreaHandler({ initialStatus }: propTypes): any {
-
     const [isVisible, setVisibleStatus] = useState<boolean>(initialStatus);
-    const refEl = useRef<HTMLDivElement>(null!); // valid HTML-el (clickable) 
+    const refEl = useRef<HTMLDivElement>(null!); // valid HTML-el (clickable)
 
     useEffect(() => {
-
         if (!isVisible) return;
 
         const areaHandler = (e: any): void => {

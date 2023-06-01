@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import { useAreaHandler } from 'utils/hooks/useAreaHandler';
-import { filterDataByCategory } from 'utils/helpers/filterDataByCategory';
+import { filterDataByProperty } from 'utils/helpers/filterDataByProperty';
 
 import {
     switchTodosDataEmptyStatus,
@@ -27,8 +27,12 @@ import './App.css';
 // /. imports
 
 const App: React.FC = () => {
-    const { todosData, categoryTemplatesData, filterProp, inputTitleValue } =
-        useAppSelector(state => state.todoSlice);
+    const {
+        todosData,
+        categoryTemplatesData,
+        filterCompareValue,
+        inputTitleValue
+    } = useAppSelector(state => state.todoSlice);
 
     const { navTemplatesData, selectTemplatesData } = useAppSelector(
         state => state.navSlice
@@ -45,19 +49,21 @@ const App: React.FC = () => {
         useState<Itodo[]>(todosData);
 
     useEffect(() => {
-        // update todosData when filering by filterProp (category)
-        setFilteredTodosData(filterDataByCategory(todosData, filterProp));
+        // update todosData[] when filering by filterCompareValue
+        setFilteredTodosData(
+            filterDataByProperty(todosData, 'category', filterCompareValue)
+        );
 
         // update todosDataFromStorage value
         localStorage.setItem('todosDataFromStorage', JSON.stringify(todosData));
-    }, [todosData, filterProp]);
+    }, [todosData, filterCompareValue]);
 
     useEffect(() => {
         // check length of filteredTodosData[] for handle display alternative content
         filteredTodosData.length === 0
             ? dispatch(switchTodosDataEmptyStatus({ status: true }))
             : dispatch(switchTodosDataEmptyStatus({ status: false }));
-    }, [filteredTodosData, filterProp]);
+    }, [filteredTodosData, filterCompareValue]);
 
     useEffect(() => {
         // update page__message text content
@@ -155,7 +161,7 @@ const App: React.FC = () => {
                                         titleFormAreaHandler.setVisibleStatus
                                     }
                                     inputTitleValue={inputTitleValue}
-                                    filterProp={filterProp}
+                                    filterCompareValue={filterCompareValue}
                                     navTemplatesData={navTemplatesData}
                                     selectTemplatesData={selectTemplatesData}
                                     categoryTemplatesData={

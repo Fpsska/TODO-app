@@ -1,4 +1,4 @@
-@import "../../assets/styles/mixins";
+@import "assets/styles/mixins";
 
 // /. imports
 
@@ -33,6 +33,7 @@
         &::-webkit-scrollbar-corner {
             background: transparent;
         }
+
         // /.
 
         :not(:last-child) {

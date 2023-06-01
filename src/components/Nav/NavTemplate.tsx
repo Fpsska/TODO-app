@@ -8,7 +8,7 @@ import {
     setCurrentCategoryID,
     setCurrentTodosCount,
     setInputTitleValue,
-    setFilterProp
+    setFilterCompareValue
 } from 'app/slices/todoSlice';
 
 // /. imports
@@ -58,7 +58,9 @@ const NavTemplate: React.FC<propTypes> = props => {
         switch (category) {
             case category:
                 dispatch(
-                    setFilterProp({ filterProp: category.toLowerCase().trim() })
+                    setFilterCompareValue({
+                        filterCompareValue: category.toLowerCase().trim()
+                    })
                 ); // update prop for filter.ts func for real-time filtering
                 dispatch(switchNavActiveStatus({ id, status: true }));
                 dispatch(
@@ -73,7 +75,7 @@ const NavTemplate: React.FC<propTypes> = props => {
                 setEditableStatus(false); // controle titleForm visible condition
                 break;
             default:
-                dispatch(setFilterProp({ filterProp: 'all' }));
+                dispatch(setFilterCompareValue({ filterCompareValue: 'all' }));
                 dispatch(switchNavActiveStatus({ id, status: true }));
                 dispatch(setSelectNavOption({ option: 'All' }));
 
