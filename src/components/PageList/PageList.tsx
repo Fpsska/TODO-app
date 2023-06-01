@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 import Preloader from 'components/ui/Preloader/Preloader';
 
@@ -6,20 +6,25 @@ import { useAreaHandler } from 'utils/hooks/useAreaHandler';
 
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 
-import { switchTodosItemEditableStatus } from 'app/slices/todoSlice';
+import {
+    switchTodosItemEditableStatus,
+    switchTodosDataEmptyStatus,
+    updateFilteredTodos
+} from 'app/slices/todoSlice';
 
-import { Itodo } from 'types/todoTypes';
+import { filterDataByProperty } from 'utils/helpers/filterDataByProperty';
 
-import TodoList from '../Todo/TodoList';
-
-import Modal from '../Modal/Modal';
-import EditForm from '../EditForm/EditForm';
+import TodoList from 'components/Todo/TodoList';
+import Modal from 'components/Modal/Modal';
+import EditForm from 'components/EditForm/EditForm';
 
 // /. imports
 
 const PageList: React.FC = () => {
     const {
         todosData,
+        filteredTodosData,
+        filterCompareValue,
         isTodosDataLoading,
         isFormVisible,
         isTodosDataEmpty,
@@ -28,14 +33,30 @@ const PageList: React.FC = () => {
         error
     } = useAppSelector(state => state.todoSlice);
 
-    const [filteredTodosData, setFilteredTodosData] =
-        useState<Itodo[]>(todosData);
-
     const dispatch = useAppDispatch();
     const modalAreaHandler = useAreaHandler({ initialStatus: false });
 
     useEffect(() => {
-        // remove editable css-class when modal is hidden
+        dispatch(updateFilteredTodos(todosData));
+        localStorage.setItem('todosDataFromStorage', JSON.stringify(todosData));
+    }, [todosData]);
+
+    useEffect(() => {
+        const filteredByCategoryTodos = filterDataByProperty(
+            todosData,
+            'category',
+            filterCompareValue
+        );
+
+        dispatch(updateFilteredTodos(filteredByCategoryTodos));
+
+        filteredByCategoryTodos.length === 0
+            ? dispatch(switchTodosDataEmptyStatus({ status: true }))
+            : dispatch(switchTodosDataEmptyStatus({ status: false }));
+    }, [todosData, filterCompareValue]);
+
+    useEffect(() => {
+        // remove editable status when modal is hidden
         !modalAreaHandler.isVisible &&
             dispatch(
                 switchTodosItemEditableStatus({
@@ -81,7 +102,7 @@ const PageList: React.FC = () => {
                 </>
             ) : (
                 <TodoList
-                    filteredTodosData={filteredTodosData}
+                    todosData={filteredTodosData}
                     setModalVisibleStatus={modalAreaHandler.setVisibleStatus}
                     isFormVisible={isFormVisible}
                 />

@@ -11,7 +11,7 @@ import { fetchTodosData } from 'app/api/fetchTodosData';
 
 interface todoSliceState {
     todosData: Itodo[];
-    todosDataContainer: Itodo[];
+    filteredTodosData: Itodo[];
     categoryTemplatesData: Icategory[];
     isTodosDataLoading: boolean;
     isFormVisible: boolean;
@@ -22,7 +22,7 @@ interface todoSliceState {
     inputTitleValue: string;
     currentCategoryID: number;
     currentTodosCount: number;
-    currentTodoID: number;
+    currentTodoID: string;
     filterCompareValue: string;
 }
 
@@ -64,7 +64,7 @@ const categoryStorageData = JSON.parse(
 
 const initialState: todoSliceState = {
     todosData: todosStorageData,
-    todosDataContainer: todosStorageData,
+    filteredTodosData: todosStorageData,
     categoryTemplatesData: categoryStorageData,
     isTodosDataLoading: true,
     isFormVisible: false,
@@ -74,7 +74,7 @@ const initialState: todoSliceState = {
     title: 'All',
     inputTitleValue: 'All',
     currentCategoryID: 1,
-    currentTodoID: 1,
+    currentTodoID: '',
     currentTodosCount: 0,
     filterCompareValue: 'all'
 };
@@ -85,54 +85,17 @@ const todoSlice = createSlice({
     name: 'todoSlice',
     initialState,
     reducers: {
-        switchTodosDataLoadingStatus(
-            state,
-            action: PayloadAction<{ status: boolean }>
-        ) {
-            const { status } = action.payload;
-            state.isTodosDataLoading = status;
-        },
-        addNewTodosItem(state, action: PayloadAction<any>) {
+        addNewTodosItem(state, action: PayloadAction<Itodo>) {
             state.todosData.push(action.payload);
         },
-        removeTodosItem(state, action: PayloadAction<{ id: number }>) {
+        removeTodosItem(state, action: PayloadAction<{ id: string }>) {
             const { id } = action.payload;
             state.todosData = state.todosData.filter(item => item.id !== id);
         },
-        findTodosItemByName(state, action: PayloadAction<{ value: string }>) {
-            const { value } = action.payload;
-            state.todosData = state.todosDataContainer.filter(item =>
-                RegExp(value.trim(), 'gi').test(item.title)
-            );
+        updateFilteredTodos(state, action: PayloadAction<Itodo[]>) {
+            state.filteredTodosData = action.payload;
         },
-        setFilterCompareValue(
-            state,
-            action: PayloadAction<{ filterCompareValue: string }>
-        ) {
-            const { filterCompareValue } = action.payload;
-            state.filterCompareValue = filterCompareValue;
-        },
-        editCurrentTodosDataItem(
-            state,
-            action: PayloadAction<{
-                id: number;
-                title: string;
-                category: string;
-                status: string;
-            }>
-        ) {
-            const { id, title, category, status } = action.payload;
 
-            const currentTodoItem = state.todosData.find(
-                item => item.id === id
-            );
-            if (currentTodoItem) {
-                currentTodoItem.title = title;
-                currentTodoItem.category = category;
-                currentTodoItem.status = status;
-                currentTodoItem.editable = false;
-            }
-        },
         editCategoryOFCurrentTodosDataItem(
             state,
             action: PayloadAction<{
@@ -151,7 +114,7 @@ const todoSlice = createSlice({
         },
         switchTodosItemEditableStatus(
             state,
-            action: PayloadAction<{ id: number; status: boolean }>
+            action: PayloadAction<{ id: string; status: boolean }>
         ) {
             const { id, status } = action.payload;
             state.todosData.map(item =>
@@ -162,7 +125,7 @@ const todoSlice = createSlice({
         },
         switchTodosItemCompleteStatus(
             state,
-            action: PayloadAction<{ id: number; status: boolean }>
+            action: PayloadAction<{ id: string; status: boolean }>
         ) {
             const { id, status } = action.payload;
 
@@ -173,6 +136,43 @@ const todoSlice = createSlice({
                 currentTodoItem.completed = !status;
             }
         },
+
+        findTodosItemByName(state, action: PayloadAction<{ value: string }>) {
+            const { value } = action.payload;
+            state.filteredTodosData = state.todosData.filter(item =>
+                RegExp(value.trim(), 'gi').test(item.title)
+            );
+        },
+        setFilterCompareValue(
+            state,
+            action: PayloadAction<{ filterCompareValue: string }>
+        ) {
+            const { filterCompareValue } = action.payload;
+            console.log(filterCompareValue);
+            state.filterCompareValue = filterCompareValue;
+        },
+        editCurrentTodosDataItem(
+            state,
+            action: PayloadAction<{
+                id: string;
+                title: string;
+                category: string;
+                status: string;
+            }>
+        ) {
+            const { id, title, category, status } = action.payload;
+
+            const currentTodoItem = state.todosData.find(
+                item => item.id === id
+            );
+            if (currentTodoItem) {
+                currentTodoItem.title = title;
+                currentTodoItem.category = category;
+                currentTodoItem.status = status;
+                currentTodoItem.editable = false;
+            }
+        },
+
         setTitle(state, action: PayloadAction<{ title: string }>) {
             const { title } = action.payload;
             state.title = title;
@@ -182,6 +182,7 @@ const todoSlice = createSlice({
             // console.log(title);
             state.inputTitleValue = title;
         },
+
         setCurrentCategoryID(state, action: PayloadAction<{ id: number }>) {
             const { id } = action.payload;
             state.currentCategoryID = id;
@@ -203,10 +204,11 @@ const todoSlice = createSlice({
                 currentCategoryItem.value = value;
             }
         },
-        setCurrentTodoID(state, action: PayloadAction<{ id: number }>) {
+        setCurrentTodoID(state, action: PayloadAction<{ id: string }>) {
             const { id } = action.payload;
             state.currentTodoID = id;
         },
+
         setCurrentTodosCount(state, action: PayloadAction<{ count: number }>) {
             const { count } = action.payload;
             state.currentTodosCount = count;
@@ -224,6 +226,14 @@ const todoSlice = createSlice({
         ) {
             const { status } = action.payload;
             state.isTodosDataEmpty = status;
+        },
+
+        switchTodosDataLoadingStatus(
+            state,
+            action: PayloadAction<{ status: boolean }>
+        ) {
+            const { status } = action.payload;
+            state.isTodosDataLoading = status;
         },
         switchErrorStatus(
             state,
@@ -273,6 +283,7 @@ export const {
     switchTodosDataLoadingStatus,
     addNewTodosItem,
     removeTodosItem,
+    updateFilteredTodos,
     findTodosItemByName,
     setFilterCompareValue,
     editCurrentTodosDataItem,

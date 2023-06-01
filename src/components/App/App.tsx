@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 import { useAreaHandler } from 'utils/hooks/useAreaHandler';
-import { filterDataByProperty } from 'utils/helpers/filterDataByProperty';
 
 import {
-    switchTodosDataEmptyStatus,
     setTitle,
     findTodosItemByName,
     addNewTodosItem
@@ -12,27 +10,23 @@ import {
 
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 
-import { Itodo } from 'types/todoTypes';
+import { generateUniqueID } from 'utils/helpers/generateUniqueID';
 
-import NavLayout from '../Nav/NavLayout';
-import TodoForm from '../TodoForm/TodoForm';
-import Burger from '../Burger/Burger';
-import TitleForm from '../TitleForm/TitleForm';
-import PageList from '../PageList/PageList';
+import NavLayout from 'components/Nav/NavLayout';
+import TodoForm from 'components/TodoForm/TodoForm';
+import Burger from 'components/Burger/Burger';
+import TitleForm from 'components/TitleForm/TitleForm';
+import PageList from 'components/PageList/PageList';
 
+import './App.css';
 import 'assets/styles/_styles.scss';
 import 'assets/styles/_media.scss';
-import './App.css';
 
 // /. imports
 
 const App: React.FC = () => {
-    const {
-        todosData,
-        categoryTemplatesData,
-        filterCompareValue,
-        inputTitleValue
-    } = useAppSelector(state => state.todoSlice);
+    const { categoryTemplatesData, filterCompareValue, inputTitleValue } =
+        useAppSelector(state => state.todoSlice);
 
     const { navTemplatesData, selectTemplatesData } = useAppSelector(
         state => state.navSlice
@@ -44,26 +38,6 @@ const App: React.FC = () => {
     const titleFormAreaHandler = useAreaHandler({ initialStatus: false });
 
     // /. hooks usage
-
-    const [filteredTodosData, setFilteredTodosData] =
-        useState<Itodo[]>(todosData);
-
-    useEffect(() => {
-        // update todosData[] when filering by filterCompareValue
-        setFilteredTodosData(
-            filterDataByProperty(todosData, 'category', filterCompareValue)
-        );
-
-        // update todosDataFromStorage value
-        localStorage.setItem('todosDataFromStorage', JSON.stringify(todosData));
-    }, [todosData, filterCompareValue]);
-
-    useEffect(() => {
-        // check length of filteredTodosData[] for handle display alternative content
-        filteredTodosData.length === 0
-            ? dispatch(switchTodosDataEmptyStatus({ status: true }))
-            : dispatch(switchTodosDataEmptyStatus({ status: false }));
-    }, [filteredTodosData, filterCompareValue]);
 
     useEffect(() => {
         // update page__message text content
@@ -86,7 +60,7 @@ const App: React.FC = () => {
     const onCreateInputChange = (value: string): void => {
         dispatch(
             addNewTodosItem({
-                id: +new Date(),
+                id: generateUniqueID(),
                 title: value,
                 category: '',
                 status: '',

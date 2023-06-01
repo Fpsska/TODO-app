@@ -28,7 +28,8 @@ const TodoForm: React.FC<propTypes> = props => {
     const formSubmitHandler = (e: React.FormEvent<HTMLFormElement>): void => {
         e.preventDefault(); // disable refresh page after submit form
 
-        if (isTodosDataLoading || error || role === 'search') return;
+        if (isTodosDataLoading || error || !inputValue || role === 'search')
+            return;
 
         onInputChangeEvent(inputValue);
 

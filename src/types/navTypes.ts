@@ -3,5 +3,5 @@ export interface Inav {
     text: string;
     category: string;
     link: string;
-    isActive: boolean
+    isActive: boolean;
 }

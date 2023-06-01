@@ -19,16 +19,22 @@ const Layout: React.FC = () => {
     const dispatch = useAppDispatch();
 
     // give number argument for define limit of tetched todo items (5 as default)
+    // useEffect(() => {
+    //     dispatch(fetchTodosData(5));
+    //     setTimeout(() => {
+    //         dispatch(switchTodosDataLoadingStatus({ status: false }));
+    //     }, 1600);
+    //     !isTodosDataLoading &&
+    //         setTimeout(() => {
+    //             dispatch(switchErrorStatus({ status: null }));
+    //         }, 3500);
+    // }, [isTodosDataLoading]);
+
     useEffect(() => {
-        dispatch(fetchTodosData(5));
         setTimeout(() => {
             dispatch(switchTodosDataLoadingStatus({ status: false }));
         }, 1600);
-        !isTodosDataLoading &&
-            setTimeout(() => {
-                dispatch(switchErrorStatus({ status: null }));
-            }, 3500);
-    }, [isTodosDataLoading]);
+    }, []);
 
     return <App />;
 };

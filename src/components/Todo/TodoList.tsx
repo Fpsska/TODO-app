@@ -9,17 +9,17 @@ import './todo.scss';
 // /. imports
 
 interface propTypes {
-    filteredTodosData: Itodo[];
+    todosData: Itodo[];
     setModalVisibleStatus: (arg: boolean) => void;
     isFormVisible: boolean;
 }
 
 const TodoList: React.FC<propTypes> = props => {
-    const { filteredTodosData, setModalVisibleStatus, isFormVisible } = props;
+    const { todosData, setModalVisibleStatus, isFormVisible } = props;
 
     return (
         <ul className="todo">
-            {filteredTodosData.map((item: Itodo) => {
+            {todosData.map((item: Itodo) => {
                 return (
                     <TodoTemplate
                         key={item.id}

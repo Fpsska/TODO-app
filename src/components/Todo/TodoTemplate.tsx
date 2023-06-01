@@ -12,7 +12,7 @@ import {
 // /. imports
 
 interface propTypes {
-    id: number;
+    id: string;
     title: string;
     category: string;
     status: string;
@@ -56,9 +56,9 @@ const TodoTemplate: React.FC<propTypes> = props => {
     return (
         <li className="todo__item">
             <label
-                className={`todo__label ${
-                    completed ? 'todo__label completed' : ''
-                } ${!category ? 'large' : ''}`}
+                className={`todo__label ${completed ? 'completed' : ''} ${
+                    !category ? 'large' : ''
+                }`}
                 onClick={handleCompleteStatus}
                 title={title}
             >

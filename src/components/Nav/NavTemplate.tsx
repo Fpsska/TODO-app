@@ -11,6 +11,8 @@ import {
     setFilterCompareValue
 } from 'app/slices/todoSlice';
 
+import { makeStringFormatting } from 'utils/helpers/makeStringFormatting';
+
 // /. imports
 
 interface propTypes {
@@ -46,74 +48,50 @@ const NavTemplate: React.FC<propTypes> = props => {
 
     useEffect(() => {
         // set current todo items count for each category
-        const array = [...todosData].filter(
+        const array = todosData.filter(
             item =>
                 item.category.toLowerCase().trim() ===
                 category.toLowerCase().trim()
         );
         setTodoCount(array.length);
-    }, [todosData]);
+    }, [todosData, category]);
 
-    const filterTodoItems = (): void => {
-        switch (category) {
-            case category:
-                dispatch(
-                    setFilterCompareValue({
-                        filterCompareValue: category.toLowerCase().trim()
-                    })
-                ); // update prop for filter.ts func for real-time filtering
-                dispatch(switchNavActiveStatus({ id, status: true }));
-                dispatch(
-                    setSelectNavOption({
-                        option: category.toLowerCase().trim()
-                    })
-                ); // two-way sync with SelectMenu.tsx for correct filtering
+    const isNavLinkAvaliable = !isTodosDataLoading && !error;
 
-                dispatch(setCurrentCategoryID({ id })); // for edit category value of current item of todosData[]
+    const linkContent = `${text} (${
+        makeStringFormatting(category) === 'all' ? todosData.length : todoCount
+    })`;
 
-                dispatch(setInputTitleValue({ title: text.trim() })); // update text content of title__input
-                setEditableStatus(false); // controle titleForm visible condition
-                break;
-            default:
-                dispatch(setFilterCompareValue({ filterCompareValue: 'all' }));
-                dispatch(switchNavActiveStatus({ id, status: true }));
-                dispatch(setSelectNavOption({ option: 'All' }));
+    const onNavLinkClick = (): void => {
+        dispatch(
+            setFilterCompareValue({
+                filterCompareValue: makeStringFormatting(category)
+            })
+        ); // update prop for filter.ts func for real-time filtering
 
-                dispatch(setCurrentCategoryID({ id }));
+        dispatch(switchNavActiveStatus({ id, status: true }));
+        dispatch(
+            setSelectNavOption({
+                option: makeStringFormatting(category)
+            })
+        ); // two-way sync with SelectMenu.tsx for correct filtering
 
-                dispatch(setInputTitleValue({ title: 'All' }));
-                setEditableStatus(false);
-        }
+        dispatch(setCurrentCategoryID({ id })); // for edit category value of current item of todosData[]
+
+        dispatch(setInputTitleValue({ title: text.trim() })); // update text content of title__input
+        setEditableStatus(false); // controle titleForm visible condition
     };
 
     return (
         <li className="nav__item">
             <a
-                className={
-                    isActive
-                        ? 'nav__link active'
-                        : isTodosDataLoading || error
-                        ? 'nav__link disabled'
-                        : 'nav__link'
-                }
+                className={`nav__link ${isActive ? 'active' : ''} ${
+                    isTodosDataLoading || error ? 'disabled' : ''
+                }`}
                 href={link}
-                onClick={() =>
-                    !isTodosDataLoading && !error && filterTodoItems()
-                }
+                onClick={() => isNavLinkAvaliable && onNavLinkClick()}
             >
-                <span
-                    title={`${text} (${
-                        category.toLowerCase().trim() === 'all'
-                            ? todosData.length
-                            : todoCount
-                    })`}
-                >
-                    {`${text} (${
-                        category.toLowerCase().trim() === 'all'
-                            ? todosData.length
-                            : todoCount
-                    })`}
-                </span>
+                <span title={linkContent}>{linkContent}</span>
             </a>
         </li>
     );

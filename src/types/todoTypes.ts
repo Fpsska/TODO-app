@@ -1,8 +1,8 @@
 export interface Itodo {
-    id: number;
+    id: string;
     title: string;
     category: string;
     status: string;
     completed: boolean;
-    editable: boolean
+    editable: boolean;
 }
