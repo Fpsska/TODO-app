@@ -10,7 +10,7 @@ interface propTypes {
 
 export function useAreaHandler({ initialStatus }: propTypes): any {
     const [isVisible, setVisibleStatus] = useState<boolean>(initialStatus);
-    const refEl = useRef<HTMLDivElement>(null!); // valid HTML-el (clickable)
+    const refEl = useRef<HTMLElement>(null!); // valid HTML-el (clickable)
 
     useEffect(() => {
         if (!isVisible) return;

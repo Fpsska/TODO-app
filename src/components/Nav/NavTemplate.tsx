@@ -7,7 +7,7 @@ import { useAppSelector, useAppDispatch } from 'app/hooks';
 import {
     setCurrentCategoryID,
     setCurrentTodosCount,
-    setInputTitleValue,
+    setTaskTitleValue,
     setFilterCompareValue
 } from 'app/slices/todoSlice';
 
@@ -78,7 +78,7 @@ const NavTemplate: React.FC<propTypes> = props => {
 
         dispatch(setCurrentCategoryID({ id })); // for edit category value of current item of todosData[]
 
-        dispatch(setInputTitleValue({ title: text.trim() })); // update text content of title__input
+        dispatch(setTaskTitleValue({ title: text.trim() })); // update text content of title__input
         setEditableStatus(false); // controle titleForm visible condition
     };
 

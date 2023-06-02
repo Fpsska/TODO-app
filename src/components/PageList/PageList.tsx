@@ -29,12 +29,14 @@ const PageList: React.FC = () => {
         isFormVisible,
         isTodosDataEmpty,
         currentTodoID,
-        title,
+        taskTitleValue,
         error
     } = useAppSelector(state => state.todoSlice);
 
     const dispatch = useAppDispatch();
     const modalAreaHandler = useAreaHandler({ initialStatus: false });
+
+    const isGeneralTodoTitle = taskTitleValue.toLowerCase().trim() === 'all';
 
     useEffect(() => {
         dispatch(updateFilteredTodos(todosData));
@@ -92,11 +94,11 @@ const PageList: React.FC = () => {
                 </h2>
             ) : isTodosDataEmpty ? (
                 <>
-                    {title === 'All' ? (
+                    {isGeneralTodoTitle ? (
                         <h1 className="page__message">Task list is empty</h1>
                     ) : (
                         <h1 className="page__message">
-                            {title} task list is empty
+                            {taskTitleValue} task list is empty
                         </h1>
                     )}
                 </>

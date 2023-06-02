@@ -26,6 +26,7 @@ const Modal: React.FC<propTypes> = props => {
               >
                   <button
                       className="modal__button modal__button--close"
+                      type="button"
                       aria-label="close modal"
                       onClick={() => setModalVisibleStatus(false)}
                   >

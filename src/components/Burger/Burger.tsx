@@ -40,6 +40,7 @@ const Burger: React.FC<propTypes> = ({ isVisible, setVisibleStatus }) => {
                     >
                         <button
                             className="burger__button"
+                            type="button"
                             aria-label="close burger menu"
                             onClick={burgerClose}
                         >

@@ -3,12 +3,9 @@ export function filterDataByProperty<T, K extends keyof T>(
     filterProp: K,
     value: string
 ): T[] {
-    switch (value) {
-        case 'all':
-            return array;
-        case value:
-            return array.filter((item: T) => item[filterProp] === value);
-        default:
-            return array;
+    if (value === 'all') {
+        return array;
+    } else {
+        return array.filter((item: T) => item[filterProp] === value);
     }
 }

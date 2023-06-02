@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 
 import { useAppDispatch } from 'app/hooks';
 
-import { setInputTitleValue } from 'app/slices/todoSlice';
+import { setTaskTitleValue } from 'app/slices/todoSlice';
 
 import { Inav } from 'types/navTypes';
 
@@ -33,7 +33,7 @@ const Nav: React.FC<propTypes> = props => {
         // update inputTitleValue
         const cuttentCategory = navTemplatesData.find(item => item.isActive);
         if (cuttentCategory) {
-            dispatch(setInputTitleValue({ title: cuttentCategory.text }));
+            dispatch(setTaskTitleValue({ title: cuttentCategory.text }));
         }
     }, [navTemplatesData]);
 

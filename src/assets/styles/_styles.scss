@@ -197,20 +197,6 @@ body {
             transition: all 0.25s linear;
         }
     }
-
-    &__button--edit {
-        max-width: 16px;
-        left: -2rem;
-        bottom: 0;
-
-        &:hover svg {
-            fill: #C5C5C5;
-        }
-
-        svg {
-            fill: #C5C5C5;
-        }
-    }
 }
 
 .resizer {

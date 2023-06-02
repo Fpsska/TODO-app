@@ -1,12 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import { useAreaHandler } from 'utils/hooks/useAreaHandler';
 
-import {
-    setTitle,
-    findTodosItemByName,
-    addNewTodosItem
-} from 'app/slices/todoSlice';
+import { findTodosItemByName, addNewTodosItem } from 'app/slices/todoSlice';
 
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 
@@ -25,7 +21,7 @@ import 'assets/styles/_media.scss';
 // /. imports
 
 const App: React.FC = () => {
-    const { categoryTemplatesData, filterCompareValue, inputTitleValue } =
+    const { categoryTemplatesData, filterCompareValue, taskTitleValue } =
         useAppSelector(state => state.todoSlice);
 
     const { navTemplatesData, selectTemplatesData } = useAppSelector(
@@ -39,18 +35,9 @@ const App: React.FC = () => {
 
     // /. hooks usage
 
-    useEffect(() => {
-        // update page__message text content
-        dispatch(setTitle({ title: inputTitleValue }));
-    }, [inputTitleValue]);
-
     const openBurger = (e: React.SyntheticEvent): void => {
         e.stopPropagation(); // for correct work of burger hide/show logic
         burgerAreaHandler.setVisibleStatus(true);
-    };
-
-    const editCategoryName = (): void => {
-        titleFormAreaHandler.setVisibleStatus(!titleFormAreaHandler.isVisible);
     };
 
     const onSearchInputChange = (value: string): void => {
@@ -97,6 +84,7 @@ const App: React.FC = () => {
                             {!burgerAreaHandler.isVisible && (
                                 <button
                                     className="page__button page__button--burger"
+                                    type="button"
                                     aria-label="open burger menu"
                                     onClick={e => openBurger(e)}
                                 >
@@ -129,12 +117,12 @@ const App: React.FC = () => {
 
                             <div className="page__header">
                                 <TitleForm
-                                    refEl={titleFormAreaHandler.refEl}
+                                    inputRef={titleFormAreaHandler.refEl}
                                     isEditable={titleFormAreaHandler.isVisible}
                                     setEditableStatus={
                                         titleFormAreaHandler.setVisibleStatus
                                     }
-                                    inputTitleValue={inputTitleValue}
+                                    inputTitleValue={taskTitleValue}
                                     filterCompareValue={filterCompareValue}
                                     navTemplatesData={navTemplatesData}
                                     selectTemplatesData={selectTemplatesData}
@@ -142,28 +130,6 @@ const App: React.FC = () => {
                                         categoryTemplatesData
                                     }
                                 />
-                                <>
-                                    {inputTitleValue !== 'All' && (
-                                        <button
-                                            className="page__button page__button--edit"
-                                            aria-label="edit todo title group"
-                                            onClick={editCategoryName}
-                                        >
-                                            <svg
-                                                width="16"
-                                                height="16"
-                                                viewBox="0 0 16 16"
-                                                fill="none"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                            >
-                                                <path
-                                                    d="M13.23 1H11.77L3.52002 9.25L3.35999 9.46997L1 13.59L2.41003 15L6.53003 12.64L6.75 12.48L15 4.22998V2.77002L13.23 1ZM2.41003 13.59L3.92004 10.59L5.37 12.04L2.41003 13.59ZM6.23999 11.53L4.46997 9.76001L12.47 1.76001L14.24 3.53003L6.23999 11.53Z"
-                                                    fill=""
-                                                />
-                                            </svg>
-                                        </button>
-                                    )}
-                                </>
                                 <TodoForm
                                     role="search"
                                     inputPlaceholder="Find a task"

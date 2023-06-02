@@ -18,8 +18,7 @@ interface todoSliceState {
     isTodosDataEmpty: boolean;
     status: string;
     error: any;
-    title: string;
-    inputTitleValue: string;
+    taskTitleValue: string;
     currentCategoryID: number;
     currentTodosCount: number;
     currentTodoID: string;
@@ -71,8 +70,7 @@ const initialState: todoSliceState = {
     isTodosDataEmpty: true,
     status: '',
     error: null,
-    title: 'All',
-    inputTitleValue: 'All',
+    taskTitleValue: 'All',
     currentCategoryID: 1,
     currentTodoID: '',
     currentTodosCount: 0,
@@ -148,7 +146,7 @@ const todoSlice = createSlice({
             action: PayloadAction<{ filterCompareValue: string }>
         ) {
             const { filterCompareValue } = action.payload;
-            console.log(filterCompareValue);
+            // console.log(filterCompareValue);
             state.filterCompareValue = filterCompareValue;
         },
         editCurrentTodosDataItem(
@@ -173,14 +171,9 @@ const todoSlice = createSlice({
             }
         },
 
-        setTitle(state, action: PayloadAction<{ title: string }>) {
+        setTaskTitleValue(state, action: PayloadAction<{ title: string }>) {
             const { title } = action.payload;
-            state.title = title;
-        },
-        setInputTitleValue(state, action: PayloadAction<{ title: string }>) {
-            const { title } = action.payload;
-            // console.log(title);
-            state.inputTitleValue = title;
+            state.taskTitleValue = title;
         },
 
         setCurrentCategoryID(state, action: PayloadAction<{ id: number }>) {
@@ -290,8 +283,7 @@ export const {
     editCategoryOFCurrentTodosDataItem,
     switchTodosItemEditableStatus,
     switchTodosItemCompleteStatus,
-    setTitle,
-    setInputTitleValue,
+    setTaskTitleValue,
     setCurrentCategoryID,
     addNewCategoryItem,
     editCurrentCategoryTemplateItem,

@@ -42,14 +42,14 @@ const TodoTemplate: React.FC<propTypes> = props => {
         dispatch(switchTodosItemCompleteStatus({ id, status: completed }));
     };
 
-    const editTodoItem = (): void => {
+    const onButtonEditClick = (): void => {
         setModalVisibleStatus(true);
         dispatch(setCurrentTodoID({ id }));
 
-        dispatch(switchTodosItemEditableStatus({ id, status: true })); // set editable css-class
+        dispatch(switchTodosItemEditableStatus({ id, status: true })); // set editable status
     };
 
-    const deleteTodoItem = (): void => {
+    const onButtonDeleteClick = (): void => {
         dispatch(removeTodosItem({ id }));
     };
 
@@ -59,7 +59,6 @@ const TodoTemplate: React.FC<propTypes> = props => {
                 className={`todo__label ${completed ? 'completed' : ''} ${
                     !category ? 'large' : ''
                 }`}
-                onClick={handleCompleteStatus}
                 title={title}
             >
                 <input
@@ -100,7 +99,8 @@ const TodoTemplate: React.FC<propTypes> = props => {
             <div className="todo__controllers">
                 <button
                     className="todo__button todo__button--edit"
-                    onClick={editTodoItem}
+                    onClick={onButtonEditClick}
+                    aria-label="edit todo item"
                 >
                     <svg
                         width="16"
@@ -117,7 +117,8 @@ const TodoTemplate: React.FC<propTypes> = props => {
                 </button>
                 <button
                     className="todo__button todo__button--delete"
-                    onClick={deleteTodoItem}
+                    onClick={onButtonDeleteClick}
+                    aria-label="delete todo item"
                 >
                     <svg
                         width="16"

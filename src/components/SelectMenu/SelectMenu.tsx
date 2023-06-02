@@ -12,7 +12,7 @@ import {
     // setCurrentCategoryID,
     switchTodosItemEditableStatus,
     setFilterCompareValue,
-    setInputTitleValue
+    setTaskTitleValue
 } from 'app/slices/todoSlice';
 
 import SelectTemplate from './SelectTemplate';
@@ -65,7 +65,7 @@ const SelectMenu: React.FC = () => {
                 ); // two-way sync with NavTemplate.tsx for correct filtering
 
                 dispatch(
-                    setInputTitleValue({
+                    setTaskTitleValue({
                         title: [...e.target.childNodes]
                             .find(item => item.value === value)
                             .innerText.trim()
@@ -92,7 +92,7 @@ const SelectMenu: React.FC = () => {
                     })
                 );
 
-                dispatch(setInputTitleValue({ title: 'All' }));
+                dispatch(setTaskTitleValue({ title: 'All' }));
                 dispatch(
                     switchTodosItemEditableStatus({
                         id: currentTodoID,
