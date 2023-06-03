@@ -1,14 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { setSelectNavOption, switchNavActiveStatus } from 'app/slices/navSlice';
 
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 
-import {
-    switchTodosItemEditableStatus,
-    setFilterCompareValue,
-    setTaskTitleValue
-} from 'app/slices/todoSlice';
+import { setFilterCompareValue, setTaskTitleValue } from 'app/slices/todoSlice';
 
 import { makeStringFormatting } from 'utils/helpers/makeStringFormatting';
 
@@ -42,22 +38,23 @@ const SelectMenu: React.FC = () => {
 
         dispatch(setSelectNavOption({ option: value })); // switch nav-select value
 
-        const equalItemOfNavTemplate = navTemplatesData.find(
-            item =>
-                makeStringFormatting(item.category) ===
-                makeStringFormatting(value)
+        dispatch(setTaskTitleValue({ title: value })); // update text content of title__form
+    };
+
+    useEffect(() => {
+        const targetNavTemplate = navTemplatesData.find(
+            item => makeStringFormatting(item.category) === selectNavOption
         );
+
         dispatch(
             switchNavActiveStatus({
-                id: equalItemOfNavTemplate
-                    ? equalItemOfNavTemplate.id
+                id: targetNavTemplate
+                    ? targetNavTemplate.id
                     : navTemplatesData[0].id,
                 status: true
             })
         ); // for equaled displaying nav UI (mobile/desktop)
-
-        dispatch(setTaskTitleValue({ title: value })); // update text content of title__form
-    };
+    }, [navTemplatesData, selectNavOption]);
 
     return (
         <select

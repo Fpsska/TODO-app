@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
-import { switchNavActiveStatus, setSelectNavOption } from 'app/slices/navSlice';
+import {
+    switchNavActiveStatus,
+    setSelectNavOption,
+    setCurrentNavID
+} from 'app/slices/navSlice';
 
 import { useAppSelector, useAppDispatch } from 'app/hooks';
 
@@ -14,8 +18,8 @@ interface propTypes {
     id: number;
     text: string;
     category: string;
-    link?: string;
-    isActive?: boolean;
+    link: string;
+    isActive: boolean;
 }
 
 // /. interfaces
@@ -41,7 +45,7 @@ const NavTemplate: React.FC<propTypes> = props => {
         setTodoCount(array.length);
     }, [todosData, category]);
 
-    const isNavLinkAvaliable = !isTodosDataLoading && !error;
+    const isNavLinkDisabled = isTodosDataLoading || error;
 
     const linkContent = `${text} (${
         makeStringFormatting(category) === 'all' ? todosData.length : todoCount
@@ -64,16 +68,17 @@ const NavTemplate: React.FC<propTypes> = props => {
         // dispatch(setCurrentCategoryID({ id })); // for edit category value of current item of todosData[]
 
         dispatch(setTaskTitleValue({ title: category })); // update text content of title__form
+        dispatch(setCurrentNavID(id));
     };
 
     return (
         <li className="nav__item">
             <a
                 className={`nav__link ${isActive ? 'active' : ''} ${
-                    isTodosDataLoading || error ? 'disabled' : ''
+                    isNavLinkDisabled ? 'disabled' : ''
                 }`}
                 href={link}
-                onClick={() => isNavLinkAvaliable && onNavLinkClick()}
+                onClick={() => !isNavLinkDisabled && onNavLinkClick()}
             >
                 <span title={linkContent}>{linkContent}</span>
             </a>

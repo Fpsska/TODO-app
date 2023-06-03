@@ -4,9 +4,7 @@ import { Inav } from 'types/navTypes';
 
 import { Icategory } from 'types/categoryTypes';
 
-import { Iselect } from 'types/selectTypes';
-
-import { useAppDispatch } from 'app/hooks';
+import { useAppSelector, useAppDispatch } from 'app/hooks';
 
 import { getCurrentArrItem } from 'utils/helpers/getCurrentArrItem';
 
@@ -16,10 +14,13 @@ import {
     setTaskTitleValue,
     setFilterCompareValue
 } from 'app/slices/todoSlice';
+
 import {
     editCurrentNavTemplateItem,
     setSelectNavOption
 } from 'app/slices/navSlice';
+
+import { makeStringFormatting } from 'utils/helpers/makeStringFormatting';
 
 import './titleForm.scss';
 
@@ -32,7 +33,6 @@ interface propTypes {
     setEditableStatus: (arg: boolean) => void;
     filterCompareValue: string;
     navTemplatesData: Inav[];
-    selectTemplatesData: Iselect[];
     categoryTemplatesData: Icategory[];
 }
 
@@ -44,66 +44,67 @@ const TitleForm: React.FC<propTypes> = props => {
         setEditableStatus,
         filterCompareValue,
         navTemplatesData,
-        selectTemplatesData,
         categoryTemplatesData
     } = props;
+
+    const { currentNavID } = useAppSelector(state => state.navSlice);
 
     const [inputValue, setInputValue] = useState<string>(inputTitleValue);
 
     const dispatch = useAppDispatch();
 
-    const isGeneralTodoGroup = inputValue.toLowerCase().trim() === 'all';
+    const isGeneralTodoGroup = makeStringFormatting(inputValue) === 'all';
 
     const formSubmitHandler = (e: React.FormEvent): void => {
         e.preventDefault();
 
-        dispatch(
-            setFilterCompareValue({
-                filterCompareValue: inputValue.toLowerCase().trim()
-            })
-        ); // update filterCompareValue
         dispatch(setTaskTitleValue({ title: inputValue.trim() })); // update title__form text content value
 
         dispatch(
+            setFilterCompareValue({
+                filterCompareValue: makeStringFormatting(inputValue)
+            })
+        ); // correct filtering after updating compared value
+
+        dispatch(
+            setSelectNavOption({
+                option: makeStringFormatting(inputValue)
+            })
+        ); // overwrite actual option value
+
+        dispatch(
             editCurrentNavTemplateItem({
-                // update text, category in navTemplatesData[]
-                id: getCurrentArrItem(
-                    navTemplatesData,
-                    'category',
-                    filterCompareValue
-                )?.id,
+                id: currentNavID,
                 text: inputValue.trim(),
-                category: inputValue.trim()
+                category: makeStringFormatting(inputValue)
             })
         );
+        // update text, category of actual nav element
 
-        dispatch(
-            setSelectNavOption({ option: inputValue.toLowerCase().trim() })
-        ); // switch to actual option after update
+        // dispatch(
+        //     editCurrentCategoryTemplateItem({
+        //         id: getCurrentArrItem(
+        //             categoryTemplatesData,
+        //             'value',
+        //             filterCompareValue
+        //         )?.id,
+        //         text: inputValue.trim(), // displayed in UI
+        //         value: makeStringFormatting(inputValue) // logic
+        //     })
+        // );
+        // update text, value in categoryTemplatesData[] (Modal.tsx)
 
-        dispatch(
-            editCurrentCategoryTemplateItem({
-                // update text, value in categoryTemplatesData[] / Modal.tsx
-                id: getCurrentArrItem(
-                    categoryTemplatesData,
-                    'value',
-                    filterCompareValue
-                )?.id,
-                text: inputValue.trim(), // displayed in UI
-                value: inputValue.toLowerCase().trim() // logic
-            })
-        );
+        // dispatch(
+        //     editCategoryOFCurrentTodosDataItem({
+        //         // update category value of each todosData[] item who prev category is equal prev title value
+        //         categoryProp: filterCompareValue,
+        //         categoryValue: inputValue
+        //             ? makeStringFormatting(inputValue)
+        //             : ''
+        //     })
+        // );
 
-        dispatch(
-            editCategoryOFCurrentTodosDataItem({
-                // update category value of each todosData[] item who prev category is equal prev title value
-                categoryProp: filterCompareValue,
-                categoryValue: inputValue ? inputValue.toLowerCase().trim() : ''
-            })
-        );
-
-        // disable editing after submit form
-        setEditableStatus(false);
+        setEditableStatus(false); // disable editing after submit form
     };
 
     const onEditButtonClick = (): void => {

@@ -146,7 +146,7 @@ const todoSlice = createSlice({
             action: PayloadAction<{ filterCompareValue: string }>
         ) {
             const { filterCompareValue } = action.payload;
-            // console.log(filterCompareValue);
+            // console.log('filterCompareValue:', filterCompareValue);
             state.filterCompareValue = filterCompareValue;
         },
         editCurrentTodosDataItem(

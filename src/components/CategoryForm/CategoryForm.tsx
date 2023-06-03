@@ -9,6 +9,9 @@ import { useAppDispatch, useAppSelector } from 'app/hooks';
 
 import { addNavTemplateItem } from 'app/slices/navSlice';
 
+import { generateUniqueID } from 'utils/helpers/generateUniqueID';
+import { makeStringFormatting } from 'utils/helpers/makeStringFormatting';
+
 import './categoryForm.scss';
 
 // /. imports
@@ -24,23 +27,26 @@ const CategoryForm: React.FC = () => {
 
     const formRef = useRef<HTMLFormElement>(null!);
 
+    const isFormAvailable = inputValue && !isTodosDataLoading && !error;
+    const isControlsAvailable = !isTodosDataLoading && !error;
+
     const formSubmitHandler = (e: React.FormEvent): void => {
         e.preventDefault();
 
         dispatch(
             addNewCategoryItem({
-                id: +new Date(),
+                id: generateUniqueID(),
                 text: inputValue.trim(),
-                value: inputValue.toLocaleLowerCase().trim(),
+                value: makeStringFormatting(inputValue),
                 name: 'category'
             })
         );
 
         dispatch(
             addNavTemplateItem({
-                id: +new Date(),
+                id: generateUniqueID(),
                 text: inputValue.trim(),
-                category: inputValue.toLocaleLowerCase().trim(),
+                category: makeStringFormatting(inputValue),
                 link: '#',
                 isActive: false
             })
@@ -53,6 +59,10 @@ const CategoryForm: React.FC = () => {
         setInputValue('');
     };
 
+    const onButtonShowClick = (): void => {
+        dispatch(switchFormVisibleStatus({ status: !isFormVisible }));
+    };
+
     return (
         <div className="category">
             <button
@@ -61,11 +71,8 @@ const CategoryForm: React.FC = () => {
                         ? 'category__button visible'
                         : 'category__button'
                 }
-                onClick={() =>
-                    dispatch(
-                        switchFormVisibleStatus({ status: !isFormVisible })
-                    )
-                }
+                type="button"
+                onClick={onButtonShowClick}
             >
                 <svg
                     width="12"
@@ -96,25 +103,21 @@ const CategoryForm: React.FC = () => {
                 <form
                     ref={formRef}
                     className="category__form"
-                    onSubmit={e =>
-                        inputValue &&
-                        !isTodosDataLoading &&
-                        !error &&
-                        formSubmitHandler(e)
-                    }
+                    onSubmit={e => isFormAvailable && formSubmitHandler(e)}
+                    action="#"
                 >
                     <input
                         className="input category__input"
                         type="text"
                         placeholder="Name of new group"
                         onChange={e => setInputValue(e.target.value)}
-                        disabled={isTodosDataLoading || error}
+                        disabled={!isControlsAvailable}
                         required
                     />
 
                     <button
                         className="category__button category__button--form"
-                        disabled={isTodosDataLoading || error}
+                        disabled={!isControlsAvailable}
                     >
                         Create
                     </button>

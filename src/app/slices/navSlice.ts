@@ -6,6 +6,7 @@ import { Inav } from 'types/navTypes';
 
 interface navSliceState {
     navTemplatesData: Inav[];
+    currentNavID: number;
     selectNavOption: string;
 }
 
@@ -48,6 +49,7 @@ const navStorageData = JSON.parse(
 
 const initialState: navSliceState = {
     navTemplatesData: navStorageData,
+    currentNavID: 0,
     selectNavOption: 'All'
 };
 
@@ -67,6 +69,9 @@ const navSlice = createSlice({
                     ? (item.isActive = status)
                     : (item.isActive = false)
             );
+        },
+        setCurrentNavID(state, action: PayloadAction<number>) {
+            state.currentNavID = action.payload;
         },
         addNavTemplateItem(state, action: PayloadAction<any>) {
             state.navTemplatesData.push(action.payload);
@@ -91,7 +96,7 @@ const navSlice = createSlice({
         },
         setSelectNavOption(state, action: PayloadAction<{ option: string }>) {
             const { option } = action.payload;
-            console.log('option:', option);
+            // console.log('option:', option);
             state.selectNavOption = option;
         }
     }
@@ -99,6 +104,7 @@ const navSlice = createSlice({
 
 export const {
     editCurrentNavTemplateItem,
+    setCurrentNavID,
     switchNavActiveStatus,
     addNavTemplateItem,
     setSelectNavOption
