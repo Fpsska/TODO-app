@@ -4,12 +4,7 @@ import { switchNavActiveStatus, setSelectNavOption } from 'app/slices/navSlice';
 
 import { useAppSelector, useAppDispatch } from 'app/hooks';
 
-import {
-    setCurrentCategoryID,
-    setCurrentTodosCount,
-    setTaskTitleValue,
-    setFilterCompareValue
-} from 'app/slices/todoSlice';
+import { setTaskTitleValue, setFilterCompareValue } from 'app/slices/todoSlice';
 
 import { makeStringFormatting } from 'utils/helpers/makeStringFormatting';
 
@@ -19,24 +14,14 @@ interface propTypes {
     id: number;
     text: string;
     category: string;
-    link: string;
-    isActive: boolean;
-
-    setEditableStatus: (arg: boolean) => void;
+    link?: string;
+    isActive?: boolean;
 }
 
 // /. interfaces
 
 const NavTemplate: React.FC<propTypes> = props => {
-    const {
-        id,
-        text,
-        category,
-        link,
-        isActive,
-
-        setEditableStatus
-    } = props;
+    const { id, text, category, link, isActive } = props;
 
     const { todosData, error, isTodosDataLoading } = useAppSelector(
         state => state.todoSlice
@@ -67,19 +52,18 @@ const NavTemplate: React.FC<propTypes> = props => {
             setFilterCompareValue({
                 filterCompareValue: makeStringFormatting(category)
             })
-        ); // update prop for filter.ts func for real-time filtering
+        ); // update prop for real-time filtering
 
         dispatch(switchNavActiveStatus({ id, status: true }));
         dispatch(
             setSelectNavOption({
                 option: makeStringFormatting(category)
             })
-        ); // two-way sync with SelectMenu.tsx for correct filtering
+        ); // for equaled displaying nav UI (mobile/desktop)
 
-        dispatch(setCurrentCategoryID({ id })); // for edit category value of current item of todosData[]
+        // dispatch(setCurrentCategoryID({ id })); // for edit category value of current item of todosData[]
 
-        dispatch(setTaskTitleValue({ title: text.trim() })); // update text content of title__input
-        setEditableStatus(false); // controle titleForm visible condition
+        dispatch(setTaskTitleValue({ title: category })); // update text content of title__form
     };
 
     return (

@@ -18,7 +18,6 @@ import {
 } from 'app/slices/todoSlice';
 import {
     editCurrentNavTemplateItem,
-    editCurrentNavSelectTemplateItem,
     setSelectNavOption
 } from 'app/slices/navSlice';
 
@@ -79,18 +78,6 @@ const TitleForm: React.FC<propTypes> = props => {
         );
 
         dispatch(
-            editCurrentNavSelectTemplateItem({
-                // update text, value in selectTemplatesData[]
-                id: getCurrentArrItem(
-                    selectTemplatesData,
-                    'value',
-                    filterCompareValue
-                )?.id,
-                text: inputValue.trim(), // displayed in UI
-                value: inputValue.trim() // logic
-            })
-        );
-        dispatch(
             setSelectNavOption({ option: inputValue.toLowerCase().trim() })
         ); // switch to actual option after update
 
@@ -124,13 +111,12 @@ const TitleForm: React.FC<propTypes> = props => {
     };
 
     useEffect(() => {
-        setInputValue(inputTitleValue);
-    }, [inputTitleValue]);
-
-    useEffect(() => {
         // save current input value when user is leave from editing mode without saving
         if (!isEditable) {
-            setInputValue(inputTitleValue);
+            const capitalizedTitle =
+                inputTitleValue.charAt(0).toUpperCase() +
+                inputTitleValue.slice(1);
+            setInputValue(capitalizedTitle.trimStart());
         }
     }, [isEditable, inputTitleValue]);
 
@@ -153,7 +139,7 @@ const TitleForm: React.FC<propTypes> = props => {
                         }
                         type="text"
                         title={`${inputValue} Tasks`}
-                        value={inputValue.trimStart()}
+                        value={inputValue}
                         onChange={e => setInputValue(e.target.value)}
                     />
                 </form>

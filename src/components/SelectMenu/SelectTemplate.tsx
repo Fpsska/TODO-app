@@ -1,19 +1,21 @@
 import React from 'react';
 
+import { makeStringFormatting } from 'utils/helpers/makeStringFormatting';
+
 // /. imports
 
 interface propTypes {
     text: string;
-    value: string;
+    category: string;
 }
 
 // /. interfaces
 
-const SelectTemplate: React.FC<propTypes> = ({ text, value }) => {
+const SelectTemplate: React.FC<propTypes> = ({ text, category }) => {
     return (
         <option
             className="nav-select__item"
-            value={value.toLowerCase().trim()}
+            value={makeStringFormatting(category)}
         >
             {text}
         </option>

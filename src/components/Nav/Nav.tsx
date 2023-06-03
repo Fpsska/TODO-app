@@ -14,27 +14,27 @@ import './nav.scss';
 
 interface propTypes {
     navTemplatesData: Inav[];
-    setEditableStatus: (arg: boolean) => void;
 }
 
 // /. interfaces
 
 const Nav: React.FC<propTypes> = props => {
-    const { setEditableStatus, navTemplatesData } = props;
+    const { navTemplatesData } = props;
 
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        // update navDataFromStorage value
         localStorage.setItem(
             'navDataFromStorage',
             JSON.stringify(navTemplatesData)
         );
-        // update inputTitleValue
+        // update navDataFromStorage value
+
         const cuttentCategory = navTemplatesData.find(item => item.isActive);
         if (cuttentCategory) {
             dispatch(setTaskTitleValue({ title: cuttentCategory.text }));
         }
+        // update inputTitleValue
     }, [navTemplatesData]);
 
     return (
@@ -45,7 +45,6 @@ const Nav: React.FC<propTypes> = props => {
                         <NavTemplate
                             key={item.id}
                             {...item}
-                            setEditableStatus={setEditableStatus}
                         />
                     );
                 })}

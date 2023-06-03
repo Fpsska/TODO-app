@@ -7,7 +7,7 @@ import {
 
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 
-import { addNavTemplateItem, addNewSelectItem } from 'app/slices/navSlice';
+import { addNavTemplateItem } from 'app/slices/navSlice';
 
 import './categoryForm.scss';
 
@@ -43,14 +43,6 @@ const CategoryForm: React.FC = () => {
                 category: inputValue.toLocaleLowerCase().trim(),
                 link: '#',
                 isActive: false
-            })
-        );
-
-        dispatch(
-            addNewSelectItem({
-                id: +new Date(),
-                text: inputValue.trim(),
-                value: inputValue.toLocaleLowerCase().trim()
             })
         );
 

@@ -58,15 +58,16 @@ const PageList: React.FC = () => {
     }, [todosData, filterCompareValue]);
 
     useEffect(() => {
-        // remove editable status when modal is hidden
-        !modalAreaHandler.isVisible &&
+        // remove editable status of todo item when modal is hidden
+        if (!modalAreaHandler.isVisible) {
             dispatch(
                 switchTodosItemEditableStatus({
                     id: currentTodoID,
                     status: false
                 })
             );
-    }, [modalAreaHandler.isVisible]);
+        }
+    }, [modalAreaHandler.isVisible, currentTodoID]);
 
     return (
         <div className="page__list">

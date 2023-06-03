@@ -1,13 +1,11 @@
-import { createSlice, PayloadAction, current } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { Inav } from 'types/navTypes';
-import { Iselect } from 'types/selectTypes';
 
 // /. imports
 
 interface navSliceState {
     navTemplatesData: Inav[];
-    selectTemplatesData: Iselect[];
     selectNavOption: string;
 }
 
@@ -43,39 +41,13 @@ const navTemplates = [
         isActive: false
     }
 ];
-const selectNavTemplates = [
-    {
-        id: 1,
-        text: 'All',
-        value: '   aLL '
-    },
-    {
-        id: 2,
-        text: '     Groceries  ',
-        value: '   groceries'
-    },
-    {
-        id: 3,
-        text: 'College',
-        value: 'COLLEGE   '
-    },
-    {
-        id: 4,
-        text: 'Payments',
-        value: 'PaYmEnTs'
-    }
-];
+
 const navStorageData = JSON.parse(
     localStorage.getItem('navDataFromStorage') || JSON.stringify(navTemplates)
-);
-const selectNavStorageData = JSON.parse(
-    localStorage.getItem('selectNavDataFromStorage') ||
-    JSON.stringify(selectNavTemplates)
 );
 
 const initialState: navSliceState = {
     navTemplatesData: navStorageData,
-    selectTemplatesData: selectNavStorageData,
     selectNavOption: 'All'
 };
 
@@ -117,25 +89,9 @@ const navSlice = createSlice({
                 currentNavItem.category = category;
             }
         },
-        addNewSelectItem(state, action: PayloadAction<any>) {
-            state.selectTemplatesData.push(action.payload);
-        },
-        editCurrentNavSelectTemplateItem(
-            state,
-            action: PayloadAction<{ id: number; text: string; value: string }>
-        ) {
-            const { id, text, value } = action.payload;
-
-            const currentCategoryItem = state.selectTemplatesData.find(
-                item => item.id === id
-            );
-            if (currentCategoryItem) {
-                currentCategoryItem.text = text;
-                currentCategoryItem.value = value;
-            }
-        },
         setSelectNavOption(state, action: PayloadAction<{ option: string }>) {
             const { option } = action.payload;
+            console.log('option:', option);
             state.selectNavOption = option;
         }
     }
@@ -145,8 +101,6 @@ export const {
     editCurrentNavTemplateItem,
     switchNavActiveStatus,
     addNavTemplateItem,
-    addNewSelectItem,
-    editCurrentNavSelectTemplateItem,
     setSelectNavOption
 } = navSlice.actions;
 

@@ -173,6 +173,7 @@ const todoSlice = createSlice({
 
         setTaskTitleValue(state, action: PayloadAction<{ title: string }>) {
             const { title } = action.payload;
+            // console.log(title);
             state.taskTitleValue = title;
         },
 

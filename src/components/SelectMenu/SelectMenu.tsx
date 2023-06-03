@@ -1,19 +1,18 @@
-import React, { useEffect } from 'react';
-
-import { getCurrentArrItem } from 'utils/helpers/getCurrentArrItem';
+import React from 'react';
 
 import { setSelectNavOption, switchNavActiveStatus } from 'app/slices/navSlice';
-
-import { Iselect } from 'types/selectTypes';
 
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 
 import {
-    // setCurrentCategoryID,
     switchTodosItemEditableStatus,
     setFilterCompareValue,
     setTaskTitleValue
 } from 'app/slices/todoSlice';
+
+import { makeStringFormatting } from 'utils/helpers/makeStringFormatting';
+
+import { Inav } from 'types/navTypes';
 
 import SelectTemplate from './SelectTemplate';
 
@@ -22,98 +21,54 @@ import './select.scss';
 // /. imports
 
 const SelectMenu: React.FC = () => {
-    const {
-        todosData,
-        filterCompareValue,
-        currentTodoID,
-        isTodosDataLoading,
-        currentTodosCount,
-        error
-    } = useAppSelector(state => state.todoSlice);
+    const { isTodosDataLoading, error } = useAppSelector(
+        state => state.todoSlice
+    );
 
-    const { selectTemplatesData, selectNavOption, navTemplatesData } =
-        useAppSelector(state => state.navSlice);
+    const { selectNavOption, navTemplatesData } = useAppSelector(
+        state => state.navSlice
+    );
 
     const dispatch = useAppDispatch();
 
-    useEffect(() => {
-        // update selectNavDataFromStorage value
-        localStorage.setItem(
-            'selectNavDataFromStorage',
-            JSON.stringify(selectTemplatesData)
+    const isSelectAvailable = !isTodosDataLoading && !error;
+
+    const selectMenuHandler = (value: string): void => {
+        dispatch(
+            setFilterCompareValue({
+                filterCompareValue: makeStringFormatting(value)
+            })
+        ); // update prop for real-time filtering
+
+        dispatch(setSelectNavOption({ option: value })); // switch nav-select value
+
+        const equalItemOfNavTemplate = navTemplatesData.find(
+            item =>
+                makeStringFormatting(item.category) ===
+                makeStringFormatting(value)
         );
-    }, [selectTemplatesData, navTemplatesData]);
+        dispatch(
+            switchNavActiveStatus({
+                id: equalItemOfNavTemplate
+                    ? equalItemOfNavTemplate.id
+                    : navTemplatesData[0].id,
+                status: true
+            })
+        ); // for equaled displaying nav UI (mobile/desktop)
 
-    const selectMenuHandler = (value: string, e: any): void => {
-        switch (value) {
-            case value:
-                dispatch(
-                    setFilterCompareValue({
-                        filterCompareValue: value.toLowerCase().trim()
-                    })
-                ); // update prop for filter.ts func for real-time filtering
-                dispatch(setSelectNavOption({ option: value })); // switch nav-select value
-                dispatch(
-                    switchNavActiveStatus({
-                        id: getCurrentArrItem(
-                            navTemplatesData,
-                            'category',
-                            value.toLowerCase().trim()
-                        )?.id,
-                        status: true
-                    })
-                ); // two-way sync with NavTemplate.tsx for correct filtering
-
-                dispatch(
-                    setTaskTitleValue({
-                        title: [...e.target.childNodes]
-                            .find(item => item.value === value)
-                            .innerText.trim()
-                    })
-                ); // update text comtent of title__input
-                dispatch(
-                    switchTodosItemEditableStatus({
-                        id: currentTodoID,
-                        status: false
-                    })
-                ); // disable editable todo when filtering todosData[]
-                break;
-            default:
-                dispatch(setFilterCompareValue({ filterCompareValue: 'all' }));
-                dispatch(setSelectNavOption({ option: 'All' }));
-                dispatch(
-                    switchNavActiveStatus({
-                        id: getCurrentArrItem(
-                            navTemplatesData,
-                            'category',
-                            'all'
-                        )?.id,
-                        status: true
-                    })
-                );
-
-                dispatch(setTaskTitleValue({ title: 'All' }));
-                dispatch(
-                    switchTodosItemEditableStatus({
-                        id: currentTodoID,
-                        status: false
-                    })
-                );
-        }
+        dispatch(setTaskTitleValue({ title: value })); // update text content of title__form
     };
 
     return (
         <select
             className="nav-select"
             value={selectNavOption}
-            disabled={isTodosDataLoading || error}
+            disabled={!isSelectAvailable}
             onChange={e =>
-                !isTodosDataLoading &&
-                !error &&
-                selectMenuHandler(e.target.value, e)
+                isSelectAvailable && selectMenuHandler(e.target.value)
             }
         >
-            {selectTemplatesData.map((item: Iselect) => {
+            {navTemplatesData.map((item: Inav) => {
                 return (
                     <SelectTemplate
                         key={item.id}

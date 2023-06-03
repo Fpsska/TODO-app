@@ -41,10 +41,7 @@ const NavLayout: React.FC<propTypes> = props => {
                     <SelectMenu />
                 </nav>
             ) : (
-                <Nav
-                    navTemplatesData={navTemplatesData}
-                    setEditableStatus={setEditableStatus}
-                />
+                <Nav navTemplatesData={navTemplatesData} />
             )}
             <div className="page__category-form">
                 <CategoryForm />
