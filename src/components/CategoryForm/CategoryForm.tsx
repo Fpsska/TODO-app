@@ -36,9 +36,8 @@ const CategoryForm: React.FC = () => {
         dispatch(
             addNewCategoryItem({
                 id: generateUniqueID(),
-                text: inputValue.trim(),
-                value: makeStringFormatting(inputValue),
-                name: 'category'
+                name: 'category',
+                value: makeStringFormatting(inputValue)
             })
         );
 

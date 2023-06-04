@@ -24,9 +24,7 @@ const App: React.FC = () => {
     const { categoryTemplatesData, filterCompareValue, taskTitleValue } =
         useAppSelector(state => state.todoSlice);
 
-    const { navTemplatesData, selectTemplatesData } = useAppSelector(
-        state => state.navSlice
-    );
+    const { navTemplatesData } = useAppSelector(state => state.navSlice);
 
     const dispatch = useAppDispatch();
 
@@ -125,7 +123,6 @@ const App: React.FC = () => {
                                     inputTitleValue={taskTitleValue}
                                     filterCompareValue={filterCompareValue}
                                     navTemplatesData={navTemplatesData}
-                                    selectTemplatesData={selectTemplatesData}
                                     categoryTemplatesData={
                                         categoryTemplatesData
                                     }

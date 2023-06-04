@@ -38,6 +38,8 @@ const TodoTemplate: React.FC<propTypes> = props => {
 
     const dispatch = useAppDispatch();
 
+    const isCategoryExisted = category && category !== 'none';
+
     const handleCompleteStatus = (): void => {
         dispatch(switchTodosItemCompleteStatus({ id, status: completed }));
     };
@@ -80,7 +82,7 @@ const TodoTemplate: React.FC<propTypes> = props => {
                 </span>
             </label>
 
-            {category ? (
+            {isCategoryExisted ? (
                 <span
                     className={`todo__category ${status}`}
                     title={`#${category}`}
@@ -91,9 +93,7 @@ const TodoTemplate: React.FC<propTypes> = props => {
                 <span
                     className={`todo__indicator ${status}`}
                     title="uncategorized"
-                >
-                    {category}
-                </span>
+                ></span>
             )}
 
             <div className="todo__controllers">

@@ -39,8 +39,8 @@ const NavTemplate: React.FC<propTypes> = props => {
         // set current todo items count for each category
         const array = todosData.filter(
             item =>
-                item.category.toLowerCase().trim() ===
-                category.toLowerCase().trim()
+                makeStringFormatting(item.category) ===
+                makeStringFormatting(category)
         );
         setTodoCount(array.length);
     }, [todosData, category]);
@@ -64,8 +64,6 @@ const NavTemplate: React.FC<propTypes> = props => {
                 option: makeStringFormatting(category)
             })
         ); // for equaled displaying nav UI (mobile/desktop)
-
-        // dispatch(setCurrentCategoryID({ id })); // for edit category value of current item of todosData[]
 
         dispatch(setTaskTitleValue({ title: category })); // update text content of title__form
         dispatch(setCurrentNavID(id));

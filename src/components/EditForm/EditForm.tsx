@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
 
-import { getCurrentArrItem } from 'utils/helpers/getCurrentArrItem';
-
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 
 import {
     editCurrentTodosDataItem,
     switchTodosItemEditableStatus
 } from 'app/slices/todoSlice';
+
+import CustomRadioInput from 'components/CustomRadioInput/CustomRadioInput';
+
+import { Icategory } from 'types/categoryTypes';
+import { Istatus } from 'types/statusTypes';
 
 import './edit-form.scss';
 
@@ -17,14 +20,15 @@ interface propTypes {
     setModalVisibleStatus: (arg: boolean) => void;
 }
 
-const EditForm: React.FC<propTypes> = ({ setModalVisibleStatus }) => {
-    const { categoryTemplatesData, todosData, currentTodoID } = useAppSelector(
-        state => state.todoSlice
-    );
+// /. interfaces
 
-    const { navTemplatesData, selectTemplatesData } = useAppSelector(
-        state => state.navSlice
-    );
+const EditForm: React.FC<propTypes> = ({ setModalVisibleStatus }) => {
+    const {
+        categoryTemplatesData,
+        todosData,
+        statusTemplatesData,
+        currentTodoID
+    } = useAppSelector(state => state.todoSlice);
 
     const [inputValue, setInputValue] = useState<string>('');
     const [inputRadioCategoryValue, setInputRadioCategoryValue] =
@@ -34,16 +38,12 @@ const EditForm: React.FC<propTypes> = ({ setModalVisibleStatus }) => {
 
     const dispatch = useAppDispatch();
 
-    const formSubmitHandler = (e: React.SyntheticEvent): void => {
-        e.preventDefault();
-
+    const formSubmitHandler = (): void => {
         dispatch(
             editCurrentTodosDataItem({
                 id: currentTodoID,
                 title: inputValue,
-                category: !inputRadioCategoryValue
-                    ? ''
-                    : inputRadioCategoryValue.toLowerCase(),
+                category: inputRadioCategoryValue.toLowerCase(),
                 status: inputRadioStatusValue
             })
         );
@@ -51,7 +51,7 @@ const EditForm: React.FC<propTypes> = ({ setModalVisibleStatus }) => {
         setModalVisibleStatus(false);
     };
 
-    const cancelForm = (): void => {
+    const onButtonCancelClick = (): void => {
         dispatch(
             switchTodosItemEditableStatus({
                 id: currentTodoID,
@@ -62,19 +62,15 @@ const EditForm: React.FC<propTypes> = ({ setModalVisibleStatus }) => {
     };
 
     useEffect(() => {
-        console.log(inputRadioCategoryValue);
-    }, [inputRadioCategoryValue]);
+        // display initial todo item properties if changes is not applied
+        const targetTodo = todosData.find(item => item.id === currentTodoID);
 
-    useEffect(() => {
-        // display, save initial todo item properties if changes is not accepted/not did
-        setInputValue(getCurrentArrItem(todosData, 'id', currentTodoID)?.title);
-        setInputRadioCategoryValue(
-            getCurrentArrItem(todosData, 'id', currentTodoID)?.category
-        );
-        setInputRadioStatusValue(
-            getCurrentArrItem(todosData, 'id', currentTodoID)?.status
-        );
-    }, [currentTodoID]);
+        if (targetTodo) {
+            setInputValue(targetTodo.title);
+            setInputRadioCategoryValue(targetTodo.category);
+            setInputRadioStatusValue(targetTodo.status);
+        }
+    }, [todosData, currentTodoID]);
 
     useEffect(() => {
         // update categoryDataFromStorage value
@@ -82,12 +78,12 @@ const EditForm: React.FC<propTypes> = ({ setModalVisibleStatus }) => {
             'categoryDataFromStorage',
             JSON.stringify(categoryTemplatesData)
         );
-    }, [categoryTemplatesData, navTemplatesData, selectTemplatesData]);
+    }, [categoryTemplatesData]);
 
     return (
         <form
             className="edit-form"
-            onSubmit={e => inputValue && formSubmitHandler(e)}
+            onSubmit={e => e.preventDefault()}
             action="#"
         >
             <fieldset className="edit-form__inputs">
@@ -107,31 +103,16 @@ const EditForm: React.FC<propTypes> = ({ setModalVisibleStatus }) => {
                     <legend className="edit-form__title">Category:</legend>
 
                     <>
-                        {categoryTemplatesData.map(item => {
+                        {categoryTemplatesData.map((item: Icategory) => {
                             return (
-                                <label
-                                    className="edit-form__label"
+                                <CustomRadioInput
                                     key={item.id}
-                                >
-                                    <input
-                                        className="edit-form__radio"
-                                        type="radio"
-                                        name={item.name}
-                                        value={item.value}
-                                        onChange={e =>
-                                            setInputRadioCategoryValue(
-                                                e.target.value
-                                            )
-                                        }
-                                    />
-                                    <span className="edit-form__radio--fake"></span>
-                                    <span
-                                        className="edit-form__radio--text"
-                                        title={item.text}
-                                    >
-                                        {item.text}
-                                    </span>
-                                </label>
+                                    {...item}
+                                    inputRadioValue={inputRadioCategoryValue}
+                                    onInputChangeEvent={
+                                        setInputRadioCategoryValue
+                                    }
+                                />
                             );
                         })}
                     </>
@@ -139,73 +120,35 @@ const EditForm: React.FC<propTypes> = ({ setModalVisibleStatus }) => {
 
                 <fieldset className="edit-form__statuses">
                     <legend className="edit-form__title">Status:</legend>
-
-                    <label className="edit-form__label">
-                        <input
-                            className="edit-form__radio"
-                            type="radio"
-                            name="status"
-                            value="waiting"
-                            onChange={e =>
-                                setInputRadioStatusValue(e.target.value)
-                            }
-                        />
-                        <span className="edit-form__radio--fake"></span>
-                        <span className="edit-form__label-text waiting">
-                            waiting
-                        </span>
-                    </label>
-                    <label className="edit-form__label">
-                        <input
-                            className="edit-form__radio"
-                            type="radio"
-                            name="status"
-                            value="process"
-                            onChange={e =>
-                                setInputRadioStatusValue(e.target.value)
-                            }
-                        />
-                        <span className="edit-form__radio--fake"></span>
-                        <span className="edit-form__label-text process">
-                            process
-                        </span>
-                    </label>
-                    <label className="edit-form__label">
-                        <input
-                            className="edit-form__radio"
-                            type="radio"
-                            name="status"
-                            value="done"
-                            onChange={e =>
-                                setInputRadioStatusValue(e.target.value)
-                            }
-                        />
-                        <span className="edit-form__radio--fake"></span>
-                        <span className="edit-form__label-text done">done</span>
-                    </label>
-                    <label className="edit-form__label">
-                        <input
-                            className="edit-form__radio"
-                            type="radio"
-                            name="status"
-                            value="none"
-                            onChange={e =>
-                                setInputRadioStatusValue(e.target.value)
-                            }
-                        />
-                        <span className="edit-form__radio--fake"></span>
-                        <span className="edit-form__label-text">none</span>
-                    </label>
+                    <>
+                        {statusTemplatesData.map((item: Istatus) => {
+                            return (
+                                <CustomRadioInput
+                                    key={item.id}
+                                    {...item}
+                                    inputRadioValue={inputRadioStatusValue}
+                                    onInputChangeEvent={
+                                        setInputRadioStatusValue
+                                    }
+                                />
+                            );
+                        })}
+                    </>
                 </fieldset>
             </div>
 
             <div className="edit-form__controllers">
-                <button className="edit-form__button edit-form__button--save">
+                <button
+                    className="edit-form__button edit-form__button--save"
+                    type="button"
+                    onClick={formSubmitHandler}
+                >
                     Ok
                 </button>
                 <button
                     className="edit-form__button edit-form__button--cancel"
-                    onClick={cancelForm}
+                    type="button"
+                    onClick={onButtonCancelClick}
                 >
                     Cancel
                 </button>

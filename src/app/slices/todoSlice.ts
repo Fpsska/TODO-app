@@ -1,18 +1,21 @@
 import { createSlice, PayloadAction, current } from '@reduxjs/toolkit';
 
 import { getRandomArrElement } from 'utils/helpers/getRandomArrElement';
+import { makeStringFormatting } from 'utils/helpers/makeStringFormatting';
 
 import { Itodo } from 'types/todoTypes';
 import { Icategory } from 'types/categoryTypes';
+import { Istatus } from 'types/statusTypes';
 
 import { fetchTodosData } from 'app/api/fetchTodosData';
 
 // /. imports
 
-interface todoSliceState {
+interface todoSliceTypes {
     todosData: Itodo[];
     filteredTodosData: Itodo[];
     categoryTemplatesData: Icategory[];
+    statusTemplatesData: Istatus[];
     isTodosDataLoading: boolean;
     isFormVisible: boolean;
     isTodosDataEmpty: boolean;
@@ -31,26 +34,22 @@ const categoryTemplates = [
     {
         id: 1,
         name: 'category',
-        text: 'groceries',
         value: 'groceries'
     },
     {
         id: 2,
         name: 'category',
-        text: 'college',
         value: 'COLLEGE'
     },
     {
         id: 3,
         name: 'category',
-        text: 'payments',
         value: 'payments'
     },
     {
         id: 4,
         name: 'category',
-        text: 'none',
-        value: ''
+        value: 'none'
     }
 ];
 const todosStorageData = JSON.parse(
@@ -61,10 +60,32 @@ const categoryStorageData = JSON.parse(
     JSON.stringify(categoryTemplates)
 );
 
-const initialState: todoSliceState = {
+const initialState: todoSliceTypes = {
     todosData: todosStorageData,
     filteredTodosData: todosStorageData,
     categoryTemplatesData: categoryStorageData,
+    statusTemplatesData: [
+        {
+            id: 1,
+            name: 'status',
+            value: 'waiting'
+        },
+        {
+            id: 2,
+            name: 'status',
+            value: 'process'
+        },
+        {
+            id: 3,
+            name: 'status',
+            value: 'done'
+        },
+        {
+            id: 4,
+            name: 'status',
+            value: 'none'
+        }
+    ],
     isTodosDataLoading: true,
     isFormVisible: false,
     isTodosDataEmpty: true,
@@ -94,20 +115,19 @@ const todoSlice = createSlice({
             state.filteredTodosData = action.payload;
         },
 
-        editCategoryOFCurrentTodosDataItem(
+        updateCategoryOfTodoItems(
             state,
             action: PayloadAction<{
                 categoryProp: string;
-                categoryValue: string;
+                newCategoryValue: string;
             }>
         ) {
-            const { categoryProp, categoryValue } = action.payload; // //  categoryProp - logic / categoryValue - UI
-
+            const { categoryProp, newCategoryValue } = action.payload;
             const validTodosArray = state.todosData.filter(
-                item => item.category.toLowerCase() === categoryProp
+                item => makeStringFormatting(item.category) === categoryProp
             );
             if (validTodosArray) {
-                validTodosArray.map(item => (item.category = categoryValue));
+                validTodosArray.map(item => (item.category = newCategoryValue));
             }
         },
         switchTodosItemEditableStatus(
@@ -146,7 +166,6 @@ const todoSlice = createSlice({
             action: PayloadAction<{ filterCompareValue: string }>
         ) {
             const { filterCompareValue } = action.payload;
-            // console.log('filterCompareValue:', filterCompareValue);
             state.filterCompareValue = filterCompareValue;
         },
         editCurrentTodosDataItem(
@@ -186,23 +205,22 @@ const todoSlice = createSlice({
         },
         editCurrentCategoryTemplateItem(
             state,
-            action: PayloadAction<{ id: number; text: string; value: string }>
+            action: PayloadAction<{ id: number; value: string }>
         ) {
-            const { id, text, value } = action.payload;
+            const { id, value } = action.payload;
 
             const currentCategoryItem = state.categoryTemplatesData.find(
                 item => item.id === id
             );
             if (currentCategoryItem) {
-                currentCategoryItem.text = text;
                 currentCategoryItem.value = value;
             }
         },
+
         setCurrentTodoID(state, action: PayloadAction<{ id: string }>) {
             const { id } = action.payload;
             state.currentTodoID = id;
         },
-
         setCurrentTodosCount(state, action: PayloadAction<{ count: number }>) {
             const { count } = action.payload;
             state.currentTodosCount = count;
@@ -281,7 +299,7 @@ export const {
     findTodosItemByName,
     setFilterCompareValue,
     editCurrentTodosDataItem,
-    editCategoryOFCurrentTodosDataItem,
+    updateCategoryOfTodoItems,
     switchTodosItemEditableStatus,
     switchTodosItemCompleteStatus,
     setTaskTitleValue,

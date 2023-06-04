@@ -42,6 +42,7 @@ const SelectMenu: React.FC = () => {
     };
 
     useEffect(() => {
+        // equaled displaying nav UI (mobile/desktop)
         const targetNavTemplate = navTemplatesData.find(
             item => makeStringFormatting(item.category) === selectNavOption
         );
@@ -53,7 +54,7 @@ const SelectMenu: React.FC = () => {
                     : navTemplatesData[0].id,
                 status: true
             })
-        ); // for equaled displaying nav UI (mobile/desktop)
+        );
     }, [navTemplatesData, selectNavOption]);
 
     return (

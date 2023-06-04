@@ -6,11 +6,9 @@ import { Icategory } from 'types/categoryTypes';
 
 import { useAppSelector, useAppDispatch } from 'app/hooks';
 
-import { getCurrentArrItem } from 'utils/helpers/getCurrentArrItem';
-
 import {
     editCurrentCategoryTemplateItem,
-    editCategoryOFCurrentTodosDataItem,
+    updateCategoryOfTodoItems,
     setTaskTitleValue,
     setFilterCompareValue
 } from 'app/slices/todoSlice';
@@ -41,9 +39,8 @@ const TitleForm: React.FC<propTypes> = props => {
         inputRef,
         isEditable,
         inputTitleValue,
-        setEditableStatus,
         filterCompareValue,
-        navTemplatesData,
+        setEditableStatus,
         categoryTemplatesData
     } = props;
 
@@ -81,28 +78,12 @@ const TitleForm: React.FC<propTypes> = props => {
         );
         // update text, category of actual nav element
 
-        // dispatch(
-        //     editCurrentCategoryTemplateItem({
-        //         id: getCurrentArrItem(
-        //             categoryTemplatesData,
-        //             'value',
-        //             filterCompareValue
-        //         )?.id,
-        //         text: inputValue.trim(), // displayed in UI
-        //         value: makeStringFormatting(inputValue) // logic
-        //     })
-        // );
-        // update text, value in categoryTemplatesData[] (Modal.tsx)
-
-        // dispatch(
-        //     editCategoryOFCurrentTodosDataItem({
-        //         // update category value of each todosData[] item who prev category is equal prev title value
-        //         categoryProp: filterCompareValue,
-        //         categoryValue: inputValue
-        //             ? makeStringFormatting(inputValue)
-        //             : ''
-        //     })
-        // );
+        dispatch(
+            updateCategoryOfTodoItems({
+                categoryProp: filterCompareValue,
+                newCategoryValue: makeStringFormatting(inputValue)
+            })
+        ); // overwrite category value for  necessary todos
 
         setEditableStatus(false); // disable editing after submit form
     };
@@ -120,6 +101,26 @@ const TitleForm: React.FC<propTypes> = props => {
             setInputValue(capitalizedTitle.trimStart());
         }
     }, [isEditable, inputTitleValue]);
+
+    useEffect(() => {
+        // update categoryTemplatesData
+        if (isGeneralTodoGroup) return;
+
+        const targetCategoryItem = categoryTemplatesData.find(
+            item =>
+                makeStringFormatting(item.value) ===
+                makeStringFormatting(inputValue)
+        );
+
+        dispatch(
+            editCurrentCategoryTemplateItem({
+                id: targetCategoryItem
+                    ? targetCategoryItem.id
+                    : categoryTemplatesData[0].id,
+                value: makeStringFormatting(inputValue)
+            })
+        );
+    }, [inputValue, categoryTemplatesData, isGeneralTodoGroup]);
 
     return (
         <div className="title">
