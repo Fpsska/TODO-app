@@ -18,8 +18,8 @@ interface propTypes {
     id: number;
     text: string;
     category: string;
-    link: string;
-    isActive: boolean;
+    link?: string;
+    isActive?: boolean;
 }
 
 // /. interfaces

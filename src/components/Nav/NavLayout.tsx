@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 import { useAppSelector } from 'app/hooks';
+
+import { useWidthHandler } from 'utils/hooks/useWidthHandler';
 
 import SelectMenu from '../SelectMenu/SelectMenu';
 import CategoryForm from '../CategoryForm/CategoryForm';
@@ -11,32 +13,16 @@ import './navLayout.scss';
 
 // /. imports
 
-interface propTypes {
-    setEditableStatus: (arg: boolean) => void;
-}
-
-// /. interfaces
-
-const NavLayout: React.FC<propTypes> = props => {
-    const { setEditableStatus } = props;
-
+const NavLayout: React.FC = () => {
     const { navTemplatesData } = useAppSelector(state => state.navSlice);
 
-    const [width, setWidth] = useState<number>(window.innerWidth);
-    const [breakpoint] = useState<number>(768);
+    const { isAllowableRes } = useWidthHandler({ min: 0, max: 768 });
 
-    useEffect(() => {
-        const handleWindowResize = () => setWidth(window.innerWidth);
-
-        window.addEventListener('resize', handleWindowResize);
-        return () => {
-            window.removeEventListener('resize', handleWindowResize);
-        };
-    }, []);
+    // /. hooks
 
     return (
         <aside className="page__nav">
-            {width <= breakpoint ? (
+            {isAllowableRes ? (
                 <nav className="page__nav-select">
                     <SelectMenu />
                 </nav>
