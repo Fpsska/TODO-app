@@ -17,9 +17,13 @@ const Burger: React.FC<propTypes> = ({ isVisible, setVisibleStatus }) => {
 
     const burgerContentRef = useRef<HTMLDivElement>(null!);
 
+    // /. hooks
+
     const burgerClose = (): void => {
         setVisibleStatus(false);
     };
+
+    // /. functions
 
     useEffect(() => {
         if (isVisible && !burgerContentRef?.current) {
@@ -29,6 +33,8 @@ const Burger: React.FC<propTypes> = ({ isVisible, setVisibleStatus }) => {
         }
         setContentVisibleStatus(false);
     }, [isVisible]);
+
+    // /. effects
 
     return (
         <section className={isVisible ? 'burger visible' : 'burger'}>

@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction, current } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { getRandomArrElement } from 'utils/helpers/getRandomArrElement';
 import { makeStringFormatting } from 'utils/helpers/makeStringFormatting';

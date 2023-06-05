@@ -31,7 +31,7 @@ const App: React.FC = () => {
     const burgerAreaHandler = useAreaHandler({ initialStatus: false });
     const titleFormAreaHandler = useAreaHandler({ initialStatus: false });
 
-    // /. hooks usage
+    // /. hooks
 
     const openBurger = (e: React.SyntheticEvent): void => {
         e.stopPropagation(); // for correct work of burger hide/show logic
@@ -55,15 +55,13 @@ const App: React.FC = () => {
         );
     };
 
+    // /. functions
+
     return (
         <div className="App">
             <div className="page">
                 <div className="page__wrapper">
-                    <NavLayout
-                        setEditableStatus={
-                            titleFormAreaHandler.setVisibleStatus
-                        }
-                    />
+                    <NavLayout />
 
                     <main className="main">
                         <div

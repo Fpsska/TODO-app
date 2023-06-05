@@ -35,21 +35,15 @@ const NavTemplate: React.FC<propTypes> = props => {
 
     const dispatch = useAppDispatch();
 
-    useEffect(() => {
-        // set current todo items count for each category
-        const array = todosData.filter(
-            item =>
-                makeStringFormatting(item.category) ===
-                makeStringFormatting(category)
-        );
-        setTodoCount(array.length);
-    }, [todosData, category]);
+    // /. hooks
 
     const isNavLinkDisabled = isTodosDataLoading || error;
 
     const linkContent = `${text} (${
         makeStringFormatting(category) === 'all' ? todosData.length : todoCount
     })`;
+
+    // /. variables
 
     const onNavLinkClick = (): void => {
         dispatch(
@@ -68,6 +62,20 @@ const NavTemplate: React.FC<propTypes> = props => {
         dispatch(setTaskTitleValue({ title: category })); // update text content of title__form
         dispatch(setCurrentNavID(id));
     };
+
+    // /. functions
+
+    useEffect(() => {
+        // set current todo items count for each category
+        const array = todosData.filter(
+            item =>
+                makeStringFormatting(item.category) ===
+                makeStringFormatting(category)
+        );
+        setTodoCount(array.length);
+    }, [todosData, category]);
+
+    // /. effects
 
     return (
         <li className="nav__item">

@@ -36,7 +36,11 @@ const PageList: React.FC = () => {
     const dispatch = useAppDispatch();
     const modalAreaHandler = useAreaHandler({ initialStatus: false });
 
+    // /. hooks
+
     const isGeneralTodoTitle = taskTitleValue.toLowerCase().trim() === 'all';
+
+    // /. variables
 
     useEffect(() => {
         dispatch(updateFilteredTodos(todosData));
@@ -68,6 +72,8 @@ const PageList: React.FC = () => {
             );
         }
     }, [modalAreaHandler.isVisible, currentTodoID]);
+
+    // /. effects
 
     return (
         <div className="page__list">

@@ -50,7 +50,11 @@ const TitleForm: React.FC<propTypes> = props => {
 
     const dispatch = useAppDispatch();
 
+    // /. hooks
+
     const isGeneralTodoGroup = makeStringFormatting(inputValue) === 'all';
+
+    // /. variables
 
     const formSubmitHandler = (e: React.FormEvent): void => {
         e.preventDefault();
@@ -92,6 +96,8 @@ const TitleForm: React.FC<propTypes> = props => {
         setEditableStatus(!isEditable);
     };
 
+    // /. functions
+
     useEffect(() => {
         // save current input value when user is leave from editing mode without saving
         if (!isEditable) {
@@ -121,6 +127,8 @@ const TitleForm: React.FC<propTypes> = props => {
             })
         );
     }, [inputValue, categoryTemplatesData, isGeneralTodoGroup]);
+
+    // /. effects
 
     return (
         <div className="title">

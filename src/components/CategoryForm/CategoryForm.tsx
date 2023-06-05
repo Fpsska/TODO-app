@@ -27,8 +27,12 @@ const CategoryForm: React.FC = () => {
 
     const formRef = useRef<HTMLFormElement>(null!);
 
+    // /. hooks
+
     const isFormAvailable = inputValue && !isTodosDataLoading && !error;
     const isControlsAvailable = !isTodosDataLoading && !error;
+
+    // /. variables
 
     const formSubmitHandler = (e: React.FormEvent): void => {
         e.preventDefault();
@@ -61,6 +65,8 @@ const CategoryForm: React.FC = () => {
     const onButtonShowClick = (): void => {
         dispatch(switchFormVisibleStatus({ status: !isFormVisible }));
     };
+
+    // /. functions
 
     return (
         <div className="category">

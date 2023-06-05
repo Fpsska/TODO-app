@@ -27,16 +27,7 @@ const DraggableWrapper: React.FC<propTypes> = props => {
         lastTranslateY: 0
     });
 
-    useEffect(() => {
-        console.log(draggableSettings);
-    }, [draggableSettings]);
-
-    useEffect(() => {
-        return () => {
-            window.removeEventListener('mousemove', handleMouseMove);
-            window.removeEventListener('mouseup', handleMouseUp);
-        };
-    }, []);
+    // /. hooks
 
     const handleMouseDown = (e: any): void => {
         e.preventDefault();
@@ -86,6 +77,21 @@ const DraggableWrapper: React.FC<propTypes> = props => {
             };
         });
     };
+
+    // /. functions
+
+    useEffect(() => {
+        console.log(draggableSettings);
+    }, [draggableSettings]);
+
+    useEffect(() => {
+        return () => {
+            window.removeEventListener('mousemove', handleMouseMove);
+            window.removeEventListener('mouseup', handleMouseUp);
+        };
+    }, []);
+
+    // /. effects
 
     return (
         <div

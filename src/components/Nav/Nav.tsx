@@ -23,6 +23,8 @@ const Nav: React.FC<propTypes> = props => {
 
     const dispatch = useAppDispatch();
 
+    // /. hooks
+
     useEffect(() => {
         localStorage.setItem(
             'navDataFromStorage',
@@ -36,6 +38,8 @@ const Nav: React.FC<propTypes> = props => {
         }
         // update inputTitleValue
     }, [navTemplatesData]);
+
+    // /. effects
 
     return (
         <nav className="nav">

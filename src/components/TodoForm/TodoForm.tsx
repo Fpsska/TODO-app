@@ -25,6 +25,8 @@ const TodoForm: React.FC<propTypes> = props => {
 
     const formRef = useRef<HTMLFormElement>(null!);
 
+    // /. hooks
+
     const formSubmitHandler = (e: React.FormEvent<HTMLFormElement>): void => {
         e.preventDefault(); // disable refresh page after submit form
 
@@ -45,6 +47,8 @@ const TodoForm: React.FC<propTypes> = props => {
 
         onInputChangeEvent(e.target.value);
     };
+
+    // /. functions
 
     return (
         <form

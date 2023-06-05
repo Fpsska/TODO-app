@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, RefObject } from 'react';
 
 // /. imports
 
@@ -6,11 +6,20 @@ interface propTypes {
     initialStatus: boolean;
 }
 
+interface returnTypes {
+    refEl: RefObject<HTMLElement>;
+    isVisible: boolean;
+    setVisibleStatus: (arg: boolean) => void;
+}
+
 // /. interfaces
 
-export function useAreaHandler({ initialStatus }: propTypes): any {
+export function useAreaHandler({ initialStatus }: propTypes): returnTypes {
     const [isVisible, setVisibleStatus] = useState<boolean>(initialStatus);
+
     const refEl = useRef<HTMLElement>(null!); // valid HTML-el (clickable)
+
+    // /. hooks
 
     useEffect(() => {
         if (!isVisible) return;
@@ -34,6 +43,8 @@ export function useAreaHandler({ initialStatus }: propTypes): any {
             document.removeEventListener('keydown', keyHandler);
         };
     }, [isVisible]);
+
+    // /. effects
 
     return { refEl, isVisible, setVisibleStatus };
 }

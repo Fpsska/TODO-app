@@ -38,6 +38,8 @@ const EditForm: React.FC<propTypes> = ({ setModalVisibleStatus }) => {
 
     const dispatch = useAppDispatch();
 
+    // /. hooks
+
     const formSubmitHandler = (): void => {
         dispatch(
             editCurrentTodosDataItem({
@@ -61,6 +63,8 @@ const EditForm: React.FC<propTypes> = ({ setModalVisibleStatus }) => {
         setModalVisibleStatus(false);
     };
 
+    // /. functions
+
     useEffect(() => {
         // display initial todo item properties if changes is not applied
         const targetTodo = todosData.find(item => item.id === currentTodoID);
@@ -79,6 +83,8 @@ const EditForm: React.FC<propTypes> = ({ setModalVisibleStatus }) => {
             JSON.stringify(categoryTemplatesData)
         );
     }, [categoryTemplatesData]);
+
+    // /. effects
 
     return (
         <form

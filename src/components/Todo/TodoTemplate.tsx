@@ -38,7 +38,11 @@ const TodoTemplate: React.FC<propTypes> = props => {
 
     const dispatch = useAppDispatch();
 
+    // /. hooks
+
     const isCategoryExisted = category && category !== 'none';
+
+    // /. variables
 
     const handleCompleteStatus = (): void => {
         dispatch(switchTodosItemCompleteStatus({ id, status: completed }));
@@ -54,6 +58,8 @@ const TodoTemplate: React.FC<propTypes> = props => {
     const onButtonDeleteClick = (): void => {
         dispatch(removeTodosItem({ id }));
     };
+
+    // /. functions
 
     return (
         <li className="todo__item">

@@ -27,7 +27,11 @@ const SelectMenu: React.FC = () => {
 
     const dispatch = useAppDispatch();
 
+    // /. hooks
+
     const isSelectAvailable = !isTodosDataLoading && !error;
+
+    // /. variables
 
     const selectMenuHandler = (value: string): void => {
         dispatch(
@@ -40,6 +44,8 @@ const SelectMenu: React.FC = () => {
 
         dispatch(setTaskTitleValue({ title: value })); // update text content of title__form
     };
+
+    // /. functions
 
     useEffect(() => {
         // equaled displaying nav UI (mobile/desktop)
@@ -56,6 +62,8 @@ const SelectMenu: React.FC = () => {
             })
         );
     }, [navTemplatesData, selectNavOption]);
+
+    // /. effects
 
     return (
         <select
